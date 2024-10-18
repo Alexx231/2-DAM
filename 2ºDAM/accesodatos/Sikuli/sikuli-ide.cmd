@@ -1,0 +1,1 @@
+CommonFiles\JDK64\bin\java.exe -jar sikulix.jar

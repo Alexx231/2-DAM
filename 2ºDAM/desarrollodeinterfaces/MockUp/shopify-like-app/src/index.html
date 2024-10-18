@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - Shopify</title>
+    <link rel="icon" href="img/shopify.svg" type="image/png">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <div class="background-container">
+        <div class="login-container">
+            <img src="img/shopify-logo-2018.svg" alt="Shopify Logo" class="logo">
+            <h1>INICIAR SESIÓN</h1>
+            <form id="loginForm">
+                <div class="input-container">
+                    <i class="fas fa-user icon"></i>
+                    <input type="email" id="email" class="form-control" placeholder="Correo Electrónico" required>
+                </div>
+                <div class="input-container">
+                    <i class="fas fa-lock icon"></i>
+                    <input type="password" id="password" class="form-control" placeholder="Contraseña" required>
+                </div>
+                <div class="social-login">
+                    <div class="separator">
+                        <span>o inicia sesión con</span>
+                    </div>
+                    <div class="social-icons">
+                        <a href="https://accounts.google.com/v3/signin/identifier?authuser=0&continue=https%3A%2F%2Ftakeout.google.com%2F%3Fhl%3Des%26pli%3D1&ec=GAlAwAE&hl=es&flowName=GlifWebSignIn&flowEntry=AddSession&dsh=S-14462332%3A1729075812699138&ddm=0" class="google"></a>
+                        <a href="https://github.com/topics/login" class="github"></a>
+                        <a href="https://www.facebook.com/login/?locale=es_ES" class="facebook"></a>
+                    </div>
+                </div>
+                <p>¿No tienes cuenta de Shopify? <a href="#">Regístrate</a></p>
+            </form>
+        </div>
+    </div>
+
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+    <script src="../bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="js/scripts.js"></script>
+</body>
+</html>

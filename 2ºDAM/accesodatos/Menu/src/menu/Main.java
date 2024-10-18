@@ -1,0 +1,129 @@
+/*
+ author alejandro.pawlukiewicz.23@campusfp.es 
+ */
+
+package menu;
+
+import java.io.*;
+import java.util.Scanner;
+
+public class Main {
+    private static final String FILE_PATH = "data/alumno.dat";
+    private static GestionAlumno alumno;
+
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        boolean salir = false;
+
+        while (!salir) {
+            System.out.println("\n--- Menú ---");
+            System.out.println("1. Abrir archivo de alumno");
+            System.out.println("2. Añadir nueva calificación");
+            System.out.println("3. Mostrar listado de calificaciones");
+            System.out.println("4. Mostrar media de calificaciones");
+            System.out.println("5. Salir");
+            System.out.print("Selecciona una opción: ");
+
+            int opcion = scanner.nextInt();
+            scanner.nextLine();
+
+            switch (opcion) {
+                case 1:
+                    abrirArchivo(scanner);
+                    break;
+                case 2:
+                    añadirCalificacion(scanner);
+                    break;
+                case 3:
+                    mostrarCalificaciones();
+                    break;
+                case 4:
+                    mostrarMedia();
+                    break;
+                case 5:
+                    salir = true;
+                    cerrarArchivo();
+                    break;
+                default:
+                    System.out.println("Opción no válida. Por favor, selecciona una opción del 1 al 5.");
+            }
+        }
+
+        scanner.close();
+    }
+
+    private static void abrirArchivo(Scanner scanner) {
+        File archivo = new File(FILE_PATH);
+        if (archivo.exists()) {
+            try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(archivo))) {
+                alumno = (GestionAlumno) ois.readObject();
+                System.out.println("Archivo cargado correctamente.");
+            } catch (IOException | ClassNotFoundException e) {
+                System.err.println("Error al cargar el archivo: " + e.getMessage());
+            }
+        } else {
+            try {
+                archivo.getParentFile().mkdirs();
+                archivo.createNewFile();
+                System.out.print("Introduce el nombre del alumno: ");
+                String nombre = scanner.nextLine();
+                System.out.print("Introduce la edad del alumno: ");
+                int edad = scanner.nextInt();
+                scanner.nextLine(); 
+                alumno = new GestionAlumno(nombre, edad);
+                guardarArchivo();
+                System.out.println("Archivo creado y guardado correctamente.");
+            } catch (IOException e) {
+                System.err.println("Error al crear el archivo: " + e.getMessage());
+            }
+        }
+    }
+
+    private static void añadirCalificacion(Scanner scanner) {
+        if (alumno == null) {
+            System.out.println("Primero debes abrir un archivo de alumno.");
+            return;
+        }
+        System.out.print("Introduce la nueva calificación: ");
+        double calificacion = scanner.nextDouble();
+        scanner.nextLine(); 
+        alumno.añadirCalificacion(calificacion);
+        guardarArchivo();
+        System.out.println("Calificación añadida y archivo guardado correctamente.");
+    }
+
+    private static void mostrarCalificaciones() {
+        if (alumno == null) {
+            System.out.println("Primero debes abrir un archivo de alumno.");
+            return;
+        }
+        System.out.println("Listado de calificaciones:");
+        for (double calificacion : alumno.getCalificaciones()) {
+            System.out.println(calificacion);
+        }
+    }
+
+    private static void mostrarMedia() {
+        if (alumno == null) {
+            System.out.println("Primero debes abrir un archivo de alumno.");
+            return;
+        }
+        double media = alumno.calcularMedia();
+        System.out.println("Media de calificaciones: " + media);
+    }
+
+    private static void cerrarArchivo() {
+        if (alumno != null) {
+            guardarArchivo();
+            System.out.println("Archivo guardado y cerrado correctamente.");
+        }
+    }
+
+    private static void guardarArchivo() {
+        try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(FILE_PATH))) {
+            oos.writeObject(alumno);
+        } catch (IOException e) {
+            System.err.println("Error al guardar el archivo: " + e.getMessage());
+        }
+    }
+}

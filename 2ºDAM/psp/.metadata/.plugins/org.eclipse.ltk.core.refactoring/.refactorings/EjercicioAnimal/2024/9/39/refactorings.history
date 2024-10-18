@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Rename type &apos;sistema.Package&apos; to &apos;Mamifero&apos;&#x0D;&#x0A;- Original project: &apos;EjercicioAnimal&apos;&#x0D;&#x0A;- Original element: &apos;sistema.Package&apos;&#x0D;&#x0A;- Renamed element: &apos;sistema.Mamifero&apos;&#x0D;&#x0A;- Update references to refactored element&#x0D;&#x0A;- Update textual occurrences in comments and strings" description="Rename type &apos;Package&apos;" flags="589830" id="org.eclipse.jdt.ui.rename.type" input="/src&lt;sistema{Package.java[Package" matchStrategy="1" name="Mamifero" qualified="false" references="true" similarDeclarations="false" stamp="1727337372552" textual="false" version="1.0"/>
+</session>

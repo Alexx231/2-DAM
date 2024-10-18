@@ -1,0 +1,33 @@
+package avtividad;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.concurrent.CountDownLatch;
+
+class Carrera {
+    private List<Caballo> caballos;
+    private List<String> resultados;
+    private CountDownLatch latch;
+
+    public Carrera(List<Caballo> caballos) {
+        this.caballos = caballos;
+        this.resultados = Collections.synchronizedList(new ArrayList<>());
+        this.latch = new CountDownLatch(caballos.size());
+    }
+
+    public void iniciarCarrera() {
+        for (Caballo caballo : caballos) {
+            new Thread(caballo).start();
+        }
+        try {
+            latch.await();
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+        }
+    }
+
+    public List<String> getResultados() {
+        return resultados;
+    }
+}

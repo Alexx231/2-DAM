@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interfaz de Gestión Empresarial - Shopify</title>
+    <link rel="icon" href="img/shopify.svg" type="image/png">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <link rel="stylesheet" href="css/interfaz.css">
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="logo-container">
+                <img src="img/shopify.svg" alt="Shopify Logo" class="logo">
+            </div>
+            <div class="search-bar">
+                <input type="text" placeholder="Buscar...">
+                <button><i class="fas fa-search"></i></button>
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="#pedidos"><i class="fas fa-box"></i></a></li>
+                    <li><a href="#clientes"><i class="fas fa-users"></i></a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+    <main>
+        <div class="dashboard">
+            <div class="sidebar">
+                <ul>
+                    <li><a href="#inicio" class="active"><i class="fas fa-home"></i> Inicio</a></li>
+                    <li><a href="#pedidos"><i class="fas fa-box"></i> Pedidos</a></li>
+                    <li><a href="#clientes"><i class="fas fa-users"></i> Clientes</a></li>
+                    <li><a href="#productos"><i class="fas fa-tags"></i> Productos</a></li>
+                    <li><a href="#analiticas"><i class="fas fa-chart-line"></i> Analíticas</a></li>
+                    <li><a href="#descuentos"><i class="fas fa-percent"></i> Descuentos</a></li>
+                    <li><a href="#aplicaciones"><i class="fas fa-th"></i> Aplicaciones</a></li>
+                </ul>
+            </div>
+            <div class="content">
+                <div class="overview">
+                    <h1>Resumen del Negocio</h1>
+                    <div class="stats">
+                        <div class="stat">
+                            <h3>Aumenta tus ventas</h3>
+                            <p>Estrategias y consejos para incrementar las ventas.</p>
+                        </div>
+                        <div class="stat">
+                            <h3>Pedidos pendientes</h3>
+                            <p>10 pedidos necesitan ser surtidos.</p>
+                        </div>
+                        <div class="stat">
+                            <h3>Visitas de hoy</h3>
+                            <p>150 visitas hoy.</p>
+                        </div>
+                        <div class="stat">
+                            <h3>Notificaciones</h3>
+                            <p>¡Felicidades! Has alcanzado 1000 ventas.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="details">
+                    <div id="pedidos" class="section">
+                        <h2>Gestión de Pedidos</h2>
+                        <p>Indicadores de pedidos pendientes.</p>
+                    </div>
+                    <div id="clientes" class="section">
+                        <h2>Gestión de Clientes</h2>
+                        <p>Información y gestión de clientes.</p>
+                    </div>
+                    <div id="productos" class="section">
+                        <h2>Catálogo de Productos</h2>
+                        <p>Opciones para añadir, editar y eliminar productos.</p>
+                    </div>
+                    <div id="analiticas" class="section">
+                        <h2>Analíticas</h2>
+                        <p>Herramientas de análisis de ventas y rendimiento.</p>
+                    </div>
+                    <div id="descuentos" class="section">
+                        <h2>Gestión de Descuentos</h2>
+                        <p>Gestión de descuentos y promociones.</p>
+                    </div>
+                    <div id="aplicaciones" class="section">
+                        <h2>Integración con Aplicaciones</h2>
+                        <p>Integración con aplicaciones de terceros.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="widgets">
+                <div class="widget">
+                    <h3>Widget 1</h3>
+                    <p>Contenido del widget 1.</p>
+                </div>
+                <div class="widget">
+                    <h3>Widget 2</h3>
+                    <p>Contenido del widget 2.</p>
+                </div>
+                <div class="widget">
+                    <h3>Widget 3</h3>
+                    <p>Contenido del widget 3.</p>
+                </div>
+            </div>
+        </div>
+    </main>
+    <footer>
+        <div class="container">
+            <p>&copy; 2023 Shopify. Todos los derechos reservados.</p>
+            <div class="social-links">
+                <a href="#"><i class="fab fa-facebook-f"></i></a>
+                <a href="#"><i class="fab fa-twitter"></i></a>
+                <a href="#"><i class="fab fa-linkedin-in"></i></a>
+            </div>
+        </div>
+    </footer>
+    <script src="../bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="js/interfaz.js"></script>
+</body>
+</html>

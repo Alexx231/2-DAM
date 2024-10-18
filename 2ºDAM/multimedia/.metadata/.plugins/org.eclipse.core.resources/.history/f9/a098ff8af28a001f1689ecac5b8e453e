@@ -1,0 +1,109 @@
+package tresenraya;
+
+import java.util.Scanner;
+
+public class Rayas {
+
+	int[] rayass;
+	
+	int ancho = 3;
+	
+	int alto = 3;
+	
+	int pieza = 0;
+	
+	int celdas = ancho*alto;
+	
+	int player1 = 1, player2 = -1;
+	
+	Scanner scan;
+	
+	void Start()
+	{
+	    rayass = new int[celdas];
+
+	    for (int i = 0; i < celdas; i++)
+	    {
+	        rayass[i] = 0;
+	    }
+	}
+	
+	void Pintar(boolean simbolos)
+	{
+		if(simbolos)
+		{
+			for(int i = 0; i < celdas; i++)
+			{
+				
+				if(i % ancho == 0 && i != 0)
+				{
+					System.out.println();
+				}
+				if(rayass[1] == player1)
+				{
+					System.out.print("X");
+				}
+				else if(rayass[1] == player2)
+				{
+					System.out.print("O");
+				}
+				else
+				{
+					System.out.print("");
+				}
+			}
+		}
+		else
+		{
+			for(int i = 0; i < celdas; i++)
+			{
+				
+				if(i % ancho == 0 && i != 0)
+				{
+					System.out.println();
+				}
+				System.out.print(rayass[i]);
+			}
+		}
+		
+	}
+	
+	void TurnoPlayer() {
+	    // Solicita al jugador que seleccione una fila (alto) para colocar su pieza
+	    System.out.println("Selecciona un número para el alto (0, 1, 2): ");
+	    int alto = scan.nextInt();
+	    
+	    // Solicita al jugador que seleccione una columna (ancho) para colocar su pieza
+	    System.out.println("Selecciona un número para el ancho (0, 1, 2): ");
+	    int ancho = scan.nextInt();
+	    
+	    // Convierte las coordenadas 2D (alto, ancho) a un índice 1D en el array del tablero
+	    int indice = alto * 3 + ancho;
+
+	    // Verifica si la posición en el tablero está vacía ('-')
+	    if (rayass[indice] == '-') {
+	        // Si está vacía, coloca la pieza del jugador en esa posición
+	        rayass[indice] = pieza;
+	    } else {
+	        // Si la posición está ocupada, muestra un mensaje y solicita al jugador que intente de nuevo
+	        System.out.println("Posición ocupada, intenta de nuevo.");
+	    }
+	}
+	
+public static void main(String[] args)
+{
+	Rayas m = new Rayas();
+	m.Start();
+	
+	while(true) {
+		m.Pintar(true);
+		m.TurnoPlayer();
+		m.Pintar(true);
+		m.TurnoPlayer();
+	}
+	
+	
+	
+}
+	
+}

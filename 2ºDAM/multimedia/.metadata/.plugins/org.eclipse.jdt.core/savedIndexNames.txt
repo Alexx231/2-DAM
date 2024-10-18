@@ -1,0 +1,6 @@
+INDEX VERSION 1.134+C:\2ºDAM\multimedia\.metadata\.plugins\org.eclipse.jdt.core
+1865797976.index
+1565752885.index
+3092210997.index
+3853236495.index
+1288848795.index

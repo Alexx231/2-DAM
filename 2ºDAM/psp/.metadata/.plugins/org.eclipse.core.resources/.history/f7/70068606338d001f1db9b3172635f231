@@ -1,0 +1,45 @@
+package actividad;
+
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.concurrent.CountDownLatch;
+
+public class Actividad5 {
+    public static void main(String[] args) {
+        List<Caballo> caballosCarrera1 = new ArrayList<>();
+        List<Caballo> caballosCarrera2 = new ArrayList<>();
+
+        for (int i = 1; i <= 5; i++) {
+            caballosCarrera1.add(new Caballo("Caballo" + i, new CountDownLatch(5), new ArrayList<>()));
+            caballosCarrera2.add(new Caballo("Caballo" + (i + 5), new CountDownLatch(5), new ArrayList<>()));
+        }
+
+        Carrera carrera1 = new Carrera(caballosCarrera1);
+        Carrera carrera2 = new Carrera(caballosCarrera2);
+
+        Thread hiloCarrera1 = new Thread(() -> {
+            carrera1.iniciarCarrera();
+            guardarResultados("resultados_carrera1.txt", carrera1.getResultados());
+        });
+
+        Thread hiloCarrera2 = new Thread(() -> {
+            carrera2.iniciarCarrera();
+            guardarResultados("resultados_carrera2.txt", carrera2.getResultados());
+        });
+
+        hiloCarrera1.start();
+        hiloCarrera2.start();
+    }
+
+    private static void guardarResultados(String nombreArchivo, List<String> resultados) {
+        try (FileWriter writer = new FileWriter(nombreArchivo)) {
+            for (String resultado : resultados) {
+                writer.write(resultado + "\n");
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+}

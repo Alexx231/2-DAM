@@ -1,0 +1,43 @@
+package actividad;
+
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.concurrent.CountDownLatch;
+
+class Caballo implements Runnable {
+    private String nombre;
+    private int distancia;
+    private static final int DISTANCIA_TOTAL = 100;
+    private CountDownLatch latch;
+    private List<String> resultados;
+
+    public Caballo(String nombre, CountDownLatch latch, List<String> resultados) {
+        this.nombre = nombre;
+        this.distancia = 0;
+        this.latch = latch;
+        this.resultados = resultados;
+    }
+
+    public void avanzar() {
+        this.distancia += (int) (Math.random() * 10);
+    }
+
+    @Override
+    public void run() {
+        while (distancia < DISTANCIA_TOTAL) {
+            avanzar();
+            try {
+                Thread.sleep(100);
+            } catch (InterruptedException e) {
+                Thread.currentThread().interrupt();
+            }
+        }
+        synchronized (resultados) {
+            resultados.add(nombre);
+        }
+        latch.countDown();
+    }
+}

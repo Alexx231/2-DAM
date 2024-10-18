@@ -1,0 +1,65 @@
+package tienda;
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
+public class importes1 {
+	
+    public static void main(String[] args) {
+        String url = "jdbc:mysql://localhost:3306/tienda";
+        String user = "root";
+        String password = "Tcachuk93";
+
+        try (Connection conn = DriverManager.getConnection(url, user, password)) {
+            String queryClientes = "SELECT NIF, nombre FROM clientes";
+            PreparedStatement stmtClientes = conn.prepareStatement(queryClientes);
+            ResultSet rsClientes = stmtClientes.executeQuery();
+
+            while (rsClientes.next()) {
+                String nif = rsClientes.getString("NIF");
+                String nombre = rsClientes.getString("nombre");
+
+                String queryFacturas = "SELECT id FROM facturas WHERE cliente_nif = ?";
+                PreparedStatement stmtFacturas = conn.prepareStatement(queryFacturas);
+                stmtFacturas.setString(1, nif);
+                ResultSet rsFacturas = stmtFacturas.executeQuery();
+
+                double importeTotal = 0;
+
+                while (rsFacturas.next()) {
+                    int facturaId = rsFacturas.getInt("id");
+
+                    String queryDetalles = "SELECT producto_id, cantidad FROM detalles WHERE factura_id = ?";
+                    PreparedStatement stmtDetalles = conn.prepareStatement(queryDetalles);
+                    stmtDetalles.setInt(1, facturaId);
+                    ResultSet rsDetalles = stmtDetalles.executeQuery();
+
+                    while (rsDetalles.next()) {
+                        int productoId = rsDetalles.getInt("producto_id");
+                        int cantidad = rsDetalles.getInt("cantidad");
+
+                        String queryProducto = "SELECT precio FROM productos WHERE id = ?";
+                        PreparedStatement stmtProducto = conn.prepareStatement(queryProducto);
+                        stmtProducto.setInt(1, productoId);
+                        ResultSet rsProducto = stmtProducto.executeQuery();
+
+                        if (rsProducto.next()) {
+                            double precio = rsProducto.getDouble("precio");
+                            importeTotal += precio * cantidad;
+                        }
+                    }
+                }
+
+                System.out.println("NIF: " + nif);
+                System.out.println("Nombre: " + nombre);
+                System.out.println("Importe Total: " + importeTotal);
+                System.out.println("-------------------------");
+            }
+        } catch (SQLException e) {
+            System.err.println("Error al conectar con la base de datos: " + e.getMessage());
+        }
+    }
+}
