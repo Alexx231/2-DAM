@@ -1,0 +1,26 @@
+
+
+
+
+""" Parte reflexiva
+Un método alternativo para limpiar datos en Python es utilizar la librería datacleaner, que proporciona funciones predefinidas para la limpieza de datos. Sin embargo, he elegido utilizar pandas porque es una librería más versátil y ampliamente utilizada en la comunidad de ciencia de datos. Además, pandas permite un control más granular sobre el proceso de limpieza, lo que es útil para personalizar la limpieza según las necesidades específicas del dataset. """
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+La Programación Orientada a Objetos (POO) puede ayudar a organizar y manipular datos en aplicaciones empresariales al proporcionar una estructura clara y modular para el código. La POO permite encapsular datos y comportamientos relacionados en clases, lo que facilita la reutilización y el mantenimiento del código. Además, la POO permite la creación de objetos que pueden interactuar entre sí, lo que es útil para modelar sistemas complejos.
+
+Por ejemplo, en una aplicación de gestión de inventarios, se pueden crear clases para representar productos, órdenes y clientes. Cada clase puede tener atributos y métodos específicos, lo que facilita la manipulación de los datos y la implementación de funcionalidades específicas.
+
+En conclusión, la POO proporciona una forma estructurada y modular de organizar el código, lo que facilita la gestión y el mantenimiento de aplicaciones empresariales complejas.
