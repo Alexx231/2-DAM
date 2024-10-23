@@ -5,9 +5,9 @@ from scripts.procesamiento_datos import (
     clean_dataframe,
     replace_nan_with_zero,
     clean_data,
-    remove_empty_rows_and_columns
+    remove_empty_rows_and_columns,
+    transpose_dataframe
 )
-
 from scripts.estadisticas import calculate_statistics
 from scripts.data_row import DataRow
 from tabulate import tabulate
@@ -49,6 +49,16 @@ def main():
     # Mostrar el dataset final
     print(tabulate(df.head(), headers='keys', tablefmt='grid'))
 
+    # Transponer el dataframe
+    df_transposed = transpose_dataframe(df)
+
+    # Mostrar el dataset transpuesto
+    print(tabulate(df_transposed.head(), headers='keys', tablefmt='grid'))
+
+    # Extraer una colección de datos de cada tipo utilizando una fila distinta
+    collection = df_transposed.iloc[0].tolist()
+    print("Colección de datos de la primera fila transpuesta:", collection)
+
     # Calcular las estadísticas del dataset
     stats = calculate_statistics(df)
 
@@ -82,6 +92,11 @@ def main():
     print(rows[0] + rows[1])
     print("Resta de objetos:")
     print(rows[0] - rows[1])
+
+    # Guardar datos concatenados en un fichero de texto
+    with open('lista.txt', 'w') as f:
+        for row in df.values:
+            f.write(' '.join(map(str, row)) + '\n')
 
 if __name__ == "__main__":
     main()

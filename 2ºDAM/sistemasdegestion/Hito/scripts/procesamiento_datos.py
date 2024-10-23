@@ -36,3 +36,6 @@ def remove_empty_rows_and_columns(dataframe):
     dataframe = dataframe.dropna(how='all')  # Eliminar filas completamente vacías
     dataframe = dataframe.dropna(axis=1, how='all')  # Eliminar columnas completamente vacías
     return dataframe
+
+def transpose_dataframe(dataframe):
+    return dataframe.transpose()
