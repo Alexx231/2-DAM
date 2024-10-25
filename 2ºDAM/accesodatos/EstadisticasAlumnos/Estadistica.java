@@ -53,7 +53,7 @@ class Estadistica {
         try (Stream<String> stream = Files.lines(Paths.get(archivo))) {
             return stream.skip(1) // Saltar la cabecera
                     .map(line -> line.split("\\|"))
-                    .map(datos -> new Calificacion(Asignatura.valueOf(datos[0]), Double.parseDouble(datos[1])))
+                    .map(datos -> new Calificacion(datos[0], Asignatura.valueOf(datos[1].toUpperCase()), Double.parseDouble(datos[2].replace(",", "."))))
                     .collect(Collectors.toList());
         }
     }
