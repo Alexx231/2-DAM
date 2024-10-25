@@ -1,3 +1,7 @@
-enum Asignatura {
-    MATEMATICAS, LENGUA, CIENCIAS, HISTORIA, INGLES
+public enum Asignatura {
+    MATEMATICAS,
+    LENGUA,
+    CIENCIAS,
+    HISTORIA,
+    INGLES
 }
