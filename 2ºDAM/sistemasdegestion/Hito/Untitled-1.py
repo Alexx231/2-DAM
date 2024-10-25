@@ -1,9 +1,7 @@
-# %%
-%pip install requests pandas tabulate openpyxl
 from tabulate import tabulate
 import requests
 import pandas as pd
-import openpyxl
+import os
 
 # Función para descargar el archivo Excel
 def download_excel_file(url, output_path):
@@ -35,9 +33,13 @@ def clean_data(df):
     # Aquí puedes agregar más reglas de limpieza si es necesario
     return df
 
+# Crear la carpeta 'data' si no existe
+output_dir = 'data'
+os.makedirs(output_dir, exist_ok=True)
+
 # Descargar el archivo Excel
 url = 'https://www.ine.es/jaxiT3/files/t/es/xlsx/60272.xlsx?nocab=1'
-output_path = 'datos_ine.xlsx'
+output_path = os.path.join(output_dir, 'datos_ine.xlsx')
 download_excel_file(url, output_path)
 
 # Cargar el archivo Excel en una variable
@@ -81,7 +83,6 @@ print(tabulate(df_transposed.head(), headers='keys', tablefmt='grid'))
 collection = df_transposed.iloc[0].tolist()
 print("Colección de datos de la primera fila transpuesta:", collection)
 
-# %%
 # Función para limpiar el dataframe
 def clean_dataframe(df):
     # Reemplazar valores NaN por 0
@@ -110,7 +111,6 @@ df_limpio = clean_dataframe(df)
 # Mostrar el dataset limpio
 print(df_limpio.head())
 
-# %%
 # Función para transponer el dataframe
 def transpose_dataframe(df):
     return df.transpose()
@@ -141,8 +141,7 @@ print(df_transposed.head())
 print("Colecciones de datos extraídas:")
 for key, value in data_collections.items():
     print(f"{key}: {value}")
-
-# %%
+    
 # Función para guardar datos concatenados en un fichero de texto
 def save_concatenated_data(data_collections, file_path):
     with open(file_path, 'w') as file:
@@ -158,7 +157,6 @@ save_concatenated_data(data_collections, 'lista.txt')
 # Mostrar mensaje de confirmación
 print("Datos concatenados guardados en 'lista.txt'")
 
-# %%
 # Función para calcular operaciones estadísticas
 def calculate_statistics(df):
     statistics = {}
@@ -188,7 +186,6 @@ statistics_table = [(col, column_stats['mean'], column_stats['variance'], column
 print("Estadísticas calculadas:")
 print(tabulate(statistics_table, headers=["Columna", "Media", "Varianza", "Moda"], tablefmt="grid"))
 
-# %%
 class DataRow:
     def __init__(self, **kwargs):
         for key, value in kwargs.items():
@@ -254,4 +251,3 @@ print()
 print("Resta de objetos:")
 print(rows[0] - rows[1])
 print()
-
