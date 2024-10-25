@@ -13,6 +13,16 @@ def clean_data(df):
     # Add more cleaning rules if necessary
     return df
 
+# mi-proyecto/scripts/data_cleaning.py
+def clean_incorrect_data(df):
+    for column in df.columns:
+        if pd.api.types.is_numeric_dtype(df[column]):
+            df[column] = pd.to_numeric(df[column], errors='coerce')
+            df[column] = df[column].apply(lambda x: x if x >= 0 else 0)
+        else:
+            df[column] = df[column].astype(str)
+    return df
+
 # Example usage
 df = pd.read_excel('../data/datos_ine.xlsx')
 df_cleaned = clean_dataframe(df)

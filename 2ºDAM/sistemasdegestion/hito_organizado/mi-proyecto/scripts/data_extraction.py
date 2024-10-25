@@ -14,7 +14,12 @@ def load_excel_file(file_path):
 
 # Función para leer la hoja de datos
 def read_excel_sheet(excel_data, sheet_name):
-    return pd.read_excel(excel_data, sheet_name)
+    df = excel_data.parse(sheet_name)
+    # Asumimos que los nombres están en la primera fila y columna
+    df.columns = df.iloc[0]
+    df = df[1:]
+    df.reset_index(drop=True, inplace=True)
+    return df
 
 # Crear la carpeta 'data' si no existe
 output_dir = 'data'
