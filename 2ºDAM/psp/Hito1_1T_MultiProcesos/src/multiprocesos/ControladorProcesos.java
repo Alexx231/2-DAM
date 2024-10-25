@@ -1,21 +1,28 @@
 package multiprocesos;
 
-import java.io.IOException;
+import java.io.File;
 
 public class ControladorProcesos {
-    public static void main(String[] args) {
-        try {
-            // Lanzar el primer examen
-            ProcessBuilder pb1 = new ProcessBuilder("java", "-cp", "C:\\2ºDAM\\psp\\Hito1_1T\\bin", "multiprocesos.Principal", "Pepe", "Juan", "Luis");
-            pb1.redirectOutput(ProcessBuilder.Redirect.to(new java.io.File("examen1.txt")));
-            pb1.start();
+    public void lanzarProcesos() {
 
-            // Lanzar el segundo examen
-            ProcessBuilder pb2 = new ProcessBuilder("java", "-cp", "C:\\2ºDAM\\psp\\Hito1_1T\\bin", "multiprocesos.Principal", "Rosa", "Miguel", "Pedro");
-            pb2.redirectOutput(ProcessBuilder.Redirect.to(new java.io.File("examen2.txt")));
-            pb2.start();
-        } catch (IOException e) {
-            e.printStackTrace();
+        String[] args1 = {"Pepe", "Juan", "Maria", "examen1.txt"};
+
+        String[] args2 = {"Luis", "Ana", "Carlos", "examen2.txt"};
+
+        Principal.ejecutarConArgumentos(args1);
+        Principal.ejecutarConArgumentos(args2);
+
+
+        verificarArchivo("examen1.txt");
+        verificarArchivo("examen2.txt");
+    }
+
+    private void verificarArchivo(String nombreArchivo) {
+        File archivo = new File(nombreArchivo);
+        if (archivo.exists()) {
+            System.out.println("El archivo " + nombreArchivo + " ha sido rellenado.");
+        } else {
+            System.out.println("El archivo " + nombreArchivo + " no se ha creado.");
         }
     }
 }

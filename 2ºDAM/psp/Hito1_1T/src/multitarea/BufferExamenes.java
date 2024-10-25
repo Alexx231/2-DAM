@@ -1,28 +1,34 @@
 package multitarea;
 
-import java.util.LinkedList;
-import java.util.Queue;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.concurrent.BlockingQueue;
+import java.util.concurrent.LinkedBlockingQueue;
 
 public class BufferExamenes {
-    private Queue<String> colaExamenes;
+    private BlockingQueue<String> examenes;
+    private List<String> examenesProducidos;
 
     public BufferExamenes() {
-        colaExamenes = new LinkedList<String>();
+        this.examenes = new LinkedBlockingQueue<>();
+        this.examenesProducidos = new ArrayList<>();
     }
 
-    public synchronized void fabricarNuevoExamen(String codigo) {
-        colaExamenes.add(codigo);
-        notify();
+    public void producirExamen(String examen) throws InterruptedException {
+        examenes.put(examen);
+        examenesProducidos.add(examen);
     }
 
-    public synchronized String consumirExamen() {
-        while (colaExamenes.isEmpty()) {
-            try {
-                wait();
-            } catch (InterruptedException e) {
-                Thread.currentThread().interrupt();
-            }
-        }
-        return colaExamenes.poll();
+    public String consumirExamen() throws InterruptedException {
+        return examenes.take();
     }
+
+    public List<String> getExamenesProducidos() {
+        return new ArrayList<>(examenesProducidos);
+    }
+
+	public void fabricarNuevoExamen(String codigo) {
+		// TODO Auto-generated method stub
+		
+	}
 }

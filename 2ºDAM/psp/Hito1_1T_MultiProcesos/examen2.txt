@@ -1,0 +1,33 @@
+Producido examen E4-2024
+Producido examen E5-2024
+Producido examen E6-2024
+E4-2024;Luis; Pregunta 1; A
+E4-2024;Luis; Pregunta 2; D
+E4-2024;Luis; Pregunta 3; C
+E4-2024;Luis; Pregunta 4; A
+E4-2024;Luis; Pregunta 5; A
+E4-2024;Luis; Pregunta 6; C
+E4-2024;Luis; Pregunta 7; B
+E4-2024;Luis; Pregunta 8; A
+E4-2024;Luis; Pregunta 9; B
+E4-2024;Luis; Pregunta 10; D
+E5-2024;Ana; Pregunta 1; -
+E5-2024;Ana; Pregunta 2; D
+E5-2024;Ana; Pregunta 3; B
+E5-2024;Ana; Pregunta 4; -
+E5-2024;Ana; Pregunta 5; D
+E5-2024;Ana; Pregunta 6; A
+E5-2024;Ana; Pregunta 7; D
+E5-2024;Ana; Pregunta 8; -
+E5-2024;Ana; Pregunta 9; C
+E5-2024;Ana; Pregunta 10; A
+E6-2024;Carlos; Pregunta 1; B
+E6-2024;Carlos; Pregunta 2; -
+E6-2024;Carlos; Pregunta 3; C
+E6-2024;Carlos; Pregunta 4; -
+E6-2024;Carlos; Pregunta 5; D
+E6-2024;Carlos; Pregunta 6; D
+E6-2024;Carlos; Pregunta 7; C
+E6-2024;Carlos; Pregunta 8; B
+E6-2024;Carlos; Pregunta 9; A
+E6-2024;Carlos; Pregunta 10; C
