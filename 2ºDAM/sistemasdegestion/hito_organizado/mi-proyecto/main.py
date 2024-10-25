@@ -1,4 +1,3 @@
-# mi-proyecto/main.py
 import os
 import pandas as pd
 from scripts.data_extraction import download_excel_file, load_excel_file, read_excel_sheet
@@ -54,6 +53,12 @@ save_concatenated_data(data_collections, os.path.join(output_dir, 'lista.txt'))
 
 # Calcular estadísticas
 statistics = calculate_statistics(df_corrected)
+
+# Guardar estadísticas en lista.txt
+with open(os.path.join(output_dir, 'lista.txt'), 'a') as file:
+    file.write("\nEstadísticas:\n")
+    for column, stats in statistics.items():
+        file.write(f"{column} - Media: {stats['mean']}, Varianza: {stats['variance']}, Moda: {stats['mode']}\n")
 
 # Crear objetos de la clase para al menos cinco filas
 data_objects = [DataRow(**row) for _, row in df_corrected.head(5).iterrows()]
