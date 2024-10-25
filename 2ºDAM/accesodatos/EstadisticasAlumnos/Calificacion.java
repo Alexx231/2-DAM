@@ -3,9 +3,13 @@
  * No se declara pública porque no se va a utilizar fuera del paquete
  */
 
+
 class Calificacion {
-    Asignatura asignatura;
-    double nota;
+
+    public String dni;
+    public Asignatura asignatura;
+    public double nota;
+
 
     /**
      * Constructor
