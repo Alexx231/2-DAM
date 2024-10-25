@@ -1,3 +1,4 @@
+# mi-proyecto/scripts/data_cleaning.py
 import pandas as pd
 
 def clean_dataframe(df):
@@ -9,11 +10,6 @@ def clean_dataframe(df):
 def replace_nan_with_zero(df):
     return df.fillna(0)
 
-def clean_data(df):
-    # Add more cleaning rules if necessary
-    return df
-
-# mi-proyecto/scripts/data_cleaning.py
 def clean_incorrect_data(df):
     for column in df.columns:
         if pd.api.types.is_numeric_dtype(df[column]):
@@ -23,11 +19,8 @@ def clean_incorrect_data(df):
             df[column] = df[column].astype(str)
     return df
 
-# Example usage
-df = pd.read_excel('../data/datos_ine.xlsx')
-df_cleaned = clean_dataframe(df)
-df_cleaned = replace_nan_with_zero(df_cleaned)
-df_cleaned = clean_data(df_cleaned)
-
-# Display the cleaned dataset
-print(df_cleaned.head())
+def clean_data(df):
+    df = clean_dataframe(df)
+    df = replace_nan_with_zero(df)
+    df = clean_incorrect_data(df)
+    return df
