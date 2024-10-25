@@ -1,3 +1,4 @@
+# mi-proyecto/main.py
 import os
 import pandas as pd
 from scripts.data_extraction import download_excel_file, load_excel_file, read_excel_sheet
@@ -7,11 +8,8 @@ from scripts.file_operations import save_concatenated_data
 from scripts.data_statistics import calculate_statistics
 from scripts.data_class import DataRow
 
-# Obtener el directorio actual del archivo main.py
-current_dir = os.path.dirname(os.path.abspath(__file__))
-
-# Crear la carpeta 'data' dentro del directorio del proyecto si no existe
-output_dir = os.path.join(current_dir, 'data')
+# Crear la carpeta 'data' si no existe
+output_dir = 'data'
 os.makedirs(output_dir, exist_ok=True)
 
 # Descargar el archivo Excel
@@ -76,6 +74,10 @@ print(data_objects[0] == data_objects[1])
 # Sumar y restar objetos
 print(data_objects[0] + data_objects[1])
 print(data_objects[0] - data_objects[1])
+
+# Mostrar la tabla transformada en la consola de manera visual e intuitiva
+print("\nTabla transformada:")
+print(df_transposed.to_string(index=False))
 
 # Ejecución principal del programa
 if __name__ == "__main__":
