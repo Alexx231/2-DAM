@@ -5,9 +5,9 @@ import java.io.File;
 public class ControladorProcesos {
     public void lanzarProcesos() {
 
-        String[] args1 = {"Pepe", "Juan", "Maria", "examen1.txt"};
+        String[] args1 = {"Pepe", "Juan", "Luis", "examen1.txt"};
 
-        String[] args2 = {"Luis", "Ana", "Carlos", "examen2.txt"};
+        String[] args2 = {"Rosa", "Miguel", "Pedro", "examen2.txt"};
 
         Principal.ejecutarConArgumentos(args1);
         Principal.ejecutarConArgumentos(args2);
