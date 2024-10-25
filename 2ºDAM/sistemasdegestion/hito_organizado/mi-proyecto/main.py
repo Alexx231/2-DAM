@@ -8,8 +8,11 @@ from scripts.file_operations import save_concatenated_data
 from scripts.data_statistics import calculate_statistics
 from scripts.data_class import DataRow
 
-# Crear la carpeta 'data' si no existe
-output_dir = 'data'
+# Obtener el directorio actual del archivo main.py
+current_dir = os.path.dirname(os.path.abspath(__file__))
+
+# Crear la carpeta 'data' dentro del directorio del proyecto si no existe
+output_dir = os.path.join(current_dir, 'data')
 os.makedirs(output_dir, exist_ok=True)
 
 # Descargar el archivo Excel
