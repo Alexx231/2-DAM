@@ -1,31 +1,45 @@
 package multitarea;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 public class Examinador implements Runnable {
-    private Thread hilo;
+    private String nombre;
     private BufferExamenes buffer;
+    private List<String> resultados;
 
-    public Thread getHilo() {
-        return hilo;
-    }
-
-    public Examinador(String alumno, BufferExamenes generador) {
-        this.buffer = generador;
-        this.hilo = new Thread(this, alumno);
-        this.hilo.start();
+    public Examinador(String nombre, BufferExamenes buffer) {
+        this.nombre = nombre;
+        this.buffer = buffer;
+        this.resultados = new ArrayList<>();
     }
 
     @Override
     public void run() {
-        String examen = buffer.consumirExamen();
-        for (int i = 1; i <= 10; i++) {
-            System.out.println(examen + ";" + hilo.getName() + "; Pregunta " + i + "; " + generarRespuesta());
+        try {
+            String examen = buffer.consumirExamen();
+            realizarExamen(examen);
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
         }
     }
 
-    private String generarRespuesta() {
-        String[] respuestas = {"A", "B", "C", "D", "-"};
-        return respuestas[(int) (Math.random() * respuestas.length)];
+    private void realizarExamen(String examen) {
+        Random random = new Random();
+        for (int i = 1; i <= 10; i++) {
+            String respuesta = generarRespuestaAleatoria(random);
+            String resultado = String.format("%s;%s; Pregunta %d; %s", examen, nombre, i, respuesta);
+            resultados.add(resultado);
+        }
+    }
+
+    private String generarRespuestaAleatoria(Random random) {
+        String[] opciones = {"A", "B", "C", "D", "-"};
+        return opciones[random.nextInt(opciones.length)];
+    }
+
+    public List<String> getResultados() {
+        return new ArrayList<>(resultados);
     }
 }

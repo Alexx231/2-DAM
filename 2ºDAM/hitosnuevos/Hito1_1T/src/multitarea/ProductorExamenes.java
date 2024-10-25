@@ -8,19 +8,25 @@ public class ProductorExamenes implements Runnable {
     private Thread hilo;
 
     public ProductorExamenes(BufferExamenes buffer) {
-        synchronized (ProductorExamenes.class) {
-            numeroExamen++;
-        }
         this.buffer = buffer;
-        this.hilo = new Thread(this, "E" + numeroExamen);
+        this.hilo = new Thread(this);
         this.hilo.start();
     }
 
     @Override
     public void run() {
-        int aa = LocalDateTime.now().getYear();
-        String codigo = this.hilo.getName() + "-" + aa;
-        buffer.fabricarNuevoExamen(codigo);
-        System.out.println("Producido examen " + codigo);
+        try {
+            synchronized (ProductorExamenes.class) {
+                numeroExamen++;
+                String codigo = "E" + numeroExamen + "-" + java.time.LocalDateTime.now().getYear();
+                buffer.producirExamen(codigo);
+            }
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+        }
+    }
+
+    public Thread getHilo() {
+        return this.hilo;
     }
 }
