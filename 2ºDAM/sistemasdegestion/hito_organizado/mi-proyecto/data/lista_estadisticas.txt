@@ -1,0 +1,13 @@
+Estadísticas por categoría:
+Total industria: Media=27.830044542339696, Varianza=2436.1526161254765, Moda=1.3
+Bienes de consumo: Media=89.74815663685521, Varianza=26681.844155551462, Moda=3.4
+Bienes de consumo duradero: Media=60.07425012236907, Varianza=35248.94858256471, Moda=0.0
+Bienes de consumo no duradero: Media=27.905034508076366, Varianza=2599.9791225735316, Moda=0.7
+Bienes de equipo: Media=32.49543578071464, Varianza=4150.023898425869, Moda=1.9
+Bienes intermedios: Media=29.4301864415076, Varianza=3734.279922342562, Moda=1.2
+Energía: Media=29.631315859030835, Varianza=3070.528135394379, Moda=3.3
+
+Estadísticas globales:
+MEDIA GLOBAL: 42.44491769869906
+VARIANZA GLOBAL: 11131.67949042543
+MODA GLOBAL: 0.0
