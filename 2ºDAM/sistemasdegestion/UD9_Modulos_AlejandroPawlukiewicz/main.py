@@ -1,28 +1,38 @@
 import sqlite3
+import os
 from datetime import datetime
 import matplotlib
-matplotlib.use('Agg')  # Configurar matplotlib para no usar display
+matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 
 class RestauranteConsola:
     def __init__(self):
+        # Eliminar la base de datos si existe
+        if os.path.exists('restaurante.db'):
+            os.remove('restaurante.db')
         self.crear_bd()
         
     def crear_bd(self):
         conn = sqlite3.connect('restaurante.db')
         c = conn.cursor()
+        
+        # Crear tablas
         c.execute('''CREATE TABLE IF NOT EXISTS menu
                     (id INTEGER PRIMARY KEY,
                      nombre TEXT,
                      precio REAL,
                      categoria TEXT)''')
+                     
         c.execute('''CREATE TABLE IF NOT EXISTS pedidos
                     (id INTEGER PRIMARY KEY,
                      nombre TEXT,
                      cantidad INTEGER,
                      fecha TEXT)''')
+        
         conn.commit()
         conn.close()
+        print("Base de datos creada correctamente")
+
 
     def agregar_plato(self, nombre, precio, categoria):
         conn = sqlite3.connect('restaurante.db')
