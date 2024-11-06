@@ -4,9 +4,19 @@ import sqlite3
 from datetime import datetime
 import tkinter as tk
 from tkinter import ttk, messagebox
-import matplotlib
+try:
+    import matplotlib.pyplot as plt
+except ImportError:
+    import subprocess
+    subprocess.check_call(["python", '-m', 'pip', 'install', 'matplotlib'])
+    import matplotlib.pyplot as plt
+try:
+    import matplotlib
+except ImportError:
+    import subprocess
+    subprocess.check_call(["python", '-m', 'pip', 'install', 'matplotlib'])
+    import matplotlib
 matplotlib.use('Agg')
-import matplotlib.pyplot as plt
 
 class RestauranteGUI:
     """Clase que implementa la interfaz gráfica del sistema de gestión de restaurante."""
@@ -92,7 +102,7 @@ class RestauranteGUI:
             conn = sqlite3.connect('restaurante.db')
             c = conn.cursor()
             c.execute("INSERT INTO menu (nombre, precio, categoria) VALUES (?, ?, ?)", 
-                     (nombre, precio, categoria))
+                    (nombre, precio, categoria))
             conn.commit()
             conn.close()
             
@@ -114,7 +124,7 @@ class RestauranteGUI:
             c = conn.cursor()
             fecha = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
             c.execute("INSERT INTO pedidos (nombre, cantidad, fecha) VALUES (?, ?, ?)",
-                     (nombre, cantidad, fecha))
+                    (nombre, cantidad, fecha))
             conn.commit()
             conn.close()
             
