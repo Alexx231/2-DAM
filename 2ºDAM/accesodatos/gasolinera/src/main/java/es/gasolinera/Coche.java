@@ -2,17 +2,22 @@ package es.gasolinera;
 
 
 public class Coche {
-	private String matricula;
-	private String marca;
-	private String modelo;
-	
-	public Coche(String matricula, String marca, String modelo) {
-		super();
-		this.matricula = matricula;
-		this.marca = marca;
-		this.modelo = modelo;
-	}
-
+    private String matricula;
+    private String marca;
+    private String modelo;
+    
+    // Constructor por defecto necesario para Spring
+    public Coche() {
+        super();
+    }
+    
+    // Constructor existente
+    public Coche(String matricula, String marca, String modelo) {
+        super();
+        this.matricula = matricula;
+        this.marca = marca;
+        this.modelo = modelo;
+    }
 
 	public String getMatricula() {
 		return matricula;

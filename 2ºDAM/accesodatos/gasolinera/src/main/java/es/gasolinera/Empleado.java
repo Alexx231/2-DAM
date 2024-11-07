@@ -5,6 +5,10 @@ public class Empleado {
 	private String nombre;
 	private String tlf;
 	private Coche coche;
+
+	public Empleado() {
+        super();
+    }
 	
 	public Empleado(String nombre, String tlf) {
 		super();

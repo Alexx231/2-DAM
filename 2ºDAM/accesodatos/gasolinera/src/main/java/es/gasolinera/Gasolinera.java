@@ -4,6 +4,10 @@ package es.gasolinera;
 public class Gasolinera {
 	private String direccion;
 	private Empleado empleado;
+
+	public Gasolinera() {
+        super();
+    }
 	
 	public Gasolinera(String direccion) {
 		super();
