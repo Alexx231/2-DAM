@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+           http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <!-- Definición del coche -->
+    <bean id="coche" class="es.gasolinera.Coche">
+        <property name="matricula" value="HP-9669"/>
+        <property name="marca" value="Nissan"/>
+        <property name="modelo" value="GTR-3"/>
+    </bean>
+
+    <!-- Definición del empleado -->
+    <bean id="empleado" class="es.gasolinera.Empleado">
+        <property name="nombre" value="Bugs Bonny"/>
+        <property name="tlf" value="555-555-555"/>
+        <property name="coche" ref="coche"/>
+    </bean>
+
+    <!-- Definición de la gasolinera -->
+    <bean id="ACME-1" class="es.gasolinera.Gasolinera">
+        <property name="direccion" value="Coyote Beach"/>
+        <property name="empleado" ref="empleado"/>
+    </bean>
+
+</beans>
