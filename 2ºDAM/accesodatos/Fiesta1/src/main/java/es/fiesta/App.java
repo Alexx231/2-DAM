@@ -17,7 +17,7 @@ public class App {
 		
 		String texto = String.format(
 			"En la fiesta sita en %s, "
-			+ "el fiestero %s "
+			+ "el fiestero es %s "
 			+ "está llegando en un coche con matrícula %s de la marca %s y modelo %s."
 			+ " Para contactar con el fiestero llame al teléfono %s.",
 			fi.getDireccion(),
@@ -32,7 +32,7 @@ public class App {
 		String textoEsperado = 
 			"En la fiesta sita en Humanes, "
 			+ "el fiestero es Alejandro "
-			+ "está llegando en un coche con matrícula 7282 - CML de la marca VW y modelo Passat. "
+			+ "está llegando en un coche con matrícula 7282-CML de la marca VW y modelo Passat. "
 			+ "Para contactar con el fiestero llame al teléfono 555-555-555.";
 
 		

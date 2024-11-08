@@ -2,34 +2,37 @@ package es.fiesta;
 
 
 public class Coche {
-	private Coche matricula;
-	private Coche marca;
-	private Coche modelo;
-	
-	public Coche(Coche matricula, Coche marca, Coche modelo) {
-		super();
-		this.matricula = matricula;
-		this.marca = marca;
-		this.modelo = modelo;
-	}
+    private String matricula;
+    private String marca;
+    private String modelo;
 
+    public Coche(String matricula, String marca, String modelo) {
+        this.matricula = matricula;
+        this.marca = marca;
+        this.modelo = modelo;
+    }
 
-	public Coche getMatricula() {
-		return matricula;
-	}
-	public void setMatricula(Coche matricula) {
-		this.matricula = matricula;
-	}
-	public Coche getMarca() {
-		return marca;
-	}
-	public void setMarca(Coche marca) {
-		this.marca = marca;
-	}
-	public Coche getModelo() {
-		return modelo;
-	}
-	public void setModelo(Coche modelo) {
-		this.modelo = modelo;
-	}
+    public String getMatricula() {
+        return matricula;
+    }
+
+    public void setMatricula(String matricula) {
+        this.matricula = matricula;
+    }
+
+    public String getMarca() {
+        return marca;
+    }
+
+    public void setMarca(String marca) {
+        this.marca = marca;
+    }
+
+    public String getModelo() {
+        return modelo;
+    }
+
+    public void setModelo(String modelo) {
+        this.modelo = modelo;
+    }
 }
