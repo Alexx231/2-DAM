@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans
+    http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <bean id="ACME-1" class="es.fiesta.Fiesta">
+		<constructor-arg index="0" value="Humanes" type="java.lang.String"/>
+		<property name="fiestero" value="fiestero"/>
+	</bean>
+	
+	<bean id="fiestero" class="es.fiesta.Fiestero">
+		<constructor-arg index="0" value="Alejandro" type="java.lang.String"/>
+		<constructor-arg index="1" value="555-555-555" type="java.lang.String"/>
+		<property name="coche" value="coche"/>
+	</bean>
+	
+	<bean id="coche" class="es.fiesta.Coche">
+		<constructor-arg index="0" value="7292-CML" type="java.lang.String"/>
+		<constructor-arg index="1" value="VW" type="java.lang.String"/>
+		<constructor-arg index="2" value="Passat" type="java.lang.String"/>
+	</bean>
+	
+	
+</beans>
