@@ -1,4 +1,4 @@
-import mysql.connector
+# bdd/consultas.py
 import pandas as pd
 from mysql.connector import Error
 
@@ -6,62 +6,164 @@ class ConsultasEncuesta:
     def __init__(self, conexion):
         self.conexion = conexion
 
-    def ordenar_por_campo(self, campo, ascendente=True):
-        """Ordena resultados por cualquier campo"""
+    def ordenar_por_campo(self, campo):
+        """Obtiene todos los registros ordenados por el campo especificado"""
+        # Mapeo de nombres de columnas
+        campo_map = {
+            'fecha': 'idEncuesta',  # Usamos idEncuesta en lugar de fecha
+            'alcohol': 'BebidasSemana',
+            'presion': None,  # No existe esta columna
+            'edad': 'edad',
+            'problemas': 'ProblemasDigestivos'
+        }
+        
+        campo_bd = campo_map.get(campo, campo)
+        if not campo_bd:
+            raise ValueError(f"Campo {campo} no existe en la base de datos")
+            
+        query = f"""
+        SELECT * FROM encuesta 
+        ORDER BY {campo_bd}
+        """
         try:
-            orden = "ASC" if ascendente else "DESC"
-            query = f"SELECT * FROM ENCUESTA ORDER BY {campo} {orden}"
-            return pd.read_sql(query, self.conexion)
+            return pd.read_sql(query, self.conexion.conexion)
         except Error as e:
-            print(f"Error al ordenar: {e}")
-            return None
+            raise Exception(f"Error al ordenar datos: {str(e)}")
 
-    def filtrar_alto_consumo(self, limite_semanal=20):
-        """Filtra encuestados con alto consumo de alcohol"""
+    def insertar_encuesta(self, datos):
+        """Inserta un nuevo registro en la tabla encuesta"""
+        # Obtener el siguiente ID
+        query_id = "SELECT MAX(idEncuesta) FROM encuesta"
+        cursor = self.conexion.conexion.cursor()
+        cursor.execute(query_id)
+        max_id = cursor.fetchone()[0] or 0
+        nuevo_id = max_id + 1
+
         query = """
-        SELECT * FROM ENCUESTA 
-        WHERE BebidasSemana > %s 
-        ORDER BY BebidasSemana DESC
+        INSERT INTO encuesta (
+            idEncuesta, edad, Sexo, BebidasSemana, CervezasSemana,
+            BebidasFinSemana, BebidasDestiladasSemana, VinosSemana,
+            PerdidasControl, DiversionDependenciaAlcohol,
+            ProblemasDigestivos, TensionAlta, DolorCabeza
+        ) VALUES (
+            %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s
+        )
         """
-        return pd.read_sql(query, self.conexion, params=(limite_semanal,))
+        try:
+            valores = (
+                nuevo_id,
+                int(datos['edad']),
+                datos['sexo'],  # Usar el sexo del formulario en lugar del valor por defecto
+                float(datos['alcohol']),
+                0,  # CervezasSemana
+                0,  # BebidasFinSemana
+                0,  # BebidasDestiladasSemana
+                0,  # VinosSemana
+                'No',  # PerdidasControl
+                'No',  # DiversionDependenciaAlcohol
+                datos.get('problemas', 'No'),  # ProblemasDigestivos
+                'No',  # TensionAlta
+                'Nunca'  # DolorCabeza
+            )
+            
+            cursor.execute(query, valores)
+            self.conexion.conexion.commit()
+            return True
+        except Error as e:
+            self.conexion.conexion.rollback()
+            raise Exception(f"Error al insertar datos: {str(e)}")
+        finally:
+            cursor.close()
 
-    def filtrar_perdidas_control(self, minimo_perdidas=3):
-        """Filtra personas con pérdidas de control frecuentes"""
-        query = """
-        SELECT * FROM ENCUESTA 
-        WHERE PerdidasControl > %s 
-        ORDER BY PerdidasControl DESC
-        """
-        return pd.read_sql(query, self.conexion, params=(minimo_perdidas,))
-
-    def filtrar_problemas_salud(self, problema):
-        """Filtra por problema de salud específico"""
-        query = """
-        SELECT * FROM ENCUESTA 
-        WHERE ProblemasDigestivos = 'Sí' 
-        OR TensionAlta = 'Sí' 
-        OR DolorCabeza = 'Muy a menudo'
-        """
-        return pd.read_sql(query, self.conexion)
-
-    def obtener_estadisticas_consumo(self):
-        """Obtiene estadísticas generales de consumo"""
+    def obtener_tendencia_temporal(self):
+        """Obtiene la tendencia del consumo por edad"""
         query = """
         SELECT 
-            AVG(BebidasSemana) as promedio_bebidas,
-            MAX(BebidasSemana) as maximo_bebidas,
-            AVG(PerdidasControl) as promedio_perdidas,
-            COUNT(CASE WHEN ProblemasDigestivos = 'Sí' THEN 1 END) as total_problemas_digestivos,
-            COUNT(CASE WHEN TensionAlta = 'Sí' THEN 1 END) as total_tension_alta
-        FROM ENCUESTA
+            edad,
+            AVG(BebidasSemana) as consumo_semanal,
+            AVG(BebidasFinSemana) as consumo_finde
+        FROM encuesta
+        GROUP BY edad
+        ORDER BY edad
         """
-        return pd.read_sql(query, self.conexion)
+        return pd.read_sql(query, self.conexion.conexion)
+
+    def obtener_estadisticas_consumo(self):
+        """Obtiene estadísticas detalladas de consumo"""
+        query = """
+        SELECT 
+            edad,
+            Sexo,
+            AVG(BebidasSemana) as promedio_semanal,
+            AVG(CervezasSemana) as promedio_cerveza,
+            AVG(BebidasFinSemana) as promedio_finde,
+            AVG(BebidasDestiladasSemana) as promedio_destiladas,
+            AVG(VinosSemana) as promedio_vinos,
+            COUNT(*) as total_registros
+        FROM encuesta
+        GROUP BY edad, Sexo
+        ORDER BY edad, Sexo
+        """
+        return pd.read_sql(query, self.conexion.conexion)
+
+    def filtrar_alto_consumo(self, limite=20):
+        """Filtra registros con alto consumo de alcohol"""
+        query = """
+        SELECT * FROM encuesta 
+        WHERE BebidasSemana > %s 
+           OR BebidasFinSemana > %s
+           OR CervezasSemana > %s
+           OR BebidasDestiladasSemana > %s
+           OR VinosSemana > %s
+        ORDER BY BebidasSemana DESC, BebidasFinSemana DESC
+        """
+        params = (limite,) * 5
+        return pd.read_sql(query, self.conexion.conexion, params=params)
+
+    def filtrar_problemas_salud(self):
+        """Analiza problemas de salud relacionados con el consumo"""
+        query = """
+        SELECT 
+            Sexo,
+            SUM(CASE WHEN ProblemasDigestivos = 'Sí' THEN 1 ELSE 0 END) as problemas_digestivos,
+            SUM(CASE WHEN TensionAlta = 'Sí' THEN 1 ELSE 0 END) as tension_alta,
+            SUM(CASE WHEN DolorCabeza IN ('A menudo', 'Muy a menudo') THEN 1 ELSE 0 END) as dolor_cabeza_frecuente,
+            AVG(BebidasSemana) as promedio_consumo_semanal,
+            COUNT(*) as total_casos
+        FROM encuesta
+        GROUP BY Sexo
+        """
+        return pd.read_sql(query, self.conexion.conexion)
+
+    def obtener_correlacion_salud_consumo(self):
+        """Analiza la correlación entre consumo y problemas de salud"""
+        query = """
+        SELECT 
+            CASE 
+                WHEN BebidasSemana = 0 THEN 'No consume'
+                WHEN BebidasSemana <= 5 THEN 'Consumo bajo'
+                WHEN BebidasSemana <= 15 THEN 'Consumo moderado'
+                ELSE 'Consumo alto'
+            END as nivel_consumo,
+            COUNT(*) as total_personas,
+            SUM(CASE WHEN ProblemasDigestivos = 'Sí' THEN 1 ELSE 0 END) as casos_digestivos,
+            SUM(CASE WHEN TensionAlta = 'Sí' THEN 1 ELSE 0 END) as casos_tension,
+            SUM(CASE WHEN DolorCabeza IN ('A menudo', 'Muy a menudo') THEN 1 ELSE 0 END) as casos_dolor_cabeza
+        FROM encuesta
+        GROUP BY 
+            CASE 
+                WHEN BebidasSemana = 0 THEN 'No consume'
+                WHEN BebidasSemana <= 5 THEN 'Consumo bajo'
+                WHEN BebidasSemana <= 15 THEN 'Consumo moderado'
+                ELSE 'Consumo alto'
+            END
+        """
+        return pd.read_sql(query, self.conexion.conexion)
 
     def exportar_a_excel(self, df, nombre_archivo):
-        """Exporta resultados a Excel"""
+        """Exporta un DataFrame a Excel"""
         try:
             df.to_excel(nombre_archivo, index=False)
-            print(f"Datos exportados exitosamente a {nombre_archivo}")
             return True
         except Exception as e:
             print(f"Error al exportar: {e}")

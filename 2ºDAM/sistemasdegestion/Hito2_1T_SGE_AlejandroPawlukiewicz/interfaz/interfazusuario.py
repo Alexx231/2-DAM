@@ -1,106 +1,264 @@
+# interfazusuario.py
 import tkinter as tk
 from tkinter import ttk, messagebox
 import matplotlib.pyplot as plt
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
+from datetime import datetime
 
 class InterfazSaludAlcohol:
-    def __init__(self):
-        self.ventana = tk.Tk()
-        self.ventana.title("Sistema de Monitoreo de Salud - Dr. Fernando")
-        self.ventana.geometry("800x600")
+    def __init__(self, root):
+        self.root = root
+        self.root.title("Sistema de Monitoreo de Salud")
         
-        # Crear el menú principal
-        self.menu_principal = tk.Menu(self.ventana)
-        self.ventana.config(menu=self.menu_principal)
+        # Inicializar callbacks
+        self._registrar_callback = None
+        self._visualizar_callback = None
+        self._estadisticas_callback = None
+        self._exportar_callback = None
+        
+        # Crear componentes principales
+        self.crear_notebook()
+        self.crear_menu()
+        self.crear_panel_registro()
+        self.crear_panel_visualizacion()
+        self.crear_panel_estadisticas()
+
+    def crear_notebook(self):
+        self.notebook = ttk.Notebook(self.root)
+        self.notebook.pack(fill='both', expand=True)
+        
+        self.tab_registro = ttk.Frame(self.notebook)
+        self.tab_visualizacion = ttk.Frame(self.notebook)
+        self.tab_estadisticas = ttk.Frame(self.notebook)
+        
+        self.notebook.add(self.tab_registro, text='Registro')
+        self.notebook.add(self.tab_visualizacion, text='Visualización')
+        self.notebook.add(self.tab_estadisticas, text='Estadísticas')
+
+    def crear_menu(self):
+        menu_bar = tk.Menu(self.root)
+        self.root.config(menu=menu_bar)
         
         # Menú Archivo
-        menu_archivo = tk.Menu(self.menu_principal, tearoff=0)
-        self.menu_principal.add_cascade(label="Archivo", menu=menu_archivo)
-        menu_archivo.add_command(label="Guardar Datos", command=self.guardar_datos)
-        menu_archivo.add_command(label="Cargar Datos", command=self.cargar_datos)
-        menu_archivo.add_separator()
-        menu_archivo.add_command(label="Salir", command=self.ventana.quit)
+        file_menu = tk.Menu(menu_bar, tearoff=0)
+        menu_bar.add_cascade(label="Archivo", menu=file_menu)
+        file_menu.add_command(label="Exportar a Excel", 
+                            command=lambda: self._exportar_callback("excel") if self._exportar_callback else None)
+        file_menu.add_separator()
+        file_menu.add_command(label="Salir", command=self.root.quit)
         
-        # Crear notebook para pestañas
-        self.notebook = ttk.Notebook(self.ventana)
-        
-        # Pestaña de Registro de Datos
-        self.tab_registro = ttk.Frame(self.notebook)
-        self.notebook.add(self.tab_registro, text="Registro de Datos")
-        self.crear_panel_registro()
-        
-        # Pestaña de Visualización
-        self.tab_visualizacion = ttk.Frame(self.notebook)
-        self.notebook.add(self.tab_visualizacion, text="Visualización")
-        self.crear_panel_visualizacion()
-        
-        # Pestaña de Estadísticas
-        self.tab_estadisticas = ttk.Frame(self.notebook)
-        self.notebook.add(self.tab_estadisticas, text="Estadísticas")
-        self.crear_panel_estadisticas()
-        
-        self.notebook.pack(expand=True, fill='both')
-    
+        # Menú Consultas
+        query_menu = tk.Menu(menu_bar, tearoff=0)
+        menu_bar.add_cascade(label="Consultas", menu=query_menu)
+        query_menu.add_command(label="Ver Estadísticas", 
+                             command=lambda: self._on_estadisticas())
+
     def crear_panel_registro(self):
-        # Frame para entrada de datos
         frame_entrada = ttk.LabelFrame(self.tab_registro, text="Registro de Consumo y Salud")
-        frame_entrada.pack(padx=10, pady=10, fill='x')
+        frame_entrada.pack(padx=10, pady=10, fill='both', expand=True)
         
-        # Campos de entrada
-        ttk.Label(frame_entrada, text="Fecha:").grid(row=0, column=0, padx=5, pady=5)
+        # Añadir ComboBox para el sexo
         self.entrada_fecha = ttk.Entry(frame_entrada)
-        self.entrada_fecha.grid(row=0, column=1, padx=5, pady=5)
-        
-        ttk.Label(frame_entrada, text="Consumo de Alcohol (ml):").grid(row=1, column=0, padx=5, pady=5)
         self.entrada_alcohol = ttk.Entry(frame_entrada)
-        self.entrada_alcohol.grid(row=1, column=1, padx=5, pady=5)
-        
-        ttk.Label(frame_entrada, text="Presión Arterial:").grid(row=2, column=0, padx=5, pady=5)
         self.entrada_presion = ttk.Entry(frame_entrada)
-        self.entrada_presion.grid(row=2, column=1, padx=5, pady=5)
+        self.entrada_edad = ttk.Entry(frame_entrada)
+        self.entrada_sexo = ttk.Combobox(frame_entrada, values=['Hombre', 'Mujer'], state='readonly')
+        self.entrada_problemas = ttk.Entry(frame_entrada)
         
-        # Botón de registro
-        ttk.Button(frame_entrada, text="Registrar Datos", 
-                  command=self.registrar_datos).grid(row=3, column=0, columnspan=2, pady=10)
+        # Establecer valor por defecto para sexo
+        self.entrada_sexo.set('Hombre')
+        
+        campos = [
+            ("Fecha (YYYY-MM-DD):", self.entrada_fecha),
+            ("Sexo:", self.entrada_sexo),
+            ("Consumo de Alcohol (ml):", self.entrada_alcohol),
+            ("Presión Arterial (120/80):", self.entrada_presion),
+            ("Edad:", self.entrada_edad),
+            ("Problemas de Salud:", self.entrada_problemas)
+        ]
+        
+        for i, (label, entry) in enumerate(campos):
+            ttk.Label(frame_entrada, text=label).grid(row=i, column=0, padx=5, pady=5, sticky='e')
+            entry.grid(row=i, column=1, padx=5, pady=5, sticky='ew')
+
+        ttk.Button(frame_entrada, text="Registrar Datos",
+                command=self._on_registrar).grid(row=len(campos), column=0, 
+                                                columnspan=2, pady=10)
 
     def crear_panel_visualizacion(self):
-        # Frame para gráficos
-        self.frame_grafico = ttk.Frame(self.tab_visualizacion)
-        self.frame_grafico.pack(expand=True, fill='both')
+        self.frame_grafico = ttk.LabelFrame(self.tab_visualizacion, text="Gráficos")
+        self.frame_grafico.pack(padx=10, pady=10, fill='both', expand=True)
         
-        # Aquí se agregará el gráfico dinámicamente
-        self.figura = plt.Figure(figsize=(6, 4))
+        self.figura = plt.Figure(figsize=(10, 6))
         self.canvas = FigureCanvasTkAgg(self.figura, self.frame_grafico)
         self.canvas.get_tk_widget().pack(side=tk.TOP, fill=tk.BOTH, expand=1)
+        
+        ttk.Button(self.frame_grafico, text="Actualizar Gráficos",
+                command=self._on_visualizar).pack(pady=5)
 
     def crear_panel_estadisticas(self):
-        # Frame para estadísticas
-        frame_stats = ttk.LabelFrame(self.tab_estadisticas, text="Resumen Estadístico")
-        frame_stats.pack(padx=10, pady=10, fill='both', expand=True)
+        self.frame_estadisticas = ttk.LabelFrame(self.tab_estadisticas, text="Estadísticas")
+        self.frame_estadisticas.pack(padx=10, pady=10, fill='both', expand=True)
         
-        # Árbol de datos
-        self.tree = ttk.Treeview(frame_stats, columns=("Valor"), show='headings')
-        self.tree.heading("Valor", text="Valor")
-        self.tree.pack(padx=5, pady=5, fill='both', expand=True)
+        ttk.Button(self.frame_estadisticas, text="Actualizar Estadísticas",
+                command=self._on_estadisticas).pack(pady=5)
 
-    def registrar_datos(self):
+    def registrar_callback(self, callback):
+        self._registrar_callback = callback
+
+    def visualizar_callback(self, callback):
+        self._visualizar_callback = callback
+
+    def estadisticas_callback(self, callback):
+        self._estadisticas_callback = callback
+
+    def exportar_callback(self, callback):
+        self._exportar_callback = callback
+
+    def _on_registrar(self):
+        if self._registrar_callback:
+            datos = self.obtener_datos_formulario()
+    
+
+    def _on_visualizar(self):
+        if self._visualizar_callback:
+            self._visualizar_callback()
+
+    def _on_estadisticas(self):
+        if self._estadisticas_callback:
+            self._estadisticas_callback()
+            
+    def obtener_datos_formulario(self):
+        """
+        Obtains data from the form fields and returns it as a dictionary.
+        Returns:
+            dict: Dictionary containing the form data with keys: fecha, alcohol, presion, edad, problemas
+        """
+        datos = {
+            'fecha': self.entrada_fecha.get(),
+            'sexo': self.entrada_sexo.get(),
+            'alcohol': self.entrada_alcohol.get(),
+            'presion': self.entrada_presion.get(),
+            'edad': self.entrada_edad.get(),
+            'problemas': self.entrada_problemas.get()
+        }
+        if self._registrar_callback:
+            if self._registrar_callback(datos):
+                self.limpiar_formulario()
+        return datos
+
+    def validar_datos(self, datos):
+        if not all(datos.values()):
+            messagebox.showwarning("Error", "Todos los campos son requeridos")
+            return False
         try:
-            # Aquí iría la lógica para guardar los datos
-            messagebox.showinfo("Éxito", "Datos registrados correctamente")
+            datetime.strptime(datos['fecha'], '%Y-%m-%d')
+            float(datos['alcohol'])
+            int(datos['edad'])
+            if not '/' in datos['presion']:
+                raise ValueError("Formato de presión inválido")
+            return True
+        except ValueError as e:
+            messagebox.showerror("Error", f"Error de validación: {str(e)}")
+            return False
+
+    def limpiar_formulario(self):
+        """Limpia todos los campos del formulario"""
+        for attr in ['entrada_fecha', 'entrada_alcohol', 'entrada_presion', 
+                    'entrada_edad', 'entrada_problemas']:
+            if hasattr(self, attr):
+                getattr(self, attr).delete(0, tk.END)
+        # Resetear sexo al valor por defecto
+        if hasattr(self, 'entrada_sexo'):
+            self.entrada_sexo.set('Hombre')
+            
+    def actualizar_grafico(self, figura):
+        """Actualiza el gráfico en la interfaz"""
+        try:
+            # Limpiar gráfico anterior si existe
+            if hasattr(self, 'canvas'):
+                self.canvas.get_tk_widget().destroy()
+            
+            # Crear nuevo canvas con la figura
+            self.canvas = FigureCanvasTkAgg(figura, self.frame_grafico)
+            self.canvas.draw()
+            self.canvas.get_tk_widget().pack(side=tk.TOP, fill=tk.BOTH, expand=1)
+            
         except Exception as e:
-            messagebox.showerror("Error", f"Error al registrar datos: {str(e)}")
+            print(f"Error al actualizar gráfico: {str(e)}")
+            messagebox.showerror("Error", "No se pudo actualizar el gráfico")
 
-    def guardar_datos(self):
-        # Implementar guardado de datos
-        pass
+    def actualizar_estadisticas(self, stats, alto_consumo):
+        """Actualiza las estadísticas mostradas en la interfaz"""
+        try:
+            # Limpiar widgets anteriores
+            for widget in self.frame_estadisticas.winfo_children():
+                widget.destroy()
+    
+            # Crear frame para estadísticas
+            frame_stats = ttk.LabelFrame(self.frame_estadisticas, text="Estadísticas Generales")
+            frame_stats.pack(padx=10, pady=5, fill='both', expand=True)
+    
+            # Mostrar estadísticas generales
+            estadisticas = {
+                'Promedio Bebidas/Semana': stats['promedio_semanal'].mean(),
+                'Promedio Cervezas/Semana': stats['promedio_cerveza'].mean(),
+                'Promedio Bebidas Fin de Semana': stats['promedio_finde'].mean(),
+                'Promedio Destiladas/Semana': stats['promedio_destiladas'].mean(),
+                'Promedio Vinos/Semana': stats['promedio_vinos'].mean(),
+                'Total Registros': stats['total_registros'].sum()
+            }
+    
+            # Mostrar cada estadística
+            for i, (label, value) in enumerate(estadisticas.items()):
+                ttk.Label(frame_stats, text=f"{label}:").grid(row=i, column=0, padx=5, pady=2, sticky='e')
+                ttk.Label(frame_stats, text=f"{value:.2f}").grid(row=i, column=1, padx=5, pady=2, sticky='w')
+    
+            # Frame para casos de alto consumo
+            if not alto_consumo.empty:
+                frame_alto = ttk.LabelFrame(self.frame_estadisticas, text="Casos de Alto Consumo")
+                frame_alto.pack(padx=10, pady=5, fill='both', expand=True)
+    
+                # Crear Treeview para mostrar casos de alto consumo
+                tree = ttk.Treeview(frame_alto, columns=('Edad', 'Sexo', 'Bebidas', 'Fin Semana'), 
+                                   show='headings', height=5)
+                
+                # Configurar columnas
+                tree.heading('Edad', text='Edad')
+                tree.heading('Sexo', text='Sexo')
+                tree.heading('Bebidas', text='Bebidas/Semana')
+                tree.heading('Fin Semana', text='Bebidas Fin Semana')
+    
+                # Configurar ancho de columnas
+                for col in tree['columns']:
+                    tree.column(col, width=100, anchor='center')
+    
+                # Insertar datos
+                for _, row in alto_consumo.iterrows():
+                    tree.insert('', 'end', values=(
+                        row['edad'],
+                        row['Sexo'],
+                        f"{row['BebidasSemana']:.1f}",
+                        f"{row['BebidasFinSemana']:.1f}"
+                    ))
+    
+                # Agregar scrollbar
+                scrollbar = ttk.Scrollbar(frame_alto, orient='vertical', command=tree.yview)
+                tree.configure(yscrollcommand=scrollbar.set)
+    
+                # Empaquetar Treeview y scrollbar
+                tree.pack(side='left', fill='both', expand=True)
+                scrollbar.pack(side='right', fill='y')
+    
+            # Botón para actualizar
+            ttk.Button(self.frame_estadisticas, text="Actualizar Estadísticas",
+                      command=self._on_estadisticas).pack(pady=10)
+    
+        except Exception as e:
+            print(f"Error al actualizar estadísticas: {str(e)}")
+            messagebox.showerror("Error", 
+                               f"Error al actualizar estadísticas: {str(e)}")
+            raise
 
-    def cargar_datos(self):
-        # Implementar carga de datos
-        pass
-
-    def ejecutar(self):
-        self.ventana.mainloop()
-
-if __name__ == "__main__":
-    app = InterfazSaludAlcohol()
-    app.ejecutar()
+    def mostrar_mensaje(self, titulo, mensaje):
+        messagebox.showinfo(titulo, mensaje)
