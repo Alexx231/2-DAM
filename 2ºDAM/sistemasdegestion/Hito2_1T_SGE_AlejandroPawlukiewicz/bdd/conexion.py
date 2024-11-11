@@ -8,8 +8,8 @@ class ConexionBD:
             self.conexion = mysql.connector.connect(
                 host='localhost',
                 user='root',
-                password='tu_password',
-                database='clinica_db'
+                password='Tcachuk93',
+                database='encuestas'
             )
             if self.conexion.is_connected():
                 print("Conexión exitosa a MySQL")
