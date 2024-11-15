@@ -17,6 +17,16 @@ class InterfazSaludAlcohol:
         self.entrada_alcohol = None
         self.entrada_presion = None
         self.entrada_problemas = None
+        self.entrada_bebidas_semana = None
+        self.entrada_cervezas = None
+        self.entrada_finde = None
+        self.entrada_destiladas = None
+        self.entrada_vinos = None
+        self.entrada_perdidas_control = None
+        self.entrada_diversion_alcohol = None
+        self.entrada_problemas_digestivos = None
+        self.entrada_tension_alta = None
+        self.entrada_dolor_cabeza = None
         
         # Inicializar callbacks
         self._registrar_callback = None
@@ -98,209 +108,182 @@ class InterfazSaludAlcohol:
         """Crea un panel de registro mejorado y más intuitivo"""
         frame_principal = ttk.Frame(self.tab_registro, style="Custom.TLabelframe")
         frame_principal.pack(padx=30, pady=20, fill='both', expand=True)
-
+        
         # Título principal
         titulo = ttk.Label(frame_principal, 
                         text="REGISTRO DE PACIENTE",
                         style="Title.TLabel")
         titulo.pack(pady=(0, 20))
-
-        # Frame para datos personales con diseño mejorado
-        frame_personal = ttk.LabelFrame(frame_principal, 
-                                    text="Datos Personales",
-                                    style="Custom.TLabelframe")
-        frame_personal.pack(fill='x', padx=20, pady=10)
-
-        # Grid para datos personales
-        frame_grid_personal = ttk.Frame(frame_personal)
-        frame_grid_personal.pack(padx=15, pady=15)
-
-        # Campos mejorados
-        campos_personales = [
-            ("Fecha:", "entrada_fecha", 15, "(YYYY-MM-DD)"),
-            ("Edad:", "entrada_edad", 5, "años"),
-            ("Sexo:", "entrada_sexo", 10, None)
-        ]
+    
+        # Sección de datos personales
+        frame_datos = ttk.LabelFrame(frame_principal, text="Datos Personales")
+        frame_datos.pack(fill='x', padx=20, pady=10)
         
-            # Campos de consumo
+        frame_grid = ttk.Frame(frame_datos)
+        frame_grid.pack(padx=15, pady=15)
+        
+        # Datos Personales
+        ttk.Label(frame_grid, text="Fecha:").grid(row=0, column=0, padx=10, pady=8, sticky='e')
+        self.entrada_fecha = ttk.Entry(frame_grid, width=15)
+        self.entrada_fecha.grid(row=0, column=1, padx=10, pady=8, sticky='w')
+        ttk.Label(frame_grid, text="(YYYY-MM-DD)", foreground="gray").grid(row=0, column=2, pady=8, sticky='w')
+        
+        ttk.Label(frame_grid, text="Edad:").grid(row=1, column=0, padx=10, pady=8, sticky='e')
+        self.entrada_edad = ttk.Entry(frame_grid, width=5)
+        self.entrada_edad.grid(row=1, column=1, padx=10, pady=8, sticky='w')
+        ttk.Label(frame_grid, text="años", foreground="gray").grid(row=1, column=2, pady=8, sticky='w')
+        
+        ttk.Label(frame_grid, text="Sexo:").grid(row=2, column=0, padx=10, pady=8, sticky='e')
+        self.entrada_sexo = ttk.Combobox(frame_grid, values=["Hombre", "Mujer"], state='readonly')
+        self.entrada_sexo.grid(row=2, column=1, padx=10, pady=8, sticky='w')
+        self.entrada_sexo.set("Hombre")
+    
+        # Sección de Consumo de Alcohol
+        frame_consumo = ttk.LabelFrame(frame_principal, text="Consumo de Alcohol")
+        frame_consumo.pack(fill='x', padx=20, pady=10)
+        frame_grid_consumo = ttk.Frame(frame_consumo)
+        frame_grid_consumo.pack(padx=15, pady=15)
+    
+        # Campos de Consumo
         campos_consumo = [
-            ("Bebidas por Semana:", "entrada_bebidas_semana", 10, "unidades"),
-            ("Cervezas por Semana:", "entrada_cervezas", 10, "unidades"),
-            ("Bebidas Fin de Semana:", "entrada_finde", 10, "unidades"),
-            ("Bebidas Destiladas:", "entrada_destiladas", 10, "unidades"),
-            ("Vinos por Semana:", "entrada_vinos", 10, "unidades")
+            ("Bebidas por Semana:", "bebidas_semana", 5),
+            ("Cervezas por Semana:", "cervezas", 5),
+            ("Bebidas Fin de Semana:", "finde", 5),
+            ("Bebidas Destiladas:", "destiladas", 5),
+            ("Vinos por Semana:", "vinos", 5)
         ]
-
-        # Campos de salud
-        campos_salud = [
-            ("Pérdidas de Control:", "entrada_perdidas_control", ["Sí", "No"]),
-            ("Diversión Depende del Alcohol:", "entrada_diversion_alcohol", ["Sí", "No"]),
-            ("Problemas Digestivos:", "entrada_problemas_digestivos", ["Sí", "No"]),
-            ("Tensión Alta:", "entrada_tension_alta", ["Sí", "No"]),
-            ("Frecuencia Dolor de Cabeza:", "entrada_dolor_cabeza", 
-            ["Nunca", "Raramente", "A menudo", "Muy a menudo"])
-        ]
-
-        # Crear y organizar campos
-        self._crear_seccion_campos("Datos Personales", campos_personales, frame_principal)
-        self._crear_seccion_campos("Datos de Consumo", campos_consumo, frame_principal)
-        self._crear_seccion_campos("Datos de Salud", campos_salud, frame_principal)
-
-        for i, (label, attr, width, hint) in enumerate(campos_personales):
-            ttk.Label(frame_grid_personal, text=label).grid(row=i, column=0, padx=10, pady=8, sticky='e')
-            
-            if attr == "entrada_sexo":
-                setattr(self, attr, ttk.Combobox(frame_grid_personal, 
-                                            values=['Hombre', 'Mujer'],
-                                            state='readonly',
-                                            width=width,
-                                            style="Custom.TCombobox"))
-                getattr(self, attr).set('Hombre')
-            else:
-                setattr(self, attr, ttk.Entry(frame_grid_personal, 
-                                            width=width,
-                                            style="Custom.TEntry"))
-            
-            getattr(self, attr).grid(row=i, column=1, padx=10, pady=8, sticky='w')
-            
-            if hint:
-                ttk.Label(frame_grid_personal, 
-                        text=hint,
-                        foreground="gray").grid(row=i, column=2, padx=5, pady=8, sticky='w')
-
-        # Frame para datos de salud
-        frame_salud = ttk.LabelFrame(frame_principal, 
-                                    text="Datos de Salud",
-                                    style="Custom.TLabelframe")
+    
+        for i, (label, nombre, width) in enumerate(campos_consumo):
+            ttk.Label(frame_grid_consumo, text=label).grid(row=i, column=0, padx=10, pady=8, sticky='e')
+            setattr(self, f'entrada_{nombre}', ttk.Entry(frame_grid_consumo, width=width))
+            getattr(self, f'entrada_{nombre}').grid(row=i, column=1, padx=10, pady=8, sticky='w')
+            ttk.Label(frame_grid_consumo, text="unidades", foreground="gray").grid(row=i, column=2, pady=8, sticky='w')
+    
+        # Sección de Salud
+        frame_salud = ttk.LabelFrame(frame_principal, text="Datos de Salud")
         frame_salud.pack(fill='x', padx=20, pady=10)
-
-        # Grid para datos de salud
         frame_grid_salud = ttk.Frame(frame_salud)
         frame_grid_salud.pack(padx=15, pady=15)
-
-        # Campos de salud mejorados
-        self.entrada_alcohol = ttk.Entry(frame_grid_salud, 
-                                    width=10,
-                                    style="Custom.TEntry")
-        self.entrada_presion = ttk.Entry(frame_grid_salud, 
-                                        width=10,
-                                        style="Custom.TEntry")
-        self.entrada_problemas = tk.Text(frame_grid_salud, 
-                                        height=3, 
-                                        width=30,
-                                        font=("Segoe UI", 10),
-                                        bg="white",
-                                        relief="flat")
-
-        # Grid layout mejorado
+    
+        # Campos de Salud
         campos_salud = [
-            ("Consumo de Alcohol:", self.entrada_alcohol, "ml/semana"),
-            ("Presión Arterial:", self.entrada_presion, "(120/80)"),
-            ("Problemas de Salud:", self.entrada_problemas, None)
+            ("Pérdidas de Control:", "perdidas_control", ["Sí", "No"]),
+            ("Diversión Depende del Alcohol:", "diversion_alcohol", ["Sí", "No"]),
+            ("Problemas Digestivos:", "problemas_digestivos", ["Sí", "No"]),
+            ("Tensión Alta:", "tension_alta", ["Sí", "No"]),
+            ("Frecuencia Dolor de Cabeza:", "dolor_cabeza", 
+             ["Nunca", "Raramente", "A menudo", "Muy a menudo"])
         ]
-
-        for i, (label, widget, hint) in enumerate(campos_salud):
+    
+        for i, (label, nombre, opciones) in enumerate(campos_salud):
             ttk.Label(frame_grid_salud, text=label).grid(row=i, column=0, padx=10, pady=8, sticky='e')
-            widget.grid(row=i, column=1, padx=10, pady=8, sticky='w')
-            if hint:
-                ttk.Label(frame_grid_salud, 
-                        text=hint,
-                        foreground="gray").grid(row=i, column=2, padx=5, pady=8, sticky='w')
-
+            setattr(self, f'entrada_{nombre}', ttk.Combobox(frame_grid_salud, values=opciones, state='readonly'))
+            getattr(self, f'entrada_{nombre}').grid(row=i, column=1, padx=10, pady=8, sticky='w')
+            getattr(self, f'entrada_{nombre}').set(opciones[0])
+    
         # Frame para botones
         frame_botones = ttk.Frame(frame_principal)
         frame_botones.pack(pady=25)
-
+        
         # Botones mejorados
         ttk.Button(frame_botones,
                 text="Limpiar Formulario",
                 style="Secondary.TButton",
                 command=self.limpiar_formulario).pack(side='left', padx=15)
-
         ttk.Button(frame_botones,
                 text="Registrar Paciente",
                 style="Primary.TButton",
                 command=self._on_registrar).pack(side='left', padx=15)
-
-        # Configurar validación
+    
+        # Configurar validación después de crear todos los widgets
         self._configurar_validacion()
         
     def _configurar_validacion(self):
         """Configura la validación de campos con feedback mejorado"""
-        
-        def validar_fecha(event):
-            try:
-                fecha = self.entrada_fecha.get()
-                if not fecha:
-                    self.entrada_fecha.configure(style='Warning.TEntry')
-                    self._mostrar_tooltip(self.entrada_fecha, "La fecha es obligatoria")
-                    return
-                    
-                fecha_obj = datetime.strptime(fecha, '%Y-%m-%d')
-                if fecha_obj > datetime.now():
-                    raise ValueError("La fecha no puede ser futura")
-                    
-                self.entrada_fecha.configure(style='Valid.TEntry')
-                self._ocultar_tooltip(self.entrada_fecha)
-                
-            except ValueError as e:
-                self.entrada_fecha.configure(style='Error.TEntry')
-                self._mostrar_tooltip(self.entrada_fecha, "Formato inválido (YYYY-MM-DD)")
+        try:
+            # Configurar estilos de validación
+            style = ttk.Style()
+            style.configure('Error.TEntry',
+                        fieldbackground='#ffd1d1',
+                        bordercolor='#ff0000')
+            style.configure('Warning.TEntry',
+                        fieldbackground='#fff3cd',
+                        bordercolor='#ffeeba')
+            style.configure('Valid.TEntry',
+                        fieldbackground='#d4edda',
+                        bordercolor='#c3e6cb')
     
-        def validar_edad(event):
-            try:
-                edad = self.entrada_edad.get()
-                if not edad:
-                    self.entrada_edad.configure(style='Warning.TEntry')
-                    self._mostrar_tooltip(self.entrada_edad, "La edad es obligatoria")
-                    return
-                    
-                edad = int(edad)
-                if not (0 <= edad <= 120):
-                    raise ValueError("Edad fuera de rango")
-                    
-                self.entrada_edad.configure(style='Valid.TEntry')
-                self._ocultar_tooltip(self.entrada_edad)
-                
-            except ValueError:
-                self.entrada_edad.configure(style='Error.TEntry')
-                self._mostrar_tooltip(self.entrada_edad, "Edad inválida (0-120)")
+            # Función genérica para validar campos numéricos
+            def validar_numerico(widget, min_val=0, max_val=None, mensaje=""):
+                def _validar(event):
+                    try:
+                        valor = widget.get().strip()
+                        if not valor:
+                            widget.configure(style='Warning.TEntry')
+                            self._mostrar_tooltip(widget, "Campo requerido")
+                            return False
+                            
+                        valor = float(valor)
+                        if valor < min_val or (max_val and valor > max_val):
+                            raise ValueError(f"Valor fuera de rango ({min_val}-{max_val if max_val else 'inf'})")
+                            
+                        widget.configure(style='Valid.TEntry')
+                        self._ocultar_tooltip(widget)
+                        return True
+                        
+                    except ValueError:
+                        widget.configure(style='Error.TEntry')
+                        self._mostrar_tooltip(widget, mensaje)
+                        return False
+                return _validar
     
-        def validar_alcohol(event):
-            try:
-                cantidad = self.entrada_alcohol.get()
-                if not cantidad:
-                    self.entrada_alcohol.configure(style='Warning.TEntry')
-                    self._mostrar_tooltip(self.entrada_alcohol, "El consumo es obligatorio")
-                    return
+            # Función para validar fecha
+            def validar_fecha(event):
+                try:
+                    fecha = self.entrada_fecha.get().strip()
+                    if not fecha:
+                        self.entrada_fecha.configure(style='Warning.TEntry')
+                        self._mostrar_tooltip(self.entrada_fecha, "La fecha es obligatoria")
+                        return
+                        
+                    datetime.strptime(fecha, '%Y-%m-%d')
+                    self.entrada_fecha.configure(style='Valid.TEntry')
+                    self._ocultar_tooltip(self.entrada_fecha)
                     
-                cantidad = float(cantidad)
-                if cantidad < 0:
-                    raise ValueError("Cantidad negativa")
-                    
-                self.entrada_alcohol.configure(style='Valid.TEntry')
-                self._ocultar_tooltip(self.entrada_alcohol)
-                
-            except ValueError:
-                self.entrada_alcohol.configure(style='Error.TEntry')
-                self._mostrar_tooltip(self.entrada_alcohol, "Cantidad inválida")
+                except ValueError:
+                    self.entrada_fecha.configure(style='Error.TEntry')
+                    self._mostrar_tooltip(self.entrada_fecha, "Formato inválido (YYYY-MM-DD)")
     
-        # Configurar estilos de validación
-        style = ttk.Style()
-        style.configure('Error.TEntry',
-                       fieldbackground='#ffd1d1',
-                       bordercolor='#ff0000')
-        style.configure('Warning.TEntry',
-                       fieldbackground='#fff3cd',
-                       bordercolor='#ffeeba')
-        style.configure('Valid.TEntry',
-                       fieldbackground='#d4edda',
-                       bordercolor='#c3e6cb')
+            # Configurar validaciones solo si los widgets existen
+            widgets_validacion = {
+                'entrada_fecha': (validar_fecha, None),
+                'entrada_edad': (validar_numerico, {'min_val': 0, 'max_val': 120, 'mensaje': "Edad inválida (0-120)"}),
+                'entrada_alcohol': (validar_numerico, {'min_val': 0, 'mensaje': "Cantidad inválida"})
+            }
     
-        # Vincular eventos de validación
-        self.entrada_fecha.bind('<FocusOut>', validar_fecha)
-        self.entrada_edad.bind('<FocusOut>', validar_edad)
-        self.entrada_alcohol.bind('<FocusOut>', validar_alcohol)
+            # Campos de consumo
+            campos_consumo = [
+                'bebidas_semana', 'cervezas', 'finde', 'destiladas', 'vinos'
+            ]
+    
+            # Agregar campos de consumo a la validación
+            for campo in campos_consumo:
+                widgets_validacion[f'entrada_{campo}'] = (
+                    validar_numerico, 
+                    {'min_val': 0, 'mensaje': "Cantidad inválida"}
+                )
+    
+            # Aplicar validaciones
+            for widget_name, (validator, params) in widgets_validacion.items():
+                if hasattr(self, widget_name) and getattr(self, widget_name) is not None:
+                    widget = getattr(self, widget_name)
+                    if params is None:
+                        widget.bind('<FocusOut>', validator)
+                    else:
+                        widget.bind('<FocusOut>', validator(widget, **params))
+    
+        except Exception as e:
+            print(f"Error al configurar validación: {str(e)}")
     
     def _mostrar_tooltip(self, widget, mensaje):
         """Muestra un tooltip con el mensaje de error"""
@@ -386,8 +369,13 @@ class InterfazSaludAlcohol:
         self._exportar_callback = callback
 
     def _on_registrar(self):
+        """Maneja el evento de registro de paciente"""
         if self._registrar_callback:
             datos = self.obtener_datos_formulario()
+            if datos:  # Verifica que se obtuvieron datos válidos
+                if self._registrar_callback(datos):  # Llama al callback con los datos
+                    # Si el registro fue exitoso, limpiar el formulario
+                    self.limpiar_formulario()
     
 
     def _on_visualizar(self):
@@ -401,59 +389,76 @@ class InterfazSaludAlcohol:
     def obtener_datos_formulario(self):
         """
         Obtiene y valida los datos del formulario.
-        Retorna:
-            dict: Diccionario con los datos validados del formulario con las claves:
-                fecha, sexo, alcohol, presion, edad, problemas
-        Raises:
-            ValueError: Si algún campo requerido está vacío o es inválido
+        Returns:
+            dict: Diccionario con los datos validados o None si hay error
         """
         try:
-            # Obtener datos de los campos
-            datos = {
-                'fecha': self.entrada_fecha.get().strip(),
-                'sexo': self.entrada_sexo.get().strip(),
-                'alcohol': self.entrada_alcohol.get().strip(),
-                'presion': self.entrada_presion.get().strip(),
-                'edad': self.entrada_edad.get().strip(),
-                'problemas': self.entrada_problemas.get('1.0', 'end-1c').strip()
+            # Verificar que los widgets existan
+            widgets_requeridos = [
+                'entrada_fecha', 
+                'entrada_edad', 
+                'entrada_sexo',
+                'entrada_bebidas_semana',
+                'entrada_cervezas',
+                'entrada_finde',
+                'entrada_destiladas',
+                'entrada_vinos',
+                'entrada_perdidas_control',
+                'entrada_diversion_alcohol',
+                'entrada_problemas_digestivos',
+                'entrada_tension_alta',
+                'entrada_dolor_cabeza'
+            ]
+    
+            # Verificar existencia de widgets
+            for widget in widgets_requeridos:
+                if not hasattr(self, widget) or getattr(self, widget) is None:
+                    raise ValueError(f"Campo {widget} no inicializado")
+    
+            # Obtener y validar datos
+            datos = {}
+            
+            # Campos de texto con strip()
+            campos_texto = {
+                'fecha': self.entrada_fecha,
+                'edad': self.entrada_edad,
+                'sexo': self.entrada_sexo,
+                'bebidas_semana': self.entrada_bebidas_semana,
+                'cervezas': self.entrada_cervezas,
+                'finde': self.entrada_finde,
+                'destiladas': self.entrada_destiladas,
+                'vinos': self.entrada_vinos
+            }
+            
+            # Campos booleanos/selección
+            campos_seleccion = {
+                'perdidas_control': self.entrada_perdidas_control,
+                'diversion_alcohol': self.entrada_diversion_alcohol,
+                'problemas_digestivos': self.entrada_problemas_digestivos,
+                'tension_alta': self.entrada_tension_alta,
+                'dolor_cabeza': self.entrada_dolor_cabeza
             }
     
-            # Validar campos requeridos
-            campos_requeridos = ['fecha', 'sexo', 'alcohol', 'edad']
-            for campo in campos_requeridos:
-                if not datos[campo]:
+            # Procesar campos de texto
+            for campo, widget in campos_texto.items():
+                valor = widget.get().strip()
+                if not valor:
                     self._mostrar_error_campo(campo)
                     raise ValueError(f"El campo {campo} es obligatorio")
+                datos[campo] = valor
     
-            # Validar formato de fecha
-            try:
-                datetime.strptime(datos['fecha'], '%Y-%m-%d')
-            except ValueError:
-                self._mostrar_error_campo('fecha')
-                raise ValueError("Formato de fecha inválido (YYYY-MM-DD)")
+            # Procesar campos de selección
+            for campo, widget in campos_seleccion.items():
+                valor = widget.get()
+                if not valor:
+                    self._mostrar_error_campo(campo)
+                    raise ValueError(f"El campo {campo} es obligatorio")
+                datos[campo] = valor
     
-            # Validar edad
-            try:
-                edad = int(datos['edad'])
-                if not (0 <= edad <= 120):
-                    raise ValueError
-            except ValueError:
-                self._mostrar_error_campo('edad')
-                raise ValueError("Edad inválida (0-120 años)")
-    
-            # Validar alcohol
-            try:
-                alcohol = float(datos['alcohol'])
-                if alcohol < 0:
-                    raise ValueError
-            except ValueError:
-                self._mostrar_error_campo('alcohol')
-                raise ValueError("Cantidad de alcohol inválida")
-    
-            # Si todo es válido y existe callback, registrar y limpiar
-            if self._registrar_callback and self._registrar_callback(datos):
-                self.limpiar_formulario()
-                messagebox.showinfo("Éxito", "Datos registrados correctamente")
+            # Validaciones específicas
+            self._validar_fecha(datos['fecha'])
+            self._validar_edad(datos['edad'])
+            self._validar_campos_numericos(datos)
     
             return datos
     
@@ -463,6 +468,36 @@ class InterfazSaludAlcohol:
         except Exception as e:
             messagebox.showerror("Error", f"Error al procesar el formulario: {str(e)}")
             return None
+    
+    def _validar_fecha(self, fecha):
+        """Valida el formato de la fecha"""
+        try:
+            datetime.strptime(fecha, '%Y-%m-%d')
+        except ValueError:
+            self._mostrar_error_campo('fecha')
+            raise ValueError("Formato de fecha inválido (YYYY-MM-DD)")
+    
+    def _validar_edad(self, edad):
+        """Valida que la edad esté en el rango correcto"""
+        try:
+            edad = int(edad)
+            if not (0 <= edad <= 120):
+                raise ValueError
+        except ValueError:
+            self._mostrar_error_campo('edad')
+            raise ValueError("Edad inválida (0-120 años)")
+    
+    def _validar_campos_numericos(self, datos):
+        """Valida los campos numéricos del formulario"""
+        campos_numericos = ['bebidas_semana', 'cervezas', 'finde', 'destiladas', 'vinos']
+        for campo in campos_numericos:
+            try:
+                valor = float(datos[campo])
+                if valor < 0:
+                    raise ValueError
+            except ValueError:
+                self._mostrar_error_campo(campo)
+                raise ValueError(f"Valor inválido en {campo}")
     
     def _mostrar_error_campo(self, campo):
         """Resalta visualmente el campo con error"""
@@ -488,13 +523,38 @@ class InterfazSaludAlcohol:
 
     def limpiar_formulario(self):
         """Limpia todos los campos del formulario"""
-        for attr in ['entrada_fecha', 'entrada_alcohol', 'entrada_presion', 
-                    'entrada_edad', 'entrada_problemas']:
-            if hasattr(self, attr):
-                getattr(self, attr).delete(0, tk.END)
-        # Resetear sexo al valor por defecto
-        if hasattr(self, 'entrada_sexo'):
-            self.entrada_sexo.set('Hombre')
+        campos_a_limpiar = [
+            'entrada_fecha', 
+            'entrada_edad',
+            'entrada_bebidas_semana',
+            'entrada_cervezas',
+            'entrada_finde',
+            'entrada_destiladas',
+            'entrada_vinos'
+        ]
+        
+        # Limpiar campos de entrada de texto
+        for campo in campos_a_limpiar:
+            if hasattr(self, campo):
+                widget = getattr(self, campo)
+                if widget:
+                    widget.delete(0, tk.END)
+        
+        # Resetear comboboxes
+        campos_combo = [
+            'entrada_sexo',
+            'entrada_perdidas_control',
+            'entrada_diversion_alcohol',
+            'entrada_problemas_digestivos',
+            'entrada_tension_alta',
+            'entrada_dolor_cabeza'
+        ]
+        
+        for campo in campos_combo:
+            if hasattr(self, campo):
+                widget = getattr(self, campo)
+                if widget:
+                    widget.set(widget.cget('values')[0])
             
     def actualizar_grafico(self, figura):
         """Actualiza el gráfico en la interfaz"""

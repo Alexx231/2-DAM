@@ -30,16 +30,25 @@ class VisualizadorGraficas:
         return fig
 
     def crear_grafica_tendencia_temporal(self, datos):
-
         if datos is None or datos.empty:
             return None
-        fig = plt.figure(figsize=(10, 6))
-        plt.plot(datos.index, datos['consumoSemanal'], marker='o')
-        plt.title('Tendencia de Consumo de Alcohol')
-        plt.xlabel('Número de Encuesta')
-        plt.ylabel('Consumo Semanal (unidades)')
-        plt.grid(True)
-        return fig
+            
+        try:
+            # Usar las columnas correctas que vienen de la base de datos
+            fig = plt.figure(figsize=(10, 6))
+            plt.plot(datos.index, datos['BebidasSemana'], marker='o', label='Bebidas por Semana')
+            plt.plot(datos.index, datos['BebidasFinSemana'], marker='s', label='Bebidas Fin de Semana')
+            
+            plt.title('Tendencia de Consumo de Alcohol')
+            plt.xlabel('Número de Encuesta')
+            plt.ylabel('Consumo (unidades)')
+            plt.legend()
+            plt.grid(True)
+            plt.tight_layout()
+            return fig
+        except Exception as e:
+            print(f"Error al crear gráfica de tendencia: {str(e)}")
+            return None
 
     def crear_grafica_problemas_salud(self, datos):
         if datos is None or datos.empty:
