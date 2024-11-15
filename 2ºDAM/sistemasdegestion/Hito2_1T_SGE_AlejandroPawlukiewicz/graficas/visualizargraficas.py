@@ -6,68 +6,96 @@ from tkinter import messagebox
 
 class VisualizadorGraficas:
     def __init__(self):
-        """Inicializa el visualizador de gráficas"""
-        try:
-            # Configurar el estilo de las gráficas
-            plt.style.use('seaborn-v0_8-darkgrid')  # Usar estilo compatible
-            sns.set_theme()  # Configuración básica de seaborn
-            
-            # Configurar el tamaño predeterminado
-            plt.rcParams['figure.figsize'] = [10, 6]
-            plt.rcParams['figure.dpi'] = 100
-            
-        except Exception as e:
-            print(f"Error al inicializar visualizador: {str(e)}")
-            messagebox.showerror("Error", "No se pudo inicializar el visualizador de gráficas")
-            raise
+        plt.style.use('seaborn-v0_8-darkgrid')
+        sns.set_theme()
+        plt.rcParams['figure.figsize'] = [10, 6]
+        plt.rcParams['figure.dpi'] = 100
 
-    def crear_dashboard(self, datos):
-        """Crea el dashboard con las gráficas"""
-        try:
-            # Limpiar gráficas anteriores
-            plt.close('all')
-            
-            # Crear figura y subplots
-            fig, (ax1, ax2, ax3) = plt.subplots(1, 3, figsize=(15, 5))
-            
-            # Gráfica 1: Consumo por edad
-            if 'edad' in datos and not datos['edad'].empty:
-                sns.barplot(data=datos['edad'], 
-                        x='edad', y='promedio_semanal',
-                        hue='Sexo', ax=ax1)
-                ax1.set_title('Consumo por Edad')
-                ax1.set_xlabel('Edad')
-                ax1.set_ylabel('Bebidas por Semana')
-            
-            # Gráfica 2: Problemas de salud
-            if 'salud' in datos and not datos['salud'].empty:
-                problemas_df = datos['salud'].melt(
-                    id_vars=['Sexo'], 
-                    value_vars=['problemas_digestivos', 'tension_alta', 'dolor_cabeza_frecuente']
-                )
-                sns.barplot(data=problemas_df, 
-                        x='variable', y='value',
-                        hue='Sexo', ax=ax2)
-                ax2.set_title('Problemas de Salud')
-                ax2.set_xlabel('Tipo de Problema')
-                ax2.set_ylabel('Cantidad de Casos')
-            
-            # Gráfica 3: Evolución temporal
-            if 'tiempo' in datos and not datos['tiempo'].empty:
-                sns.lineplot(data=datos['tiempo'], 
-                            x='idEncuesta', y='BebidasSemana',
-                            ax=ax3)
-                ax3.set_title('Evolución del Consumo')
-                ax3.set_xlabel('ID Encuesta')
-                ax3.set_ylabel('Bebidas por Semana')
-            
-            plt.tight_layout()
-            return fig
-            
-        except Exception as e:
-            print(f"Error al crear dashboard: {str(e)}")
+    def crear_grafica_consumo_edad(self, datos):
+        if datos is None or datos.empty:
             return None
+            
+        fig, ax = plt.subplots()
+        sns.barplot(
+            data=datos,
+            x='edad',
+            y='promedio_semanal',
+            hue='Sexo',
+            ax=ax
+        )
+        ax.set_title('Consumo por Edad')
+        ax.set_xlabel('Edad')
+        ax.set_ylabel('Bebidas por Semana')
+        plt.tight_layout()
+        return fig
 
-    def limpiar_graficas(self):
-        """Limpia las gráficas actuales"""
-        plt.close('all')
+    def crear_grafica_tendencia_temporal(self, datos):
+
+        if datos is None or datos.empty:
+            return None
+        fig = plt.figure(figsize=(10, 6))
+        plt.plot(datos.index, datos['consumoSemanal'], marker='o')
+        plt.title('Tendencia de Consumo de Alcohol')
+        plt.xlabel('Número de Encuesta')
+        plt.ylabel('Consumo Semanal (unidades)')
+        plt.grid(True)
+        return fig
+
+    def crear_grafica_problemas_salud(self, datos):
+        if datos is None or datos.empty:
+            return None
+            
+        # Transformar los datos para la visualización
+        datos_melt = datos.melt(
+            id_vars=['Sexo'],
+            value_vars=[
+                'problemas_digestivos',
+                'tension_alta',
+                'dolor_cabeza_frecuente'
+            ],
+            var_name='Problema',
+            value_name='Cantidad'
+        )
+        
+        fig, ax = plt.subplots()
+        sns.barplot(
+            data=datos_melt,
+            x='Problema',
+            y='Cantidad',
+            hue='Sexo',
+            ax=ax
+        )
+        
+        # Personalizar la gráfica
+        ax.set_title('Problemas de Salud por Género')
+        ax.set_xlabel('Tipo de Problema')
+        ax.set_ylabel('Cantidad de Casos')
+        
+        # Mejorar las etiquetas
+        etiquetas = {
+            'problemas_digestivos': 'Digestivos',
+            'tension_alta': 'Tensión Alta',
+            'dolor_cabeza_frecuente': 'Dolor Cabeza'
+        }
+        ax.set_xticklabels([etiquetas[x.get_text()] for x in ax.get_xticklabels()])
+        
+        plt.xticks(rotation=45)
+        plt.tight_layout()
+        return fig
+
+    def crear_grafica_tendencia(self, datos):
+        if datos is None or datos.empty:
+            return None
+            
+        fig, ax = plt.subplots()
+        sns.lineplot(
+            data=datos,
+            x='idEncuesta',
+            y='BebidasSemana',
+            ax=ax
+        )
+        ax.set_title('Tendencia de Consumo')
+        ax.set_xlabel('ID Encuesta')
+        ax.set_ylabel('Bebidas por Semana')
+        plt.tight_layout()
+        return fig

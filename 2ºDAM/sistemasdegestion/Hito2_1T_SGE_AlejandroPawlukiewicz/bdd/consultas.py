@@ -31,18 +31,11 @@ class ConsultasEncuesta:
             raise Exception(f"Error al ordenar datos: {str(e)}")
 
     def insertar_encuesta(self, datos):
-        """Inserta un nuevo registro en la tabla encuesta"""
-        # Obtener el siguiente ID
-        query_id = "SELECT MAX(idEncuesta) FROM encuesta"
-        cursor = self.conexion.conexion.cursor()
-        cursor.execute(query_id)
-        max_id = cursor.fetchone()[0] or 0
-        nuevo_id = max_id + 1
-
         query = """
         INSERT INTO encuesta (
-            idEncuesta, edad, Sexo, BebidasSemana, CervezasSemana,
-            BebidasFinSemana, BebidasDestiladasSemana, VinosSemana,
+            idEncuesta, edad, Sexo, 
+            BebidasSemana, CervezasSemana, BebidasFinSemana, 
+            BebidasDestiladasSemana, VinosSemana,
             PerdidasControl, DiversionDependenciaAlcohol,
             ProblemasDigestivos, TensionAlta, DolorCabeza
         ) VALUES (
@@ -50,25 +43,33 @@ class ConsultasEncuesta:
         )
         """
         try:
+            cursor = self.conexion.conexion.cursor()
+            
+            # Obtener siguiente ID
+            cursor.execute("SELECT MAX(idEncuesta) FROM encuesta")
+            max_id = cursor.fetchone()[0] or 0
+            nuevo_id = max_id + 1
+    
             valores = (
                 nuevo_id,
                 int(datos['edad']),
-                datos['sexo'],  # Usar el sexo del formulario en lugar del valor por defecto
-                float(datos['alcohol']),
-                0,  # CervezasSemana
-                0,  # BebidasFinSemana
-                0,  # BebidasDestiladasSemana
-                0,  # VinosSemana
-                'No',  # PerdidasControl
-                'No',  # DiversionDependenciaAlcohol
-                datos.get('problemas', 'No'),  # ProblemasDigestivos
-                'No',  # TensionAlta
-                'Nunca'  # DolorCabeza
+                datos['sexo'],
+                float(datos['bebidas_semana']),
+                float(datos['cervezas']),
+                float(datos['finde']),
+                float(datos['destiladas']),
+                float(datos['vinos']),
+                datos['perdidas_control'],
+                datos['diversion_alcohol'],
+                datos['problemas_digestivos'],
+                datos['tension_alta'],
+                datos['dolor_cabeza']
             )
             
             cursor.execute(query, valores)
             self.conexion.conexion.commit()
             return True
+            
         except Error as e:
             self.conexion.conexion.rollback()
             raise Exception(f"Error al insertar datos: {str(e)}")
@@ -92,30 +93,49 @@ class ConsultasEncuesta:
         """Obtiene estadísticas detalladas de consumo"""
         query = """
         SELECT 
+            idEncuesta,
             edad,
             Sexo,
+            BebidasSemana,
+            CervezasSemana,
+            BebidasFinSemana,
+            BebidasDestiladasSemana,
+            VinosSemana,
             AVG(BebidasSemana) as promedio_semanal,
             AVG(CervezasSemana) as promedio_cerveza,
             AVG(BebidasFinSemana) as promedio_finde,
             AVG(BebidasDestiladasSemana) as promedio_destiladas,
-            AVG(VinosSemana) as promedio_vinos,
-            COUNT(*) as total_registros
+            AVG(VinosSemana) as promedio_vinos
         FROM encuesta
-        GROUP BY edad, Sexo
-        ORDER BY edad, Sexo
+        GROUP BY idEncuesta, edad, Sexo, BebidasSemana, CervezasSemana, 
+                BebidasFinSemana, BebidasDestiladasSemana, VinosSemana
         """
-        return pd.read_sql(query, self.conexion.conexion)
+        try:
+            return pd.read_sql(query, self.conexion.conexion)
+        except Exception as e:
+            print(f"Error en obtener_estadisticas_consumo: {str(e)}")
+            return pd.DataFrame()  # Retorna DataFrame vacío en caso de error
 
     def filtrar_alto_consumo(self, limite=20):
         """Filtra registros con alto consumo de alcohol"""
         query = """
-        SELECT * FROM encuesta 
+        SELECT 
+            idEncuesta,
+            edad,
+            Sexo,
+            BebidasSemana,
+            CervezasSemana,
+            BebidasFinSemana,
+            BebidasDestiladasSemana,
+            VinosSemana
+        FROM encuesta 
         WHERE BebidasSemana > %s 
            OR BebidasFinSemana > %s
            OR CervezasSemana > %s
            OR BebidasDestiladasSemana > %s
            OR VinosSemana > %s
-        ORDER BY BebidasSemana DESC, BebidasFinSemana DESC
+        ORDER BY BebidasSemana DESC
+        LIMIT 100
         """
         params = (limite,) * 5
         return pd.read_sql(query, self.conexion.conexion, params=params)
