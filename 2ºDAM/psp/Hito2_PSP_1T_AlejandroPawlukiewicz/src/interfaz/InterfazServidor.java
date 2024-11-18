@@ -2,16 +2,14 @@ package interfaz;
 
 import javax.swing.*;
 import java.awt.*;
-import servidor.ServidorLibros;
-import servidor.ServidorManager;
-import servidor.IServicioLibros;
 import java.rmi.registry.Registry;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.server.UnicastRemoteObject;
 import java.sql.Connection;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-
+import servidor.ServidorLibros;
+import servidor.IServicioLibros;
 import datos.ConexionBD;
 
 public class InterfazServidor extends JFrame {
@@ -228,11 +226,11 @@ public class InterfazServidor extends JFrame {
         add(mainPanel);
     }
 
-	public static void main(String[] args) {
-	    SwingUtilities.invokeLater(() -> {
-	        InterfazServidor servidor = new InterfazServidor();
-	        servidor.setLocationRelativeTo(null);
-	        servidor.setVisible(true);
-	    });
-	}
+    public static void main(String[] args) {
+        SwingUtilities.invokeLater(() -> {
+            InterfazServidor servidor = new InterfazServidor();
+            servidor.setLocationRelativeTo(null);
+            servidor.setVisible(true);
+        });
+    }
 }
