@@ -20,6 +20,7 @@ public class ConexionBD {
         }
     }
     
+    // Obtiene una conexión a la base de datos
     public static Connection obtenerConexion() throws SQLException {
         try {
             Connection conexion = DriverManager.getConnection(URL, USER, PASSWORD);

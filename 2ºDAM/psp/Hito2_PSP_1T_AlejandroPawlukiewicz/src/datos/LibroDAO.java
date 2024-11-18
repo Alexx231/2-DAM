@@ -1,4 +1,3 @@
-// LibroDAO.java
 package datos;
 
 import java.sql.*;
@@ -6,6 +5,7 @@ import java.util.*;
 
 public class LibroDAO {
     
+    // Busca libros en la base de datos según una clave
     public List<String> buscarLibros(String clave) {
         List<String> resultados = new ArrayList<>();
         String query = "SELECT * FROM libros WHERE titulo LIKE ? OR autor LIKE ? OR categoria LIKE ?";

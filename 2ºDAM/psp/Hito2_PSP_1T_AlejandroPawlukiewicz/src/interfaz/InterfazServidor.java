@@ -1,16 +1,14 @@
 package interfaz;
 
-import javax.swing.*;
 import java.awt.*;
-import java.rmi.registry.Registry;
 import java.rmi.registry.LocateRegistry;
+import java.rmi.registry.Registry;
 import java.rmi.server.UnicastRemoteObject;
-import java.sql.Connection;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import servidor.ServidorLibros;
+import javax.swing.*;
 import servidor.IServicioLibros;
-import datos.ConexionBD;
+import servidor.ServidorLibros;
 
 public class InterfazServidor extends JFrame {
     private JButton btnIniciar;
@@ -24,13 +22,17 @@ public class InterfazServidor extends JFrame {
     private boolean servidorIniciado = false;
 
     public InterfazServidor() {
+        // Configura la ventana principal
         configurarVentana();
+        // Inicializa los componentes de la interfaz
         inicializarComponentes();
+        // Configura los eventos de los botones
         configurarEventos();
+        // Verifica el estado del servidor al iniciar
         verificarEstadoServidor();
     }
 
- // Añadir nuevo método para verificación
+    // Añadir nuevo método para verificación
     private void verificarEstadoServidor() {
         try {
             // Intenta conectarse al registro RMI en el puerto 1099
@@ -58,7 +60,7 @@ public class InterfazServidor extends JFrame {
         }
     }
 
- // Modificar el método iniciarServidor()
+    // Modificar el método iniciarServidor()
     private void iniciarServidor() throws Exception {
         if (servidorIniciado) {
             // En lugar de lanzar excepción, manejarlo directamente
@@ -71,8 +73,11 @@ public class InterfazServidor extends JFrame {
         }
         
         try {
+            // Crea una instancia del servicio de libros
             servicioLibros = new ServidorLibros();
+            // Crea el registro RMI en el puerto 1099
             registry = LocateRegistry.createRegistry(1099);
+            // Exporta el objeto del servicio y lo vincula en el registro
             stub = (IServicioLibros) UnicastRemoteObject.exportObject(servicioLibros, 0);
             registry.rebind("ServicioLibros", stub);
             servidorIniciado = true;
@@ -90,10 +95,13 @@ public class InterfazServidor extends JFrame {
                 throw new Exception("El servidor no está en ejecución");
             }
             if (registry != null) {
+                // Desvincula el objeto del servicio del registro
                 registry.unbind("ServicioLibros");
                 if (stub != null) {
+                    // Desexporta el objeto del servicio
                     UnicastRemoteObject.unexportObject(servicioLibros, true);
                 }
+                // Desexporta el registro
                 UnicastRemoteObject.unexportObject(registry, true);
                 registry = null;
                 stub = null;
@@ -107,7 +115,7 @@ public class InterfazServidor extends JFrame {
         }
     }
 
- // Modificar la parte relevante de configurarEventos()
+    // Modificar la parte relevante de configurarEventos()
     private void configurarEventos() {
         btnIniciar.addActionListener(e -> {
             try {

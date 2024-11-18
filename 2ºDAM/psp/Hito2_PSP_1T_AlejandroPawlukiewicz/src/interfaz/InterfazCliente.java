@@ -25,6 +25,7 @@ public class InterfazCliente extends JFrame {
         conectarServidor();
     }
 
+    // Conecta al servidor RMI
     private void conectarServidor() {
         try {
             Registry registry = LocateRegistry.getRegistry("localhost", 1099);
@@ -43,6 +44,7 @@ public class InterfazCliente extends JFrame {
         }
     }
     
+    // Configura la ventana principal
     private void configurarVentana() {
         setTitle("Biblioteca Virtual - Cliente");
         setSize(1000, 700);
@@ -52,6 +54,7 @@ public class InterfazCliente extends JFrame {
         getContentPane().setBackground(new Color(240, 242, 245));
     }
 
+    // Limpia los resultados de búsqueda
     private void limpiarResultados() {
         txtBusqueda.setText("");
         panelResultados.removeAll();
@@ -60,6 +63,7 @@ public class InterfazCliente extends JFrame {
         filtroBox.setSelectedIndex(0);
     }
     
+    // Inicializa los componentes de la interfaz
     private void inicializarComponentes() {
         // Panel superior con título
         JPanel panelTitulo = new JPanel();
@@ -102,6 +106,7 @@ public class InterfazCliente extends JFrame {
             BorderFactory.createLineBorder(new Color(200, 200, 200)),
             BorderFactory.createEmptyBorder(8, 10, 8, 10)
         ));
+        txtBusqueda.addActionListener(e -> buscarLibros());
         
         // ComboBox personalizado
         String[] opciones = {"Todos", "Título", "Autor", "Precio"};
@@ -114,30 +119,13 @@ public class InterfazCliente extends JFrame {
         btnBuscar = new JButton("Buscar");
         btnLimpiar = new JButton("Limpiar");
         
-     // Eventos
+        // Eventos
         btnBuscar.addActionListener(e -> buscarLibros());
         btnLimpiar.addActionListener(e -> limpiarResultados());
-        txtBusqueda.addActionListener(e -> buscarLibros());
-        
+
         // Estilo botones
         configurarBoton(btnBuscar, new Color(25, 118, 210));
         configurarBoton(btnLimpiar, new Color(158, 158, 158));
-
-        // Área de resultados
-        
-        panelResultados = new JPanel();
-        panelResultados.setLayout(new GridLayout(0, 2, 10, 10)); // 2 columnas, espaciado 10px
-        panelResultados.setBackground(new Color(240, 242, 245));
-
-        JScrollPane scrollResultados = new JScrollPane(panelResultados);
-        scrollResultados.setBorder(BorderFactory.createCompoundBorder(
-            BorderFactory.createTitledBorder(null, "Resultados", 
-                TitledBorder.DEFAULT_JUSTIFICATION, 
-                TitledBorder.DEFAULT_POSITION, 
-                new Font("Segoe UI", Font.BOLD, 14)),
-            BorderFactory.createEmptyBorder(10, 10, 10, 10)
-        ));
-        scrollResultados.setPreferredSize(new Dimension(0, 400));
 
         // Layout
         gbc.gridx = 0; gbc.gridy = 0;
@@ -157,6 +145,21 @@ public class InterfazCliente extends JFrame {
 
         gbc.gridx = 5;
         panelBusqueda.add(btnLimpiar, gbc);
+
+        // Área de resultados
+        panelResultados = new JPanel();
+        panelResultados.setLayout(new GridLayout(0, 2, 10, 10)); // 2 columnas, espaciado 10px
+        panelResultados.setBackground(new Color(240, 242, 245));
+
+        JScrollPane scrollResultados = new JScrollPane(panelResultados);
+        scrollResultados.setBorder(BorderFactory.createCompoundBorder(
+            BorderFactory.createTitledBorder(null, "Resultados", 
+                TitledBorder.DEFAULT_JUSTIFICATION, 
+                TitledBorder.DEFAULT_POSITION, 
+                new Font("Segoe UI", Font.BOLD, 14)),
+            BorderFactory.createEmptyBorder(10, 10, 10, 10)
+        ));
+        scrollResultados.setPreferredSize(new Dimension(0, 400));
 
         // Panel principal
         JPanel mainPanel = new JPanel(new BorderLayout(15, 15));
@@ -188,6 +191,7 @@ public class InterfazCliente extends JFrame {
         });
     }
 
+    // Realiza la búsqueda de libros
     private void buscarLibros() {
         String termino = txtBusqueda.getText().trim();
         String filtro = (String) filtroBox.getSelectedItem();
@@ -211,6 +215,7 @@ public class InterfazCliente extends JFrame {
         }
     }
 
+    // Muestra los resultados filtrados en la interfaz
     private void mostrarResultadosFiltrados(List<String> resultados, String filtro) {
         panelResultados.removeAll();
         
@@ -234,6 +239,7 @@ public class InterfazCliente extends JFrame {
         panelResultados.repaint();
     }
 
+    // Crea una tarjeta para mostrar la información de un libro
     private JPanel crearCard(String libro, String filtro) {
         JPanel card = new JPanel();
         card.setLayout(new BoxLayout(card, BoxLayout.Y_AXIS));
@@ -286,6 +292,7 @@ public class InterfazCliente extends JFrame {
         return mostrarCard ? card : null;
     }
 
+    // Añade un campo a la tarjeta
     private void agregarCampoACard(JPanel card, String texto) {
         JLabel label = new JLabel(texto);
         label.setFont(new Font("Segoe UI", Font.PLAIN, 14));
