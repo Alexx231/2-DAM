@@ -49,7 +49,11 @@ class ConsultasEncuesta:
             cursor.execute("SELECT MAX(idEncuesta) FROM encuesta")
             max_id = cursor.fetchone()[0] or 0
             nuevo_id = max_id + 1
-    
+
+            # Convertir valores Sí/No a 1/0
+            def convertir_si_no(valor):
+                return 1 if valor.lower() == 'sí' else 0
+
             valores = (
                 nuevo_id,
                 int(datos['edad']),
@@ -59,10 +63,10 @@ class ConsultasEncuesta:
                 float(datos['finde']),
                 float(datos['destiladas']),
                 float(datos['vinos']),
-                datos['perdidas_control'],
-                datos['diversion_alcohol'],
-                datos['problemas_digestivos'],
-                datos['tension_alta'],
+                convertir_si_no(datos['perdidas_control']),
+                convertir_si_no(datos['diversion_alcohol']),
+                convertir_si_no(datos['problemas_digestivos']),
+                convertir_si_no(datos['tension_alta']),
                 datos['dolor_cabeza']
             )
             
@@ -75,6 +79,30 @@ class ConsultasEncuesta:
             raise Exception(f"Error al insertar datos: {str(e)}")
         finally:
             cursor.close()
+            
+    def obtener_registros_recientes(self, limite=10):
+        """
+        Obtiene los registros más recientes de la base de datos
+        """
+        query = """
+        SELECT 
+            idEncuesta, 
+            Sexo, 
+            edad, 
+            BebidasSemana,
+            BebidasFinSemana,
+            BebidasDestiladasSemana,
+            VinosSemana,
+            CervezasSemana
+        FROM encuesta 
+        ORDER BY idEncuesta DESC 
+        LIMIT %s
+        """
+        try:
+            return pd.read_sql(query, self.conexion.conexion, params=(limite,))
+        except Exception as e:
+            print(f"Error al obtener registros recientes: {e}")
+            return pd.DataFrame()
 
     def obtener_tendencia_temporal(self):
         """Obtiene la tendencia del consumo por edad"""
@@ -139,6 +167,35 @@ class ConsultasEncuesta:
         """
         params = (limite,) * 5
         return pd.read_sql(query, self.conexion.conexion, params=params)
+    
+    def filtrar_perdidas_control(self, min_perdidas=3):
+        """
+        Filtra pacientes que han perdido el control más veces que el mínimo especificado
+        Args:
+            min_perdidas: Número mínimo de pérdidas de control
+        Returns:
+            DataFrame con los pacientes filtrados
+        """
+        query = """
+        SELECT 
+            idEncuesta,
+            Sexo,
+            edad,
+            PerdidasControl,
+            BebidasSemana,
+            BebidasFinSemana,
+            CervezasSemana,
+            BebidasDestiladasSemana,
+            VinosSemana
+        FROM encuesta 
+        WHERE PerdidasControl >= %s
+        ORDER BY PerdidasControl DESC
+        """
+        try:
+            return pd.read_sql(query, self.conexion.conexion, params=(min_perdidas,))
+        except Exception as e:
+            print(f"Error al filtrar pérdidas de control: {e}")
+            return pd.DataFrame()
 
     def filtrar_problemas_salud(self):
         """Analiza problemas de salud relacionados con el consumo"""
@@ -179,6 +236,134 @@ class ConsultasEncuesta:
             END
         """
         return pd.read_sql(query, self.conexion.conexion)
+    
+    def actualizar_paciente(self, datos):
+        """
+        Actualiza los datos de un paciente existente
+        Args:
+            datos: Diccionario con los datos del paciente
+        """
+        query = """
+        UPDATE encuesta 
+        SET Sexo = %s,
+            edad = %s,
+            BebidasSemana = %s,
+            CervezasSemana = %s,
+            BebidasFinSemana = %s,
+            BebidasDestiladasSemana = %s,
+            VinosSemana = %s,
+            PerdidasControl = %s,
+            DiversionDependenciaAlcohol = %s,
+            ProblemasDigestivos = %s,
+            TensionAlta = %s,
+            DolorCabeza = %s
+        WHERE idEncuesta = %s
+        """
+        try:
+            def convertir_si_no(valor):
+                return 1 if valor else 0
+    
+            cursor = self.conexion.conexion.cursor()
+            values = (
+                datos['sexo'],
+                int(datos['edad']),
+                float(datos['bebidas_semana']),
+                float(datos['cervezas']),
+                float(datos['finde']),
+                float(datos['destiladas']),
+                float(datos['vinos']),
+                convertir_si_no(datos['perdidas_control']),
+                convertir_si_no(datos['diversion_alcohol']),
+                convertir_si_no(datos['problemas_digestivos']),
+                convertir_si_no(datos['tension_alta']),
+                datos['dolor_cabeza'],
+                int(datos['id'])
+            )
+            
+            cursor.execute(query, values)
+            self.conexion.conexion.commit()
+            return True
+        except Exception as e:
+            self.conexion.conexion.rollback()
+            raise Exception(f"Error al actualizar paciente: {str(e)}")
+        finally:
+            cursor.close()
+
+    
+    def obtener_listado_pacientes(self):
+        """
+        Obtiene el listado completo de pacientes de la base de datos
+        :return: DataFrame con todos los pacientes
+        """
+        query = """
+        SELECT 
+            idEncuesta,
+            NOW() as Fecha,  # Usamos NOW() como fecha temporal
+            Sexo,
+            edad,
+            BebidasSemana,
+            BebidasFinSemana,
+            CervezasSemana,
+            BebidasDestiladasSemana,
+            VinosSemana
+        FROM encuesta 
+        ORDER BY idEncuesta DESC
+        """
+        try:
+            return pd.read_sql(query, self.conexion.conexion)
+        except Exception as e:
+            print(f"Error al obtener listado de pacientes: {e}")
+            raise Exception(f"Error al obtener listado de pacientes: {str(e)}")
+        
+    def obtener_paciente_por_id(self, id_paciente):
+        """
+        Obtiene los datos de un paciente por su ID
+        Args:
+            id_paciente: ID del paciente a buscar
+        Returns:
+            dict: Diccionario con los datos del paciente o None si no se encuentra
+        """
+        query = """
+        SELECT 
+            idEncuesta,
+            Sexo,
+            edad,
+            BebidasSemana,
+            BebidasFinSemana,
+            CervezasSemana,
+            BebidasDestiladasSemana,
+            VinosSemana,
+            PerdidasControl,
+            DiversionDependenciaAlcohol,
+            ProblemasDigestivos,
+            TensionAlta,
+            DolorCabeza
+        FROM encuesta 
+        WHERE idEncuesta = %s
+        """
+        try:
+            with self.conexion.conexion.cursor(dictionary=True) as cursor:
+                cursor.execute(query, (id_paciente,))
+                return cursor.fetchone()
+        except Exception as e:
+            raise Exception(f"Error al obtener paciente: {str(e)}")
+
+    def eliminar_paciente(self, id_paciente):
+        """
+        Elimina un paciente de la base de datos
+        Args:
+            id_paciente: ID del paciente a eliminar
+        """
+        try:
+            cursor = self.conexion.conexion.cursor()
+            query = "DELETE FROM encuesta WHERE idEncuesta = %s"
+            cursor.execute(query, (id_paciente,))
+            self.conexion.conexion.commit()
+            cursor.close()
+            return True
+        except Exception as e:
+            self.conexion.conexion.rollback()
+            raise Exception(f"No se pudo eliminar el paciente: {str(e)}")
 
     def exportar_a_excel(self, df, nombre_archivo):
         """Exporta un DataFrame a Excel"""

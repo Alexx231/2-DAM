@@ -105,8 +105,14 @@ class SistemaMonitoreoSalud:
             self.interfaz.visualizar_callback(self.mostrar_graficas)
             self.interfaz.estadisticas_callback(self.mostrar_estadisticas)
             self.interfaz.exportar_callback(self.exportar_a_excel)
-            
+            self.interfaz.eliminar_callback(self.eliminar_paciente)
+            self.interfaz.registrar_buscar_callback(self.buscar_paciente)
+            self.interfaz.registrar_actualizar_callback(self.actualizar_paciente)
             self.cargar_datos_iniciales()
+            
+            # Cargar listado de pacientes
+            pacientes = self.consultas.obtener_listado_pacientes()
+            self.interfaz.actualizar_listado_pacientes(pacientes)
             
         except Exception as e:
             raise Exception(f"Error al inicializar componentes: {str(e)}")
@@ -129,13 +135,52 @@ class SistemaMonitoreoSalud:
 
     def registrar_paciente(self, datos_paciente):
         try:
+            # Insertar nuevo registro
             self.consultas.insertar_encuesta(datos_paciente)
             messagebox.showinfo("Éxito", "Paciente registrado correctamente")
-            self.mostrar_graficas()  # Actualizar gráficas después del registro
+            
+            # Actualizar estadísticas y gráficas
+            self.mostrar_estadisticas()
+            self.mostrar_graficas()
+            
             return True
+            
         except Exception as e:
             messagebox.showerror("Error", f"Error al registrar paciente: {str(e)}")
             return False
+        
+    def buscar_paciente(self, id_paciente):
+        try:
+            datos = self.consultas.obtener_paciente_por_id(id_paciente)
+            if datos:
+                self.interfaz.mostrar_datos_paciente(datos)
+                messagebox.showinfo("Éxito", "Paciente encontrado. Puede proceder a modificar los datos.")
+            else:
+                messagebox.showwarning("No encontrado", "No se encontró ningún paciente con ese ID")
+        except Exception as e:
+            messagebox.showerror("Error", f"Error al buscar paciente: {str(e)}")
+
+    def actualizar_paciente(self, datos):
+        try:
+            self.consultas.actualizar_paciente(datos)
+            messagebox.showinfo("Éxito", "Paciente actualizado correctamente")
+        except Exception as e:
+            messagebox.showerror("Error", f"Error al actualizar paciente: {str(e)}")
+            
+    def eliminar_paciente(self, id_paciente):
+        """
+        Elimina un paciente y actualiza el listado
+        Args:
+            id_paciente: ID del paciente a eliminar
+        """
+        try:
+            self.consultas.eliminar_paciente(id_paciente)
+            messagebox.showinfo("Éxito", "Paciente eliminado correctamente")
+            # Actualizar el listado
+            pacientes = self.consultas.obtener_listado_pacientes()
+            self.interfaz.actualizar_listado_pacientes(pacientes)
+        except Exception as e:
+            messagebox.showerror("Error", f"No se pudo eliminar el paciente: {str(e)}")
 
     def mostrar_graficas(self):
         try:
@@ -157,74 +202,24 @@ class SistemaMonitoreoSalud:
 
     def mostrar_estadisticas(self):
         try:
-            # Obtener datos y verificar que no estén vacíos
+            # Obtener estadísticas básicas
             stats = self.consultas.obtener_estadisticas_consumo()
             if stats is None or stats.empty:
                 raise ValueError("No hay datos disponibles")
     
-            # Verificar que existan todas las columnas necesarias
-            columnas_requeridas = ['BebidasSemana', 'CervezasSemana', 'BebidasFinSemana',
-                                'BebidasDestiladasSemana', 'VinosSemana', 'Sexo']
+            # Obtener registros recientes
+            registros_recientes = self.consultas.obtener_registros_recientes()
             
-            for columna in columnas_requeridas:
-                if columna not in stats.columns:
-                    raise KeyError(f"Columna {columna} no encontrada en los datos")
+            # Obtener datos de alto consumo
+            alto_consumo = self.consultas.filtrar_alto_consumo()
     
-            # Convertir columnas numéricas si es necesario
-            columnas_numericas = ['BebidasSemana', 'CervezasSemana', 'BebidasFinSemana',
-                                'BebidasDestiladasSemana', 'VinosSemana']
-            
-            for col in columnas_numericas:
-                stats[col] = pd.to_numeric(stats[col], errors='coerce')
-    
-            # Crear columnas temporales con manejo de errores
-            try:
-                stats['promedio_semanal'] = stats['BebidasSemana'].fillna(0)
-                stats['promedio_cerveza'] = stats['CervezasSemana'].fillna(0)
-                stats['promedio_finde'] = stats['BebidasFinSemana'].fillna(0)
-                stats['promedio_destiladas'] = stats['BebidasDestiladasSemana'].fillna(0)
-                stats['promedio_vinos'] = stats['VinosSemana'].fillna(0)
-            except Exception as e:
-                print(f"Error al crear columnas temporales: {str(e)}")
-                raise
-    
-            # Obtener resto de datos necesarios
-            alto_consumo = self.consultas.filtrar_alto_consumo(limite=15)
-            problemas_salud = self.consultas.filtrar_problemas_salud()
-            correlacion = self.consultas.obtener_correlacion_salud_consumo()
-    
-            # Calcular estadísticas
-            estadisticas_detalladas = {
-                'general': stats,
-                'alto_riesgo': alto_consumo,
-                'problemas_salud': {
-                    'digestivos': problemas_salud['problemas_digestivos'].sum(),
-                    'tension': problemas_salud['tension_alta'].sum(),
-                    'dolor_cabeza': problemas_salud['dolor_cabeza_frecuente'].sum()
-                },
-                'correlaciones': correlacion,
-                'por_genero': stats.groupby('Sexo').agg({
-                    'promedio_semanal': 'mean',
-                    'promedio_cerveza': 'mean',     
-                    'promedio_finde': 'mean',   
-                    'promedio_destiladas': 'mean',
-                    'promedio_vinos': 'mean'
-                }).round(2)
-            }
-    
-            # Actualizar interfaz y gráficas
-            self.interfaz.actualizar_estadisticas(
-                stats=stats,
-                alto_consumo=alto_consumo
-            )
-            self.mostrar_graficas()
-    
+            # Actualizar la interfaz con todos los datos
+            self.interfaz.actualizar_estadisticas(stats, alto_consumo)
+            if not registros_recientes.empty:
+                self.interfaz.actualizar_registros_recientes(registros_recientes)
+                
         except Exception as e:
-            messagebox.showerror("Error", 
-                f"Error al mostrar estadísticas: {str(e)}\n"
-                "Por favor, verifique la conexión a la base de datos y el formato de los datos.")
-            print(f"Error detallado: {str(e)}")
-            return None
+            messagebox.showerror("Error", f"Error al mostrar estadísticas: {str(e)}")
             
     def exportar_a_excel(self, tipo_exportacion):
         try:
