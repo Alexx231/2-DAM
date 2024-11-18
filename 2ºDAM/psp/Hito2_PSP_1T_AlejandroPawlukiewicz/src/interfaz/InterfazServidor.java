@@ -63,7 +63,6 @@ public class InterfazServidor extends JFrame {
     // Modificar el método iniciarServidor()
     private void iniciarServidor() throws Exception {
         if (servidorIniciado) {
-            // En lugar de lanzar excepción, manejarlo directamente
             agregarLog("Aviso: El servidor ya está en ejecución");
             JOptionPane.showMessageDialog(this,
                 "El servidor ya está en ejecución",
@@ -73,17 +72,50 @@ public class InterfazServidor extends JFrame {
         }
         
         try {
-            // Crea una instancia del servicio de libros
+            // Primero intentamos limpiar cualquier instancia anterior
+            try {
+                Registry registroExistente = LocateRegistry.getRegistry(1099);
+                try {
+                    registroExistente.unbind("ServicioLibros");
+                } catch (Exception e) {
+                    // Ignoramos si el servicio no existe
+                }
+            } catch (Exception e) {
+                // Ignoramos si no hay registro existente
+            }
+
+            // Esperamos un momento para asegurar que los recursos se liberan
+            Thread.sleep(100);
+            
+            // Creamos una nueva instancia del servicio
             servicioLibros = new ServidorLibros();
-            // Crea el registro RMI en el puerto 1099
-            registry = LocateRegistry.createRegistry(1099);
-            // Exporta el objeto del servicio y lo vincula en el registro
+            
+            // Intentamos crear un nuevo registro
+            try {
+                registry = LocateRegistry.createRegistry(1099);
+            } catch (Exception e) {
+                // Si falla, obtenemos el registro existente
+                registry = LocateRegistry.getRegistry(1099);
+            }
+            
+            // Exportamos el objeto y lo vinculamos al registro
             stub = (IServicioLibros) UnicastRemoteObject.exportObject(servicioLibros, 0);
             registry.rebind("ServicioLibros", stub);
+            
             servidorIniciado = true;
             lblConexion.setText("Base de datos: Conectada");
             lblConexion.setForeground(new Color(46, 139, 87));
+            agregarLog("Servidor iniciado correctamente");
+            
         } catch (Exception e) {
+            // Si algo falla, intentamos limpiar todo
+            if (servicioLibros != null) {
+                try {
+                    UnicastRemoteObject.unexportObject(servicioLibros, true);
+                } catch (Exception ex) {
+                    // Ignoramos errores de limpieza
+                }
+            }
             throw new Exception(e.getMessage());
         }
     }

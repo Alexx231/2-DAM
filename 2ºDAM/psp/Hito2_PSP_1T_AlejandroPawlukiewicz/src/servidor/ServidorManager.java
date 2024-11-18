@@ -46,14 +46,45 @@ public class ServidorManager {
     // Inicia el servidor RMI
     public void iniciarServidor() throws Exception {
         try {
-            // Crea una instancia del servidor de libros
+            // Primero intentamos limpiar cualquier registro existente
+            try {
+                Registry registroExistente = LocateRegistry.getRegistry(PUERTO);
+                try {
+                    registroExistente.unbind("ServicioLibros");
+                } catch (Exception e) {
+                    // Ignoramos si el servicio no existe
+                }
+            } catch (Exception e) {
+                // Ignoramos si no hay registro existente
+            }
+
+            // Esperamos un momento para asegurar que los recursos se liberan
+            Thread.sleep(100);
+
+            // Creamos una nueva instancia del servidor
             servidor = new ServidorLibros();
-            // Crea el registro RMI en el puerto especificado
-            registry = LocateRegistry.createRegistry(PUERTO);
-            // Exporta el objeto del servidor y lo vincula en el registro
+            
+            // Intentamos crear un nuevo registro
+            try {
+                registry = LocateRegistry.createRegistry(PUERTO);
+            } catch (Exception e) {
+                // Si falla, obtenemos el registro existente
+                registry = LocateRegistry.getRegistry(PUERTO);
+            }
+
+            // Exportamos el objeto y lo vinculamos al registro
             IServicioLibros stub = (IServicioLibros) UnicastRemoteObject.exportObject(servidor, 0);
             registry.rebind("ServicioLibros", stub);
+
         } catch (Exception e) {
+            // Si algo falla, intentamos limpiar todo
+            if (servidor != null) {
+                try {
+                    UnicastRemoteObject.unexportObject(servidor, true);
+                } catch (Exception ex) {
+                    // Ignoramos errores de limpieza
+                }
+            }
             throw new Exception("Error al iniciar el servidor: " + e.getMessage());
         }
     }
@@ -62,10 +93,15 @@ public class ServidorManager {
     public void detenerServidor() throws Exception {
         try {
             if (registry != null) {
-                // Desvincula el objeto del servidor del registro
-                registry.unbind("ServicioLibros");
-                // Desexporta el objeto del servidor y el registro
-                UnicastRemoteObject.unexportObject(servidor, true);
+                try {
+                    registry.unbind("ServicioLibros");
+                } catch (Exception e) {
+                    // Ignoramos si el servicio ya no existe
+                }
+                
+                if (servidor != null) {
+                    UnicastRemoteObject.unexportObject(servidor, true);
+                }
                 UnicastRemoteObject.unexportObject(registry, true);
                 registry = null;
                 servidor = null;
