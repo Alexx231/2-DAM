@@ -1,0 +1,11 @@
+/workspaces/2-DAM/2ºDAM/accesodatos/BookWorld/src/main/java/bookworld/modelos/Libro.java
+/workspaces/2-DAM/2ºDAM/accesodatos/BookWorld/src/main/java/bookworld/config/ConexionBD.java
+/workspaces/2-DAM/2ºDAM/accesodatos/BookWorld/src/main/java/bookworld/dao/ClienteDAO.java
+/workspaces/2-DAM/2ºDAM/accesodatos/BookWorld/src/main/java/bookworld/Main.java
+/workspaces/2-DAM/2ºDAM/accesodatos/BookWorld/src/main/java/bookworld/modelos/Cliente.java
+/workspaces/2-DAM/2ºDAM/accesodatos/BookWorld/src/main/java/bookworld/dao/ReportesDAO.java
+/workspaces/2-DAM/2ºDAM/accesodatos/BookWorld/src/main/java/bookworld/servicio/ReporteServicio.java
+/workspaces/2-DAM/2ºDAM/accesodatos/BookWorld/src/main/java/bookworld/dao/VentaDAO.java
+/workspaces/2-DAM/2ºDAM/accesodatos/BookWorld/src/main/java/bookworld/modelos/DetalleVenta.java
+/workspaces/2-DAM/2ºDAM/accesodatos/BookWorld/src/main/java/bookworld/modelos/Venta.java
+/workspaces/2-DAM/2ºDAM/accesodatos/BookWorld/src/main/java/bookworld/dao/LibroDAO.java
