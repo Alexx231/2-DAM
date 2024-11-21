@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        .container {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        
+        .color-box {
+            height: 100px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            padding: 10px;
+            border-radius: 5px;
+            text-align: center;
+        }
+
+        .dark-text {
+            color: #333;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="color-box" style="background-color: #333333">
+            #333333<br>Gris oscuro
+        </div>
+        <div class="color-box" style="background-color: #343434">
+            #343434<br>Gris similar
+        </div>
+        <div class="color-box" style="background-color: #353535">
+            #353535<br>Gris ligeramente diferente
+        </div>
+        <div class="color-box" style="background-color: #2E2E2E">
+            #2E2E2E<br>Gris oscuro tenue
+        </div>
+        <div class="color-box" style="background-color: #363636">
+            #363636<br>Gris más claro
+        </div>
+        <div class="color-box dark-text" style="background-color: rgb(223, 227, 234)">
+            RGB(223, 227, 234)<br>Gris claro
+        </div>
+        <div class="color-box" style="background-color: rgb(125, 140, 154)">
+            RGB(125, 140, 154)<br>Gris más oscuro
+        </div>
+        <div class="color-box" style="background-color: rgb(24, 102, 204)">
+            RGB(153, 184, 224)<br>Azul claro
+        </div>
+    </div>
+</body>
+</html>
