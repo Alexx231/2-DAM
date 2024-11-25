@@ -6,8 +6,8 @@ import java.io.InputStreamReader;
 public class ActividadUno {
     
     public static void main(String[] args) {
+        // Intenta ejecutar el comando "tasklist.exe"
         try {
-
             Process proceso = Runtime.getRuntime().exec("tasklist.exe");
             
             // Crear un BufferedReader para leer la salida del proceso
@@ -25,6 +25,7 @@ public class ActividadUno {
             // Cerrar el BufferedReader
             reader.close();
         } catch (Exception e) {
+            // Maneja cualquier excepción que ocurra durante la ejecución del proceso
             e.printStackTrace();
         }
     }
