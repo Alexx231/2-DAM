@@ -1,0 +1,2 @@
+Error: Could not find or load main class ejercicios.ActividadSeis
+Caused by: java.lang.ClassNotFoundException: ejercicios.ActividadSeis
