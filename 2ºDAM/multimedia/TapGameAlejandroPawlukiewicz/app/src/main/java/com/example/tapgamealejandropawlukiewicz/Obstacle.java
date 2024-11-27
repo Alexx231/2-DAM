@@ -1,31 +1,37 @@
 package com.example.tapgamealejandropawlukiewicz;
 
+import static com.google.protobuf.DescriptorProtos.FileOptions.OptimizeMode.SPEED;
+
 import android.content.Context;
 import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 
 public class Obstacle {
-    private final ImageView view;
+    private ImageView view;
     private float x;
-    private static final float SPEED = 10f;
-    private boolean scored = false; // Nuevo campo para rastrear si se ha puntuado
+    private boolean scored;
+    private ViewGroup parentView;
 
-    public Obstacle(Context context) {
+    public Obstacle(Context context, ViewGroup parentView) {
+        this.parentView = parentView;
         view = new ImageView(context);
-        view.setImageResource(R.drawable.obstacle_type_1);
+        view.setImageResource(R.drawable.obstacle_type_1); // Asegúrate de tener este recurso
 
-        view.setLayoutParams(new ViewGroup.LayoutParams(
-                ViewGroup.LayoutParams.WRAP_CONTENT,
-                ViewGroup.LayoutParams.WRAP_CONTENT));
+        // Configura el tamaño y la posición del obstáculo
+        int size = 80; // o el tamaño que desees
+        RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(size, size);
+        params.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
+        params.bottomMargin = 0; // ajusta según necesites
+        view.setLayoutParams(params);
 
-        x = context.getResources().getDisplayMetrics().widthPixels;
-        float y = context.getResources().getDisplayMetrics().heightPixels - 220;
-
+        // Establece la posición inicial
+        x = parentView.getWidth();
         view.setX(x);
-        view.setY(y);
+        scored = false;
     }
 
     public void moveLeft(float speed) {
@@ -33,28 +39,6 @@ public class Obstacle {
         view.setX(x);
     }
 
-    // Nuevo método para detectar colisiones
-    public boolean intersects(Rect characterBounds) {
-        Rect obstacleBounds = new Rect();
-        view.getHitRect(obstacleBounds);
-        return Rect.intersects(characterBounds, obstacleBounds);
-    }
-
-    public void update() {
-        x -= SPEED;
-        view.setX(x);
-    }
-
-    // Nuevos métodos para manejar el estado de puntuación
-    public boolean isScored() {
-        return scored;
-    }
-
-    public void setScored(boolean scored) {
-        this.scored = scored;
-    }
-
-    // Métodos existentes
     public float getX() {
         return x;
     }
@@ -63,13 +47,21 @@ public class Obstacle {
         return view.getWidth();
     }
 
-    public View getView() {
+    public ImageView getView() {
         return view;
     }
 
-    public Rect getBounds() {
-        Rect bounds = new Rect();
-        view.getHitRect(bounds);
-        return bounds;
+    public boolean isScored() {
+        return scored;
+    }
+
+    public void setScored(boolean scored) {
+        this.scored = scored;
+    }
+
+    public boolean intersects(Rect characterBounds) {
+        Rect obstacleBounds = new Rect();
+        view.getHitRect(obstacleBounds);
+        return Rect.intersects(characterBounds, obstacleBounds);
     }
 }

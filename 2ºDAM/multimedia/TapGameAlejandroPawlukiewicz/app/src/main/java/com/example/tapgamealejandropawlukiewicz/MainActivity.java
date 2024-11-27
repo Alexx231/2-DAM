@@ -1,46 +1,43 @@
-package com. example. tapgamealejandropawlukiewicz;
+package com.example.tapgamealejandropawlukiewicz;
 
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
+import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
-import android.content.Intent;
 import android.graphics.Rect;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
+import android.util.Log;
+import android.view.MotionEvent;
+import android.view.View;
+import android.view.animation.AccelerateDecelerateInterpolator;
+import android.view.animation.AccelerateInterpolator;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
-
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.constraintlayout.widget.ConstraintLayout;
-
-import com.example.tapgamealejandropawlukiewicz.Login;
-import com.example.tapgamealejandropawlukiewicz.Obstacle;
-import com.example.tapgamealejandropawlukiewicz.R;
-import com.google.firebase.auth.FirebaseAuth;
-
+import android.widget.RelativeLayout;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-// MainActivity.java
 public class MainActivity extends AppCompatActivity {
     private static final float OBSTACLE_SPEED = 10f;
-    private static final int OBSTACLE_SPAWN_INTERVAL = 2000; // 2 segundos
-    private static final float JUMP_FORCE = -25f;
-    private static final float GRAVITY = 1.5f;
+    private static final int OBSTACLE_SPAWN_INTERVAL = 2000;
+    private static final float JUMP_HEIGHT = 300f;
+    private static final int JUMP_DURATION = 500;
 
+    private GameView gameView;
     private ImageView character;
-    private float characterY;
-    private float initialY;
-    private float velocityY = 0;
-    private boolean isJumping = false;
-    private List<Obstacle> obstacles;
-    private int score = 0;
     private TextView scoreText;
-    private ConstraintLayout gameLayout;
-    private Handler gameHandler;
-    private boolean isGameRunning = true;
+    private RelativeLayout gameLayout;
+    private Handler handler;
+
+    private boolean isJumping = false;
+    private boolean isGameRunning = false;
+    private int score = 0;
+    private List<Obstacle> obstacles = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,13 +50,15 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void initializeViews() {
-        character = findViewById(R.id.character);
-        scoreText = findViewById(R.id.scoreText);
-        gameLayout = findViewById(R.id.gameLayout);
-        initialY = character.getY();
-        characterY = initialY;
-        obstacles = new ArrayList<>();
-        gameHandler = new Handler(Looper.getMainLooper());
+        try {
+            character = findViewById(R.id.character);
+            scoreText = findViewById(R.id.scoreText);
+            gameLayout = findViewById(R.id.gameLayout);
+            handler = new Handler(Looper.getMainLooper());
+        } catch (Exception e) {
+            Log.e("MainActivity", "Error en initializeViews: " + e.getMessage());
+            e.printStackTrace();
+        }
     }
 
     private void setupGame() {
@@ -68,70 +67,83 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void startGame() {
+        isGameRunning = true;
+        score = 0;
+        obstacles.clear();
         startGameLoop();
         spawnObstacles();
-    }
-
-    private void startGameLoop() {
-        gameHandler.post(new Runnable() {
-            @Override
-            public void run() {
-                if (isGameRunning) {
-                    updateGameState();
-                    gameHandler.postDelayed(this, 16);
-                }
-            }
-        });
-    }
-
-    private void spawnObstacles() {
-        gameHandler.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                if (isGameRunning) {
-                    addNewObstacle();
-                    gameHandler.postDelayed(this, OBSTACLE_SPAWN_INTERVAL);
-                }
-            }
-        }, OBSTACLE_SPAWN_INTERVAL);
-    }
-
-    private void updateGameState() {
-        updateCharacterPosition();
-        updateObstacles();
-        checkCollisions();
-    }
-
-    private void updateCharacterPosition() {
-        if (isJumping) {
-            velocityY += GRAVITY;
-            characterY += velocityY;
-
-            if (characterY >= initialY) {
-                characterY = initialY;
-                velocityY = 0;
-                isJumping = false;
-                character.setRotation(0f);
-            }
-
-            character.setY(characterY);
-        }
     }
 
     private void jump() {
         if (!isJumping) {
             isJumping = true;
-            velocityY = JUMP_FORCE;
 
-            // Animación de rotación
-            ObjectAnimator rotation = ObjectAnimator.ofFloat(character, "rotation", 0f, 360f);
-            rotation.setDuration(500);
-            rotation.start();
+            ObjectAnimator jumpUp = ObjectAnimator.ofFloat(
+                    character,
+                    "translationY",
+                    0f,
+                    -JUMP_HEIGHT
+            );
+            jumpUp.setDuration(JUMP_DURATION / 2);
+            jumpUp.setInterpolator(new AccelerateDecelerateInterpolator());
+
+            ObjectAnimator jumpDown = ObjectAnimator.ofFloat(
+                    character,
+                    "translationY",
+                    -JUMP_HEIGHT,
+                    0f
+            );
+            jumpDown.setDuration(JUMP_DURATION / 2);
+            jumpDown.setInterpolator(new AccelerateInterpolator());
+
+            AnimatorSet jumpSequence = new AnimatorSet();
+            jumpSequence.playSequentially(jumpUp, jumpDown);
+            jumpSequence.addListener(new AnimatorListenerAdapter() {
+                @Override
+                public void onAnimationEnd(Animator animation) {
+                    isJumping = false;
+                }
+            });
+            jumpSequence.start();
         }
     }
 
+    private void startGameLoop() {
+        handler.post(new Runnable() {
+            @Override
+            public void run() {
+                if (isGameRunning) {
+                    updateGameState();
+                    handler.postDelayed(this, 16); // ~60 FPS
+                }
+            }
+        });
+    }
+
+    private void updateGameState() {
+        updateObstacles();
+        checkCollisions();
+    }
+
+    private void spawnObstacles() {
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                if (isGameRunning && Math.random() < 0.3) { // 30% de probabilidad
+                    // Aquí creamos el nuevo obstáculo
+                    Obstacle obstacle = new Obstacle(MainActivity.this, gameLayout);
+                    obstacles.add(obstacle);
+                    gameLayout.addView(obstacle.getView());
+                }
+                if (isGameRunning) {
+                    handler.postDelayed(this, OBSTACLE_SPAWN_INTERVAL);
+                }
+            }
+        }, OBSTACLE_SPAWN_INTERVAL);
+    }
+
     private void addNewObstacle() {
-        Obstacle obstacle = new Obstacle(this);
+        Obstacle obstacle = new Obstacle(this, gameLayout);
         obstacles.add(obstacle);
         gameLayout.addView(obstacle.getView());
     }
@@ -142,7 +154,9 @@ public class MainActivity extends AppCompatActivity {
             Obstacle obstacle = iterator.next();
             obstacle.moveLeft(OBSTACLE_SPEED);
 
-            if (!obstacle.isScored() && obstacle.getX() < character.getX()) {
+            if (!obstacle.isScored() &&
+                    obstacle.getX() < character.getX() &&
+                    isJumping) {
                 score++;
                 obstacle.setScored(true);
                 updateScore();
@@ -155,25 +169,27 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    private void updateScore() {
-        runOnUiThread(() -> scoreText.setText("Score: " + score));
-    }
-
     private void checkCollisions() {
-        Rect characterBounds = new Rect();
-        character.getHitRect(characterBounds);
+        if (!isJumping) {
+            Rect characterBounds = new Rect();
+            character.getHitRect(characterBounds);
 
-        for (Obstacle obstacle : obstacles) {
-            if (obstacle.intersects(characterBounds)) {
-                gameOver();
-                break;
+            for (Obstacle obstacle : obstacles) {
+                if (obstacle.intersects(characterBounds)) {
+                    gameOver();
+                    break;
+                }
             }
         }
     }
 
+    private void updateScore() {
+        runOnUiThread(() -> scoreText.setText("Score: " + score));
+    }
+
     private void gameOver() {
         isGameRunning = false;
-        gameHandler.removeCallbacksAndMessages(null);
+        handler.removeCallbacksAndMessages(null);
 
         new AlertDialog.Builder(this)
                 .setTitle("¡Game Over!")
@@ -186,11 +202,8 @@ public class MainActivity extends AppCompatActivity {
 
     private void restartGame() {
         score = 0;
-        characterY = initialY;
-        velocityY = 0;
         isJumping = false;
-        character.setRotation(0f);
-        character.setY(initialY);
+        character.setTranslationY(0f);
 
         for (Obstacle obstacle : obstacles) {
             gameLayout.removeView(obstacle.getView());
@@ -198,14 +211,30 @@ public class MainActivity extends AppCompatActivity {
         obstacles.clear();
 
         scoreText.setText("Score: 0");
-        isGameRunning = true;
         startGame();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        isGameRunning = false;
+        handler.removeCallbacksAndMessages(null);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (!isGameRunning) {
+            startGame();
+        }
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        if (handler != null) {
+            handler.removeCallbacksAndMessages(null);
+        }
         isGameRunning = false;
-        gameHandler.removeCallbacksAndMessages(null);
     }
 }
