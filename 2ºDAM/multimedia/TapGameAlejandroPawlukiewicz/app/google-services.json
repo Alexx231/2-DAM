@@ -1,0 +1,30 @@
+{
+  "project_info": {
+    "project_number": "43180615202",
+    "firebase_url": "https://hito1multimedia-default-rtdb.firebaseio.com",
+    "project_id": "hito1multimedia",
+    "storage_bucket": "hito1multimedia.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:43180615202:android:acca56f9cfbe380f24cc7b",
+        "android_client_info": {
+          "package_name": "com.example.tapgamealejandropawlukiewicz"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBHZ4Lu60rJCZu9QJbR9c_TwcYDQiUTx4w"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
