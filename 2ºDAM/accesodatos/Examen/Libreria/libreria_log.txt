@@ -1,0 +1,4 @@
+2024-11-28 23:21:48 - Consulta de libros por temática: Fantasia
+2024-11-28 23:21:50 - Consulta de todos los libros
+2024-11-28 23:21:53 - Consulta de resumen de ventas
+2024-11-28 23:21:59 - Exportación de libros a CSV

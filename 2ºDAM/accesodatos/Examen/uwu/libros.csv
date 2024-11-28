@@ -1,0 +1,41 @@
+ID,Título,Autor,Editorial,Temática,Precio
+1,"Dune","Frank Herbert","Ace","Ciencia Ficción",19.99
+2,"Neuromante","William Gibson","Ace","Ciencia Ficción",15.99
+3,"Fahrenheit 451","Ray Bradbury","Ballantine Books","Ciencia Ficción",13.99
+4,"1984","George Orwell","Harcourt","Ciencia Ficción",16.99
+5,"El fin de la infancia","Arthur C. Clarke","HarperVoyager","Ciencia Ficción",14.99
+6,"La máquina del tiempo","H.G. Wells","Tor Classics","Ciencia Ficción",10.99
+7,"El hombre en el castillo","Philip K. Dick","Vintage","Ciencia Ficción",18.99
+8,"Fundación","Isaac Asimov","Spectra","Ciencia Ficción",17.99
+9,"Solaris","Stanisław Lem","Harcourt","Ciencia Ficción",14.50
+10,"La guerra de los mundos","H.G. Wells","Signet Classics","Ciencia Ficción",12.50
+11,"El Señor de los Anillos","J.R.R. Tolkien","Minotauro","Fantasía",25.99
+12,"Juego de Tronos","George R.R. Martin","Bantam","Fantasía",22.99
+13,"El Hobbit","J.R.R. Tolkien","Minotauro","Fantasía",15.99
+14,"La espada del destino","Andrzej Sapkowski","Alamut","Fantasía",20.99
+15,"Harry Potter y la piedra filosofal","J.K. Rowling","Bloomsbury","Fantasía",18.99
+16,"La historia interminable","Michael Ende","Alfaguara","Fantasía",14.99
+17,"Crónica del asesino de reyes: El nombre del viento","Patrick Rothfuss","DAW Books","Fantasía",19.99
+18,"Las crónicas de Narnia: El león, la bruja y el armario","C.S. Lewis","HarperCollins","Fantasía",13.99
+19,"El último deseo","Andrzej Sapkowski","Alamut","Fantasía",21.99
+20,"La princesa prometida","William Goldman","Harcourt","Fantasía",16.99
+21,"Sapiens: De animales a dioses","Yuval Noah Harari","Debate","Historia",18.99
+22,"Homo Deus","Yuval Noah Harari","Debate","Historia",19.99
+23,"Guns, Germs, and Steel","Jared Diamond","W.W. Norton","Historia",21.99
+24,"El origen de las especies","Charles Darwin","Penguin Classics","Historia",16.99
+25,"Los cañones de agosto","Barbara W. Tuchman","Ballantine Books","Historia",14.99
+26,"El declive de Occidente","Oswald Spengler","Alianza Editorial","Historia",22.99
+27,"Historia de Roma","Indro Montanelli","Debolsillo","Historia",12.99
+28,"El ascenso y la caída del Tercer Reich","William L. Shirer","Simon & Schuster","Historia",23.99
+29,"Chernóbil: La tragedia","Serhii Plokhy","Alianza","Historia",17.99
+30,"Historia de España contada para escépticos","Juan Eslava Galán","Planeta","Historia",15.99
+31,"Don Quijote de la Mancha","Miguel de Cervantes","Cátedra","Literatura Clásica",17.99
+32,"Crimen y castigo","Fiódor Dostoyevski","Penguin Classics","Literatura Clásica",14.99
+33,"Orgullo y prejuicio","Jane Austen","Penguin Classics","Literatura Clásica",13.99
+34,"Moby Dick","Herman Melville","Penguin Classics","Literatura Clásica",16.99
+35,"Los hermanos Karamázov","Fiódor Dostoyevski","Penguin Classics","Literatura Clásica",18.99
+36,"En busca del tiempo perdido","Marcel Proust","Gallimard","Literatura Clásica",22.99
+37,"Cien años de soledad","Gabriel García Márquez","Sudamericana","Literatura Clásica",15.99
+38,"Anna Karénina","Lev Tolstói","Penguin Classics","Literatura Clásica",19.99
+39,"La Divina Comedia","Dante Alighieri","Penguin Classics","Literatura Clásica",25.99
+40,"Hamlet","William Shakespeare","Oxford University Press","Literatura Clásica",12.99
