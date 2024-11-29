@@ -15,6 +15,8 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.animation.AccelerateDecelerateInterpolator;
 import android.view.animation.AccelerateInterpolator;
+import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import androidx.appcompat.app.AlertDialog;
@@ -23,6 +25,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.widget.RelativeLayout;
+import android.widget.Toast;
 
 import com.example.tapgamealejandropawlukiewicz.adapters.RankingAdapter;
 import com.google.firebase.auth.FirebaseAuth;
@@ -36,13 +39,19 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity {
     private static float OBSTACLE_SPEED = 20f;
     private static int OBSTACLE_SPAWN_INTERVAL = 1500;
-    private static final float JUMP_HEIGHT = 300f;
+    private static float JUMP_HEIGHT = 300f;
 
     private static final float SPEED_INCREMENT = 5f;
     private static final int SPAWN_REDUCTION = 300;
     private int lastSpeedIncrease = 0;
     private int lastSpawnIncrease = 0;
     private static final int JUMP_DURATION = 500;
+
+    private static final int JUMP_UPGRADE_COST = 500;
+    private static final float JUMP_UPGRADE_MULTIPLIER = 1.5f;
+    private boolean jumpUpgraded = false;
+    private ImageButton shopButton;
+
 
     private GameView gameView;
     private ImageView character;
@@ -64,6 +73,7 @@ public class MainActivity extends AppCompatActivity {
 
         initializeMusic();
         initializeViews();
+        setupShop();
         setupGame();
         startGame();
     }
@@ -74,6 +84,7 @@ public class MainActivity extends AppCompatActivity {
             scoreText = findViewById(R.id.scoreText);
             gameLayout = findViewById(R.id.gameLayout);
             handler = new Handler(Looper.getMainLooper());
+            shopButton = findViewById(R.id.shopButton);
         } catch (Exception e) {
             Log.e("MainActivity", "Error en initializeViews: " + e.getMessage());
             e.printStackTrace();
@@ -107,12 +118,13 @@ public class MainActivity extends AppCompatActivity {
     private void jump() {
         if (!isJumping) {
             isJumping = true;
+            float currentJumpHeight = jumpUpgraded ? JUMP_HEIGHT : JUMP_HEIGHT;
 
             ObjectAnimator jumpUp = ObjectAnimator.ofFloat(
                     character,
                     "translationY",
                     0f,
-                    -JUMP_HEIGHT
+                    currentJumpHeight
             );
             jumpUp.setDuration(JUMP_DURATION / 2);
             jumpUp.setInterpolator(new AccelerateDecelerateInterpolator());
@@ -382,6 +394,43 @@ public class MainActivity extends AppCompatActivity {
             Log.e("MainActivity", "Error en showRankingDialog: " + e.getMessage());
             restartGame();
         }
+    }
+
+    private void setupShop() {
+        shopButton.setOnClickListener(v -> showShopDialog());
+    }
+
+    private void showShopDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        View shopView = getLayoutInflater().inflate(R.layout.shop_dialog, null);
+
+        TextView currentScoreText = shopView.findViewById(R.id.currentScoreText);
+        Button upgradeJumpButton = shopView.findViewById(R.id.upgradeJumpButton);
+
+        currentScoreText.setText("Puntos disponibles: " + score);
+
+        // Habilitar/deshabilitar botón según puntuación y estado
+        upgradeJumpButton.setEnabled(score >= JUMP_UPGRADE_COST && !jumpUpgraded);
+        if (jumpUpgraded) {
+            upgradeJumpButton.setText("Salto Mejorado (Comprado)");
+        }
+
+        upgradeJumpButton.setOnClickListener(v -> {
+            if (score >= JUMP_UPGRADE_COST && !jumpUpgraded) {
+                score -= JUMP_UPGRADE_COST;
+                jumpUpgraded = true;
+                JUMP_HEIGHT *= JUMP_UPGRADE_MULTIPLIER;
+                updateScore();
+                v.setEnabled(false);
+                ((Button) v).setText("Salto Mejorado (Comprado)");
+                Toast.makeText(this, "¡Mejora de salto adquirida!", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        builder.setView(shopView)
+                .setTitle("Tienda")
+                .setPositiveButton("Cerrar", null)
+                .show();
     }
 
     private void restartGame() {

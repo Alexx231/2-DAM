@@ -13,8 +13,16 @@ android {
         targetSdk = 34
         versionCode = 1
         versionName = "1.0"
-
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+    }
+
+    signingConfigs {
+        create("release") {
+            storeFile = file("keystore/release.keystore")
+            storePassword = "your_store_password"
+            keyAlias = "your_key_alias"
+            keyPassword = "your_key_password"
+        }
     }
 
     buildTypes {
@@ -24,8 +32,20 @@ android {
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
+            signingConfig = signingConfigs.getByName("release")
         }
     }
+
+    splits {
+        abi {
+            isEnable = false
+            reset()
+        }
+        density {
+            isEnable = false
+        }
+    }
+
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_11
         targetCompatibility = JavaVersion.VERSION_11

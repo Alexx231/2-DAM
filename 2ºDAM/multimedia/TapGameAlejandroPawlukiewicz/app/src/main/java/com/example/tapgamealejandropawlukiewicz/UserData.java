@@ -5,6 +5,7 @@ public class UserData {
     private String email;
     private String username;
     private int highScore;
+    private boolean hasJumpUpgrade;
 
     public UserData() {} // Constructor vacío necesario para Firestore
 
@@ -18,4 +19,12 @@ public class UserData {
     public String getEmail() { return email; }
     public String getUsername() { return username; }
     public int getHighScore() { return highScore; }
+
+    public boolean hasJumpUpgrade() {
+        return hasJumpUpgrade;
+    }
+
+    public void setHasJumpUpgrade(boolean hasJumpUpgrade) {
+        this.hasJumpUpgrade = hasJumpUpgrade;
+    }
 }

@@ -13,6 +13,16 @@
         android:src="@drawable/ground_pattern"
         android:scaleType="fitXY"/>
 
+    <ImageButton
+        android:id="@+id/shopButton"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_alignParentEnd="true"
+        android:layout_margin="16dp"
+        android:background="?attr/selectableItemBackgroundBorderless"
+        android:src="@drawable/shop_icon"
+        android:contentDescription="Tienda"/>
+
     <ImageView
         android:id="@+id/character"
         android:layout_width="80dp"

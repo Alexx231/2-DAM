@@ -71,61 +71,62 @@ public class Login extends AppCompatActivity { // Definición de la clase Login 
         }
     }
 
-    private void setup() { // Método para configurar los listeners de los botones
-        setTitle("Login"); // Establecer el título de la actividad
-
-        // Manejar el clic del botón de registro
-        botonRegistro.setOnClickListener(new View.OnClickListener() { // Listener para el botón de registro
-            @Override
-            public void onClick(View v) { // Método onClick que se ejecuta al hacer clic en el botón
-                if (!emailText.getText().toString().isEmpty() && !passwordText.getText().toString().isEmpty()) { // Verificar que los campos de email y contraseña no estén vacíos
-                    FirebaseAuth.getInstance().createUserWithEmailAndPassword(emailText.getText().toString(), passwordText.getText().toString()) // Crear un nuevo usuario con email y contraseña
-                            .addOnCompleteListener(task -> { // Listener para completar la operación
-                                if (task.isSuccessful()) { // Si la operación es exitosa
-                                    FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser(); // Obtener el usuario actual de Firebase
-                                    if (user != null) { // Si el usuario no es nulo
-                                        FirebaseFirestore db = FirebaseFirestore.getInstance(); // Obtener la instancia de Firestore
-                                        Map<String, Object> userData = new HashMap<>(); // Crear un mapa para almacenar los datos del usuario
-                                        userData.put("email", user.getEmail()); // Agregar el email al mapa
-                                        db.collection("users").document(user.getUid()) // Obtener la colección "users" en Firestore y el documento del usuario
-                                                .set(userData) // Establecer los datos del usuario en el documento
-                                                .addOnSuccessListener(aVoid -> { // Listener para el éxito de la operación
-                                                    showMainActivity(); // Navegar a MainActivity
-                                                });
-                                    }
-                                } else { // Si la operación falla
-                                    if (task.getException() instanceof FirebaseAuthUserCollisionException) { // Si la excepción es una colisión de usuarios
-                                        showAlert("Este correo electrónico ya está en uso."); // Mostrar alerta de colisión de usuarios
-                                    } else { // Si la excepción es otra
-                                        showAlert(task.getException().getMessage()); // Mostrar alerta con el mensaje de la excepción
-                                    }
-                                }
-                            });
-                } else { // Si los campos están vacíos
-                    Toast.makeText(Login.this, "Por favor, complete todos los campos", Toast.LENGTH_SHORT).show(); // Mostrar un mensaje de toast
-                }
-            }
-        });
-
-        // Manejar el clic del botón de inicio de sesión
-        botonInicioSesion.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (!emailText.getText().toString().isEmpty() && !passwordText.getText().toString().isEmpty()) {
-                    FirebaseAuth.getInstance().signInWithEmailAndPassword(emailText.getText().toString(), passwordText.getText().toString())
-                            .addOnCompleteListener(task -> {
-                                if (task.isSuccessful()) {
-                                    // Espera breve antes de la transición
-                                    startMainActivity();
-                                    new Handler().postDelayed(() -> showMainActivity(), 500);
+    private void setup() {
+        setTitle("Login");
+        botonRegistro.setOnClickListener(v -> {
+            if (!emailText.getText().toString().isEmpty() && !passwordText.getText().toString().isEmpty()) {
+                FirebaseAuth.getInstance().createUserWithEmailAndPassword(emailText.getText().toString(), passwordText.getText().toString())
+                        .addOnCompleteListener(task -> {
+                            if (task.isSuccessful()) {
+                                // Cuando el registro es exitoso, mostrar el diálogo de nombre de usuario
+                                showUsernameDialog(emailText.getText().toString());
+                            } else {
+                                if (task.getException() instanceof FirebaseAuthUserCollisionException) {
+                                    showAlert("Este correo electrónico ya está en uso.");
                                 } else {
-                                    showAlert(task.getException().getMessage());
+                                    showAlert("Error al registrar usuario.");
                                 }
-                            });
-                }
+                            }
+                        });
+            } else {
+                showAlert("Por favor, complete todos los campos.");
             }
         });
-        }
+
+        botonInicioSesion.setOnClickListener(v -> {
+            if (!emailText.getText().toString().isEmpty() && !passwordText.getText().toString().isEmpty()) {
+                FirebaseAuth.getInstance().signInWithEmailAndPassword(emailText.getText().toString(), passwordText.getText().toString())
+                        .addOnCompleteListener(task -> {
+                            if (task.isSuccessful()) {
+                                FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+                                if (user != null) {
+                                    FirebaseFirestore db = FirebaseFirestore.getInstance();
+                                    db.collection("users").document(user.getUid()).get()
+                                            .addOnSuccessListener(documentSnapshot -> {
+                                                if (documentSnapshot.exists()) {
+                                                    // Si el usuario ya tiene un nombre de usuario, ir a MainActivity
+                                                    if (documentSnapshot.contains("username")) {
+                                                        showMainActivity();
+                                                    } else {
+                                                        // Si no tiene nombre de usuario, mostrar el diálogo
+                                                        showUsernameDialog(user.getEmail());
+                                                    }
+                                                } else {
+                                                    // Si el documento no existe, mostrar el diálogo
+                                                    showUsernameDialog(user.getEmail());
+                                                }
+                                            })
+                                            .addOnFailureListener(e -> showAlert("Error al verificar usuario."));
+                                }
+                            } else {
+                                showAlert("Error al iniciar sesión.");
+                            }
+                        });
+            } else {
+                showAlert("Por favor, complete todos los campos.");
+            }
+        });
+    }
 
     // Mostrar un cuadro de diálogo de alerta con un mensaje de error
     private void showAlert(String message) {
@@ -182,13 +183,22 @@ public class Login extends AppCompatActivity { // Definición de la clase Login 
 
     private void saveUserToFirestore(String email, String username) {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
-        UserData userData = new UserData(email, username, 0);
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 
-        db.collection("users")
-                .document(email)
-                .set(userData)
-                .addOnSuccessListener(aVoid -> Log.d("Login", "Usuario guardado"))
-                .addOnFailureListener(e -> Log.e("Login", "Error al guardar usuario", e));
+        if (user != null) {
+            UserData userData = new UserData(email, username, 0);
+
+            db.collection("users").document(user.getUid())
+                    .set(userData)
+                    .addOnSuccessListener(aVoid -> {
+                        Log.d("Login", "Usuario guardado correctamente");
+                        showMainActivity();
+                    })
+                    .addOnFailureListener(e -> {
+                        Log.e("Login", "Error al guardar usuario", e);
+                        showAlert("Error al guardar el nombre de usuario");
+                    });
+        }
     }
 
     @Override
