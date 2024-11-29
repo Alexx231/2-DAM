@@ -1,8 +1,11 @@
 package com.example.tapgamealejandropawlukiewicz; // Paquete de la aplicación
 
 import android.content.Intent; // Importación de la clase Intent para cambiar de actividad
+import android.media.MediaPlayer;
 import android.os.Bundle; // Importación de la clase Bundle para pasar datos entre actividades
 import android.os.Handler;
+import android.text.InputType;
+import android.util.Log;
 import android.view.View; // Importación de la clase View para manejar la interfaz de usuario
 import android.widget.Button; // Importación de la clase Button para manejar botones
 import android.widget.EditText; // Importación de la clase EditText para manejar campos de texto
@@ -26,6 +29,9 @@ import java.util.Map; // Importación de la clase Map para manejar mapas de dato
 public class Login extends AppCompatActivity { // Definición de la clase Login que extiende AppCompatActivity
 
     // Elementos de la interfaz de usuario
+
+    private MediaPlayer mediaPlayer;
+
     private EditText emailText; // Campo de texto para el email
     private EditText passwordText; // Campo de texto para la contraseña
     private Button botonRegistro; // Botón para el registro
@@ -36,6 +42,7 @@ public class Login extends AppCompatActivity { // Definición de la clase Login 
         super.onCreate(savedInstanceState); // Llamada al método onCreate de la superclase
         EdgeToEdge.enable(this); // Habilitar la visualización de borde a borde
         setContentView(R.layout.activity_login); // Establecer el diseño de la actividad
+        initializeMusic();
 
         // Ajustar el padding para las barras del sistema
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> { // Listener para aplicar márgenes de ventana
@@ -51,6 +58,17 @@ public class Login extends AppCompatActivity { // Definición de la clase Login 
         botonInicioSesion = findViewById(R.id.botonIniciarSesion); // Inicializar el botón de inicio de sesión
 
         setup(); // Configurar los listeners de los botones
+    }
+
+    private void initializeMusic() {
+        try {
+            mediaPlayer = MediaPlayer.create(this, R.raw.music_intro);
+            mediaPlayer.setLooping(true);
+            mediaPlayer.setVolume(0.5f, 0.5f);
+            mediaPlayer.start();
+        } catch (Exception e) {
+            Log.e("Login", "Error al iniciar la música: " + e.getMessage());
+        }
     }
 
     private void setup() { // Método para configurar los listeners de los botones
@@ -98,6 +116,7 @@ public class Login extends AppCompatActivity { // Definición de la clase Login 
                             .addOnCompleteListener(task -> {
                                 if (task.isSuccessful()) {
                                     // Espera breve antes de la transición
+                                    startMainActivity();
                                     new Handler().postDelayed(() -> showMainActivity(), 500);
                                 } else {
                                     showAlert(task.getException().getMessage());
@@ -125,5 +144,66 @@ public class Login extends AppCompatActivity { // Definición de la clase Login 
         homeIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(homeIntent);
         finish(); // Cierra la actividad de login
+    }
+    private void startMainActivity() {
+        // Detener música y añadir pausa antes de iniciar MainActivity
+        if (mediaPlayer != null && mediaPlayer.isPlaying()) {
+            mediaPlayer.stop();
+            mediaPlayer.release();
+        }
+
+        // Usar Handler para añadir delay
+        new Handler().postDelayed(() -> {
+            Intent intent = new Intent(Login.this, MainActivity.class);
+            startActivity(intent);
+            finish();
+        }, 1000); // 1 segundo de pausa
+    }
+
+    private void showUsernameDialog(String email) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        final EditText input = new EditText(this);
+        input.setInputType(InputType.TYPE_CLASS_TEXT);
+
+        builder.setTitle("Nombre de Usuario")
+                .setMessage("Introduce tu nombre de usuario para el ranking:")
+                .setView(input)
+                .setCancelable(false)
+                .setPositiveButton("Aceptar", (dialog, which) -> {
+                    String username = input.getText().toString();
+                    if (!username.isEmpty()) {
+                        saveUserToFirestore(email, username);
+                        startMainActivity();
+                    }
+                });
+
+        builder.show();
+    }
+
+    private void saveUserToFirestore(String email, String username) {
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        UserData userData = new UserData(email, username, 0);
+
+        db.collection("users")
+                .document(email)
+                .set(userData)
+                .addOnSuccessListener(aVoid -> Log.d("Login", "Usuario guardado"))
+                .addOnFailureListener(e -> Log.e("Login", "Error al guardar usuario", e));
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        if (mediaPlayer != null && mediaPlayer.isPlaying()) {
+            mediaPlayer.pause();
+        }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (mediaPlayer != null && !mediaPlayer.isPlaying()) {
+            mediaPlayer.start();
+        }
     }
 }

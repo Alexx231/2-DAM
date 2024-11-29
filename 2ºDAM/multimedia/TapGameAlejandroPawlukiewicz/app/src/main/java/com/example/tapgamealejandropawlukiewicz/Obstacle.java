@@ -19,13 +19,13 @@ public class Obstacle {
     public Obstacle(Context context, ViewGroup parentView) {
         this.parentView = parentView;
         view = new ImageView(context);
-        view.setImageResource(R.drawable.obstacle_type_1); // Asegúrate de tener este recurso
+        view.setImageResource(R.drawable.obstacle_type_2); // Asegúrate de tener este recurso
 
         // Configura el tamaño y la posición del obstáculo
         int size = 80; // o el tamaño que desees
         RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(size, size);
         params.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
-        params.bottomMargin = 0; // ajusta según necesites
+        params.bottomMargin = 250; // ajusta según necesites
         view.setLayoutParams(params);
 
         // Establece la posición inicial
