@@ -2,14 +2,14 @@
 
 <familia>
 
-    <integrante nombre="Juan" apellido="Pérez" dni="12345678A" rango="Padre"></integrante>
+    <integrante nombre="Juan" apellido="Pérez" dni="12345678A" rango="Padre"/>
 
-    <integrante nombre="María" apellido="García" dni="87654321B" rango="Madre"></integrante>
+    <integrante nombre="María" apellido="García" dni="87654321B" rango="Madre"/>
 
-    <integrante nombre="Carlos" apellido="Pérez" dni="11223344C" rango="Hijo"></integrante>
+    <integrante nombre="Carlos" apellido="Pérez" dni="11223344C" rango="Hijo"/>
 
-    <integrante nombre="Ana" apellido="Pérez" dni="22334455D" rango="Hija"></integrante>
+    <integrante nombre="Ana" apellido="Pérez" dni="22334455D" rango="Hija"/>
 
-    <integrante nombre="Lucía" apellido="García" dni="33445566E" rango="Abuela"></integrante>
+    <integrante nombre="Lucía" apellido="García" dni="33445566E" rango="Abuela"/>
 
 </familia>

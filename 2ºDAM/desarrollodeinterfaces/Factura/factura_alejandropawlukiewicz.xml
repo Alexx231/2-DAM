@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<factura>
+    <numero>001</numero>
+    <fecha>2023-10-15</fecha>
+    <cliente>
+        <nombre>Juan Pérez</nombre>
+        <telefono>123456789</telefono>
+        <direccion>Calle Falsa 123, Ciudad, País</direccion>
+    </cliente>
+    <concepto>Compra de productos electrónicos</concepto>
+    <total>1500.00</total>
+</factura>
