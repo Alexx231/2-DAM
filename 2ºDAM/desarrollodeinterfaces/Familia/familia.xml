@@ -1,0 +1,38 @@
+<familia>
+
+    <integrante>
+        <nombre>Juan</nombre>
+        <apellido>Pérez</apellido>
+        <dni>12345678A</dni>
+        <rango>Padre</rango>
+    </integrante>
+
+    <integrante>
+        <nombre>María</nombre>
+        <apellido>García</apellido>
+        <dni>87654321B</dni>
+        <rango>Madre</rango>
+    </integrante>
+
+    <integrante>
+        <nombre>Carlos</nombre>
+        <apellido>Pérez</apellido>
+        <dni>11223344C</dni>
+        <rango>Hijo</rango>
+    </integrante>
+
+    <integrante>
+        <nombre>Ana</nombre>
+        <apellido>Pérez</apellido>
+        <dni>22334455D</dni>
+        <rango>Hija</rango>
+    </integrante>
+
+    <integrante>
+        <nombre>Lucía</nombre>
+        <apellido>García</apellido>
+        <dni>33445566E</dni>
+        <rango>Abuela</rango>
+    </integrante>
+
+</familia>
