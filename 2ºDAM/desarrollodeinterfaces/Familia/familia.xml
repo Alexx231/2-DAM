@@ -1,38 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
 <familia>
 
-    <integrante>
-        <nombre>Juan</nombre>
-        <apellido>Pérez</apellido>
-        <dni>12345678A</dni>
-        <rango>Padre</rango>
-    </integrante>
+    <integrante nombre="Juan" apellido="Pérez" dni="12345678A" rango="Padre"></integrante>
 
-    <integrante>
-        <nombre>María</nombre>
-        <apellido>García</apellido>
-        <dni>87654321B</dni>
-        <rango>Madre</rango>
-    </integrante>
+    <integrante nombre="María" apellido="García" dni="87654321B" rango="Madre"></integrante>
 
-    <integrante>
-        <nombre>Carlos</nombre>
-        <apellido>Pérez</apellido>
-        <dni>11223344C</dni>
-        <rango>Hijo</rango>
-    </integrante>
+    <integrante nombre="Carlos" apellido="Pérez" dni="11223344C" rango="Hijo"></integrante>
 
-    <integrante>
-        <nombre>Ana</nombre>
-        <apellido>Pérez</apellido>
-        <dni>22334455D</dni>
-        <rango>Hija</rango>
-    </integrante>
+    <integrante nombre="Ana" apellido="Pérez" dni="22334455D" rango="Hija"></integrante>
 
-    <integrante>
-        <nombre>Lucía</nombre>
-        <apellido>García</apellido>
-        <dni>33445566E</dni>
-        <rango>Abuela</rango>
-    </integrante>
+    <integrante nombre="Lucía" apellido="García" dni="33445566E" rango="Abuela"></integrante>
 
 </familia>
