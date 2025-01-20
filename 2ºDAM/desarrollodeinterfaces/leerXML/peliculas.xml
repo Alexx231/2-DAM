@@ -1,0 +1,28 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<peliculas>
+	<pelicula>
+		<nombre>Super 8</nombre>
+		<director>Director1</director>
+		<valoracion puntos="4" />
+		<publico>Adultos</publico>
+	</pelicula>
+	<pelicula>
+		<nombre>Los pitufos</nombre>
+		<director>Director1</director>
+		<valoracion puntos="3" />
+		<publico>Todos los publicos</publico>
+	</pelicula>
+	<pelicula>
+		<nombre>El Rey Leon</nombre>
+		<director>Director3</director>
+		<valoracion puntos="4" />
+		<publico>Infantil</publico>
+	</pelicula>
+	<pelicula>
+		<nombre>La Cenicienta</nombre>
+		<director>Director4</director>
+		<valoracion />
+  <!--<valoracion puntos="5" />	-->
+		<publico>Infantil</publico>
+	</pelicula>
+</peliculas>

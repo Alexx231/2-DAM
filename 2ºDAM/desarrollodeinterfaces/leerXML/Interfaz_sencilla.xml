@@ -1,0 +1,10 @@
+<interfaz>
+    <ventana titulo="Mi Aplicación_s" ancho="500" alto="500">
+        <panel nombre="panelPrincipal" layout="FlowLayout">
+            <boton nombre="boton1" texto="Botón 1" />
+            <boton nombre="boton2" texto="Botón 2" />
+            <etiqueta nombre="etiqueta1" texto="Etiqueta 1" />
+            <cajaTexto nombre="cajaTexto1" texto="Caja de Texto 1" />
+        </panel>
+    </ventana>
+</interfaz>

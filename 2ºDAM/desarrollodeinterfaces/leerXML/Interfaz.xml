@@ -1,0 +1,21 @@
+<interfaz>
+    <ventana titulo="Mi Aplicación" ancho="800" alto="600">
+        <panel nombre="panelPrincipal" layout="borderLayout">
+            <panel nombre="panelNorte" layout="flowLayout" posicion="norte">
+                <etiqueta nombre="etiquetaTitulo" texto="Bienvenido a Mi Aplicación Compleja" />
+            </panel>
+            <panel nombre="panelCentro" layout="gridLayout" filas="3" columnas="2" posicion="centro">
+                <etiqueta nombre="etiquetaNombre" texto="Nombre:" />
+                <cajaTexto nombre="cajaTextoNombre" texto="" />
+                <etiqueta nombre="etiquetaApellido" texto="Apellido:" />
+                <cajaTexto nombre="cajaTextoApellido" texto="" />
+                <etiqueta nombre="etiquetaEmail" texto="Email:" />
+                <cajaTexto nombre="cajaTextoEmail" texto="" />
+            </panel>
+            <panel nombre="panelSur" layout="flowLayout" posicion="sur">
+                <boton nombre="botonEnviar" texto="Enviar" />
+                <boton nombre="botonCancelar" texto="Cancelar" />
+            </panel>
+        </panel>
+    </ventana>
+</interfaz>
