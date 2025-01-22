@@ -42,7 +42,51 @@
         <ion-content fullscreen="true">
             <div class="banner">
                 <img src="pancarta.png" alt="Banner" style="width: 100%; max-width: 2000px; height: 850px; display: block; margin: 0 auto;">
-                <img src="letrero.png" alt="Letrero" style="width: 100%; max-width: 1200px; height: auto; display: block; margin: 50px auto 0; position: relative; z-index: 2;">
+                <div class="letrero">
+                    <h1>MAGIK PARK</h1>
+                    <p>¡La magia cobra vida!</p>
+                </div>
+                <div class="feature-cards" style="display: flex; justify-content: space-around; gap: 20px; padding: 20px; margin-top: 20px; font-family: Arial, sans-serif;">
+                    <!-- Primera tarjeta -->
+                    <div style="width: 300px; border-radius: 15px; overflow: hidden; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); display: flex;">
+                        <img src="letrero1.png" alt="Característica 1" style="width: 40%; height: auto; object-fit: cover; border-radius: 15px 0 0 15px;">
+                        <div style="padding: 15px; flex: 1; text-align: left;">
+                            <div style="background-color: #FFC107; color: black; padding: 5px 10px; font-weight: bold; font-size: 0.9em; text-align: center; margin-bottom: 10px; border-radius: 5px;">
+                                ¡Por tiempo limitado!
+                            </div>
+                            <h3 style="margin: 10px 0; font-size: 1.2em; font-weight: bold; color: #000;">Ahorra hasta 110€ en tu Bono Parques</h3>
+                            <p style="color: #555; font-size: 0.9em; line-height: 1.4;">Adelántate a Black Friday y hazte con tu Bono al mejor precio.</p>
+                            <a href="#" style="color: #007BFF; font-weight: bold; text-decoration: none; display: inline-block; margin-top: 10px;"> ¡Compra ya! &rarr;</a>
+                        </div>
+                    </div>
+                
+                    <!-- Segunda tarjeta -->
+                    <div style="width: 300px; border-radius: 15px; overflow: hidden; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); display: flex;">
+                        <img src="letrero2.png" alt="Característica 2" style="width: 40%; height: auto; object-fit: cover; border-radius: 15px 0 0 15px;">
+                        <div style="padding: 15px; flex: 1; text-align: left;">
+                            <div style="background-color: #00BFFF; color: white; padding: 5px 10px; font-weight: bold; font-size: 0.9em; text-align: center; margin-bottom: 10px; border-radius: 5px;">
+                                ¡La Comunión más especial!
+                            </div>
+                            <h3 style="margin: 10px 0; font-size: 1.2em; font-weight: bold; color: #000;">Un lugar único para la celebración</h3>
+                            <p style="color: #555; font-size: 0.9em; line-height: 1.4;">Para la celebración de un día inolvidable.</p>
+                            <a href="#" style="color: #007BFF; font-weight: bold; text-decoration: none; display: inline-block; margin-top: 10px;">¡Más info! &rarr;</a>
+                        </div>
+                    </div>
+                
+                    <!-- Tercera tarjeta -->
+                    <div style="width: 300px; border-radius: 15px; overflow: hidden; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); display: flex;">
+                        <img src="letrero3.png" alt="Característica 3" style="width: 40%; height: auto; object-fit: cover; border-radius: 15px 0 0 15px;">
+                        <div style="padding: 15px; flex: 1; text-align: left;">
+                            <div style="background-color: #FFC107; color: black; padding: 5px 10px; font-weight: bold; font-size: 0.9em; text-align: center; margin-bottom: 10px; border-radius: 5px;">
+                                Del 6 de diciembre al 5 de enero
+                            </div>
+                            <h3 style="margin: 10px 0; font-size: 1.2em; font-weight: bold; color: #000;">Navidad</h3>
+                            <p style="color: #555; font-size: 0.9em; line-height: 1.4;">La vuelta de Winterland, shows navideños y encuentros mágicos.</p>
+                            <a href="#" style="color: #007BFF; font-weight: bold; text-decoration: none; display: inline-block; margin-top: 10px;">¡Más info! &rarr;</a>
+                        </div>
+                    </div>
+                </div>
+                                
             </div>
             
             <div class="container" style="width: 100%; max-width: 500px; margin: 0 auto;">
@@ -54,8 +98,61 @@
                     ¡Compra ya!
                 </ion-button>
             </div>
-        </ion-content>
 
+            <div class="news-section">
+                <h2 class="section-title">Últimas Noticias</h2>
+                <div class="news-container">
+                    <ion-card class="news-card">
+                        <img src="noticia1.png" alt="Noticia 1">
+                        <ion-card-header>
+                            <ion-card-subtitle>15 Enero 2025</ion-card-subtitle>
+                            <ion-card-title>Actualizacion Obras</ion-card-title>
+                        </ion-card-header>
+                        <ion-card-content>
+                            Actualmente, el parque se encuentra en construccion de una nueva atraccion...                        </ion-card-content>
+                    </ion-card>
+
+                    <div class="news-separator">
+                        <span>✦</span>
+                        <hr>
+                        <span>✦</span>
+                    </div>
+
+                    <ion-card class="news-card">
+                        <img src="noticia2.png" alt="Noticia 2">
+                        <ion-card-header>
+                            <ion-card-subtitle>10 Enero 2025</ion-card-subtitle>
+                            <ion-card-title>Turismo Sostenible</ion-card-title>
+                        </ion-card-header>
+                        <ion-card-content>
+                            Magik Park Madrid está comprometido con facilitar las experiencias memorables de hoy a las generaciones futuras, integrando para ello la sostenibilidad en su actividad diaria, habiendo obtenido el Certificado “S” de Turismo Sostenible                        </ion-card-content>
+                    </ion-card>
+
+                    <div class="news-separator">
+                        <span>✦</span>
+                        <hr>
+                        <span>✦</span>
+                    </div>
+
+                    <ion-card class="news-card">
+                        <img src="noticia3.png" alt="Noticia 3">
+                        <ion-card-header>
+                            <ion-card-subtitle>5 Enero 2025</ion-card-subtitle>
+                            <ion-card-title>Grupos Parques Reunidos</ion-card-title>
+                        </ion-card-header>
+                        <ion-card-content>
+                            ¡Es oficial! Las sociedades españolas del Grupo Parques Reunidos son parte de #EmpresasConImpacto.                        </ion-card-content>
+                    </ion-card>
+
+                    <div class="news-separator">
+                        <span>✦</span>
+                        <hr>
+                        <span>✦</span>
+                    </div>
+
+                </div>
+            </div>
+        </ion-content>
     </ion-app>
 </body>
 </html>
