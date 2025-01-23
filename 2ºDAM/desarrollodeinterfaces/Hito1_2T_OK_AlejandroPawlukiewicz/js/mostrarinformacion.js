@@ -121,8 +121,6 @@ function mostrarAtraccion(nombre) {
     title.textContent = atraccion.nombre;
     content.innerHTML = `
         <div class="ion-padding">
-            <img src="${atraccion.imagen}" alt="${atraccion.nombre}" style="width: 100%; max-width: 300px;">
-            <h2>${atraccion.nombre}</h2>
             <p>${atraccion.descripción}</p>
             <p><strong>Ubicación:</strong> ${atraccion.ubicación}</p>
             <p><strong>Edad mínima:</strong> ${atraccion.edad} años</p>

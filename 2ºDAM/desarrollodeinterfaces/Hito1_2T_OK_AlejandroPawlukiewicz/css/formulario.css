@@ -1,5 +1,4 @@
-
-        body, html {
+body, html {
             margin: 0;
             padding: 0;
             height: 100vh;
@@ -106,33 +105,6 @@
             margin-bottom: 10px;
             text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
         }
-
-        .nav-toolbar {
-            --background: #e1e5ec;
-            --border-style: none;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-        }
-        
-        .nav-buttons ion-button {
-            --color: #394e60;
-            --background: transparent;
-            --background-hover: #f5f5f5;
-            --background-activated: #e0e0e0;
-            --border-color: #394e60;
-            --border-style: solid;
-            --border-width: 1px;
-            margin: 0 5px;
-            height: 40px;
-            font-size: 14px;
-        }
-        
-        .nav-buttons ion-button:last-child {
-            --background: #c3cfd9;
-            --background-hover: #b3bfc9;
-            --background-activated: #a3afb9;
-            --border-style: none;
-            --color: white;
-        }
         
         ion-header img {
             height: 80px;
@@ -140,11 +112,27 @@
         }
         
         @media (max-width: 768px) {
-            .nav-buttons {
-                display: none !important;
-            }
             
             ion-header img {
                 height: 60px;
             }
         }
+
+/* Estilos para los botones del navbar */
+.nav-buttons ion-button {
+    height: 40px;
+    --padding-start: 15px;
+    --padding-end: 15px;
+    font-size: 14px;
+    margin: 0 5px;
+}
+
+.nav-buttons ion-button ion-icon {
+    margin-left: 4px;  /* Reducir el espacio entre texto e icono */
+    margin-right: 0;   /* Eliminar el margen derecho del icono */
+}
+
+.nav-buttons ion-button::part(native) {
+    padding: 0 15px;
+    gap: 4px;          /* Espacio uniforme entre elementos */
+}
