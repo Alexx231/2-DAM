@@ -332,3 +332,30 @@ ion-content {
     font-weight: 300;
     letter-spacing: 1px;
 }
+
+.footer-content {
+    display: flex;
+    justify-content: center;
+    padding: 20px;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(5px);
+}
+
+.privacy-button {
+    --color: #394e60;
+    --background-hover: rgba(57, 78, 96, 0.1);
+    font-size: 0.9em;
+    letter-spacing: 0.5px;
+    text-transform: none;
+    transition: all 0.3s ease;
+}
+
+.privacy-button:hover {
+    --opacity: 0.8;
+    transform: translateY(-2px);
+}
+
+.privacy-button ion-icon {
+    margin-right: 8px;
+    font-size: 1.2em;
+}
