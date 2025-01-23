@@ -7,8 +7,8 @@
     <meta name="apple-mobile-web-app-capable" content="yes">
     <title>Magik Park - Privacidad</title>
     <script type="module" src="https://cdn.jsdelivr.net/npm/@ionic/core/dist/ionic/ionic.esm.js"></script>
-    <link rel="stylesheet" href="css/index.css">
-    <link rel="stylesheet" href="css/privacidad.css">
+    <link rel="stylesheet" href="../css/index.css">
+    <link rel="stylesheet" href="../css/privacidad.css">
     <script type="module" src="https://unpkg.com/@ionic/core@latest/dist/ionic/ionic.esm.js"></script>
     <link rel="stylesheet" href="https://unpkg.com/@ionic/core@latest/css/ionic.bundle.css" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@ionic/core/css/ionic.bundle.css" />
@@ -18,21 +18,23 @@
         <ion-header>
             <ion-toolbar class="nav-toolbar" style="height: 100px;">
                 <div style="display: flex; align-items: center; width: 100%;">
-                    <img src="logo.png" alt="Magik Park Logo" href= template/index.html style="margin-right: 20px;">
+                    <a href="index.html">
+                        <img src="../img/logo.png" alt="Magik Park Logo" style="margin-right: 20px;">
+                    </a>
                     <div class="nav-buttons" style="display: flex; align-items: center;">
-                        <ion-button fill="outline" href="template/atracciones.html">
+                        <ion-button fill="outline" href="atracciones.html">
                             Atracciones
                             <ion-icon slot="end" name="chevron-down-outline"></ion-icon>
                         </ion-button>
-                        <ion-button fill="outline" href="template/formulario.html">
+                        <ion-button fill="outline" href="formulario.html">
                             Formulario
                             <ion-icon slot="end" name="chevron-down-outline"></ion-icon>
                         </ion-button>
-                        <ion-button fill="outline" href="template/alojamiento.html">
+                        <ion-button fill="outline" href="alojamiento.html">
                             Galeria de Imagenes
                             <ion-icon slot="end" name="chevron-down-outline"></ion-icon>
                         </ion-button>
-                        <ion-button style="--background: #c3cfd9;" href="template/entradas.html">
+                        <ion-button style="--background: #c3cfd9;" href="entradas.html">
                             Comprar Entradas
                         </ion-button>
                     </div>

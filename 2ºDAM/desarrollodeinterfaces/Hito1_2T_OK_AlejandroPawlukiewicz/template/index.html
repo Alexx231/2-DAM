@@ -9,7 +9,7 @@
     <meta name="apple-mobile-web-app-capable" content="yes">
   <title>Magik Park</title>
   <script type="module" src="https://cdn.jsdelivr.net/npm/@ionic/core/dist/ionic/ionic.esm.js"></script>
-  <link rel="stylesheet" href="index.css">
+  <link rel="stylesheet" href="../css/index.css">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@ionic/core/css/ionic.bundle.css" />
 </head>
 <body>
@@ -17,21 +17,23 @@
         <ion-header>
             <ion-toolbar class="nav-toolbar" style="height: 100px;">
                 <div style="display: flex; align-items: center; width: 100%;">
-                    <img src="logo.png" alt="Magik Park Logo" href= template/index.html style="margin-right: 20px;">
+                    <a href="index.html">
+                        <img src="../img/logo.png" alt="Magik Park Logo" style="margin-right: 20px;">
+                    </a>
                     <div class="nav-buttons" style="display: flex; align-items: center;">
-                        <ion-button fill="outline" href="template/atracciones.html">
+                        <ion-button fill="outline" href="atracciones.html">
                             Atracciones
                             <ion-icon slot="end" name="chevron-down-outline"></ion-icon>
                         </ion-button>
-                        <ion-button fill="outline" href="template/formulario.html">
+                        <ion-button fill="outline" href="formulario.html">
                             Formulario
                             <ion-icon slot="end" name="chevron-down-outline"></ion-icon>
                         </ion-button>
-                        <ion-button fill="outline" href="template/alojamiento.html">
+                        <ion-button fill="outline" href="alojamiento.html">
                             Galeria de Imagenes
                             <ion-icon slot="end" name="chevron-down-outline"></ion-icon>
                         </ion-button>
-                        <ion-button style="--background: #c3cfd9;" href="template/entradas.html">
+                        <ion-button style="--background: #c3cfd9;" href="entradas.html">
                             Comprar Entradas
                         </ion-button>
                     </div>
@@ -45,7 +47,7 @@
                 <div class="scroll-text">Desliza para explorar</div>
             </div>
             <div class="banner fade-in-section">
-                <img src="pancarta.png" alt="Banner" style="width: 100%; max-width: 2000px; height: 850px; display: block; margin: 0 auto;">
+                <img src="../img/pancarta.png" alt="Banner" style="width: 100%; max-width: 2000px; height: 850px; display: block; margin: 0 auto;">
                 <div class="letrero">
                     <h1>MAGIK PARK</h1>
                     <p>¡La magia cobra vida!</p>
@@ -53,7 +55,7 @@
                 <div class="feature-cards" style="display: flex; justify-content: space-around; gap: 20px; padding: 20px; margin-top: 20px; font-family: Arial, sans-serif;">
                     <!-- Primera tarjeta -->
                     <div style="width: 300px; border-radius: 15px; overflow: hidden; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); display: flex;">
-                        <img src="letrero1.png" alt="Característica 1" style="width: 40%; height: auto; object-fit: cover; border-radius: 15px 0 0 15px;">
+                        <img src="../img/letrero1.png" alt="Característica 1" style="width: 40%; height: auto; object-fit: cover; border-radius: 15px 0 0 15px;">
                         <div style="padding: 15px; flex: 1; text-align: left;">
                             <div style="background-color: #FFC107; color: black; padding: 5px 10px; font-weight: bold; font-size: 0.9em; text-align: center; margin-bottom: 10px; border-radius: 5px;">
                                 ¡Por tiempo limitado!
@@ -66,7 +68,7 @@
                 
                     <!-- Segunda tarjeta -->
                     <div style="width: 300px; border-radius: 15px; overflow: hidden; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); display: flex;">
-                        <img src="letrero2.png" alt="Característica 2" style="width: 40%; height: auto; object-fit: cover; border-radius: 15px 0 0 15px;">
+                        <img src="../img/letrero2.png" alt="Característica 2" style="width: 40%; height: auto; object-fit: cover; border-radius: 15px 0 0 15px;">
                         <div style="padding: 15px; flex: 1; text-align: left;">
                             <div style="background-color: #00BFFF; color: white; padding: 5px 10px; font-weight: bold; font-size: 0.9em; text-align: center; margin-bottom: 10px; border-radius: 5px;">
                                 ¡La Comunión más especial!
@@ -79,7 +81,7 @@
                 
                     <!-- Tercera tarjeta -->
                     <div style="width: 300px; border-radius: 15px; overflow: hidden; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); display: flex;">
-                        <img src="letrero3.png" alt="Característica 3" style="width: 40%; height: auto; object-fit: cover; border-radius: 15px 0 0 15px;">
+                        <img src="../img/letrero3.png" alt="Característica 3" style="width: 40%; height: auto; object-fit: cover; border-radius: 15px 0 0 15px;">
                         <div style="padding: 15px; flex: 1; text-align: left;">
                             <div style="background-color: #FFC107; color: black; padding: 5px 10px; font-weight: bold; font-size: 0.9em; text-align: center; margin-bottom: 10px; border-radius: 5px;">
                                 Del 6 de diciembre al 5 de enero
@@ -106,7 +108,7 @@
                 <h2 class="section-title">Últimas Noticias</h2>
                 <div class="news-container">
                     <ion-card class="news-card">
-                        <img src="noticia1.png" alt="Noticia 1">
+                        <img src="../img/noticia1.png" alt="Noticia 1">
                         <ion-card-header>
                             <ion-card-subtitle>15 Enero 2025</ion-card-subtitle>
                             <ion-card-title>Actualizacion Obras</ion-card-title>
@@ -122,7 +124,7 @@
                     </div>
 
                     <ion-card class="news-card">
-                        <img src="noticia2.png" alt="Noticia 2">
+                        <img src="../img/noticia2.png" alt="Noticia 2">
                         <ion-card-header>
                             <ion-card-subtitle>10 Enero 2025</ion-card-subtitle>
                             <ion-card-title>Turismo Sostenible</ion-card-title>
@@ -138,7 +140,7 @@
                     </div>
 
                     <ion-card class="news-card">
-                        <img src="noticia3.png" alt="Noticia 3">
+                        <img src="../img/noticia3.png" alt="Noticia 3">
                         <ion-card-header>
                             <ion-card-subtitle>5 Enero 2025</ion-card-subtitle>
                             <ion-card-title>Grupos Parques Reunidos</ion-card-title>
