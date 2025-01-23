@@ -17,22 +17,22 @@
         <ion-header>
             <ion-toolbar class="nav-toolbar" style="height: 100px;">
                 <div style="display: flex; align-items: center; width: 100%;">
-                    <img src="logo.png" alt="Magik Park Logo" style="margin-right: 20px;">
+                    <img src="logo.png" alt="Magik Park Logo" href= index.html style="margin-right: 20px;">
                     <div class="nav-buttons" style="display: flex; align-items: center;">
-                        <ion-button fill="outline">
-                            Descubre el parque
+                        <ion-button fill="outline" href="atracciones.html">
+                            Atracciones
                             <ion-icon slot="end" name="chevron-down-outline"></ion-icon>
                         </ion-button>
-                        <ion-button fill="outline">
-                            Horarios y Precios
+                        <ion-button fill="outline" href="formulario.html">
+                            Formulario
                             <ion-icon slot="end" name="chevron-down-outline"></ion-icon>
                         </ion-button>
-                        <ion-button fill="outline">
-                            Dónde alojarse
+                        <ion-button fill="outline" href="alojamiento.html">
+                            Galeria de Imagenes
                             <ion-icon slot="end" name="chevron-down-outline"></ion-icon>
                         </ion-button>
-                        <ion-button style="--background: #c3cfd9;">
-                            Comprar
+                        <ion-button style="--background: #c3cfd9;" href="entradas.html">
+                            Comprar Entradas
                         </ion-button>
                     </div>
                 </div>
@@ -40,7 +40,11 @@
         </ion-header>
 
         <ion-content fullscreen="true">
-            <div class="banner">
+            <div class="scroll-indicator">
+                <ion-icon name="chevron-down" class="scroll-arrow"></ion-icon>
+                <div class="scroll-text">Desliza para explorar</div>
+            </div>
+            <div class="banner fade-in-section">
                 <img src="pancarta.png" alt="Banner" style="width: 100%; max-width: 2000px; height: 850px; display: block; margin: 0 auto;">
                 <div class="letrero">
                     <h1>MAGIK PARK</h1>
@@ -86,10 +90,9 @@
                         </div>
                     </div>
                 </div>
-                                
             </div>
             
-            <div class="container" style="width: 100%; max-width: 500px; margin: 0 auto;">
+            <div class="container fade-in-section" style="width: 100%; max-width: 500px; margin: 0 auto;">
                 <div class="info">
                     <h4>Visitantes</h4>
                     <a href="#" class="add-link">Añadir Visitantes</a>
@@ -99,7 +102,7 @@
                 </ion-button>
             </div>
 
-            <div class="news-section">
+            <div class="news-section fade-in-section">
                 <h2 class="section-title">Últimas Noticias</h2>
                 <div class="news-container">
                     <ion-card class="news-card">
@@ -154,5 +157,28 @@
             </div>
         </ion-content>
     </ion-app>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const sections = document.querySelectorAll('.fade-in-section');
+            
+            const appearOnScroll = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.intersectionRatio > 0) {
+                        entry.target.classList.add('is-visible');
+                    } else {
+                        entry.target.classList.remove('is-visible');
+                    }
+                });
+            }, {
+                threshold: [0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1],
+                rootMargin: "0px"
+            });
+    
+            sections.forEach(section => {
+                appearOnScroll.observe(section);
+                section.classList.add('fade-in-section');
+            });
+        });
+    </script>
 </body>
 </html>

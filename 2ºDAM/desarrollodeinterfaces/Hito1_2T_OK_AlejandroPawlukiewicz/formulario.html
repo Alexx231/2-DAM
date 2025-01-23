@@ -15,33 +15,39 @@
         body, html {
             margin: 0;
             padding: 0;
-            height: 100%;
-            width: 100%;
+            height: 100vh;
+            width: 100vw;
             overflow: hidden;
+            background: url('formulario.png') center center fixed;
+            background-size: cover;
         }
     
         ion-content {
-            --background: url('formulario.png') no-repeat center center fixed;
-            --background-size: cover;
+            --background: transparent;
         }
     
+        ion-app {
+            background: transparent;
+        }
+
         .form-container {
             height: 100%;
             width: 100%;
             display: flex;
             justify-content: center;
             align-items: center;
+            padding: 20px;
         }
+
         ion-item {
-            --background: rgba(255, 255, 255, 0.2);
-            --border-color: transparent;
-            margin-bottom: 40px;
-            --min-height: 70px;
-            border-radius: 10px;
-            --padding-top: 15px;
-            --padding-bottom: 15px;
-            margin-left: 20px;
-            margin-right: 20px;
+            --background: rgba(255, 255, 255, 0.1);
+            --border-color: rgba(255, 255, 255, 0.2);
+            --border-radius: 12px;
+            --padding-start: 16px;
+            --padding-end: 16px;
+            --min-height: 60px;
+            margin-bottom: 20px;
+            --highlight-color-focused: #ffffff;
         }
     
         ion-input {
@@ -53,6 +59,32 @@
             --padding-bottom: 20px;
             width: 100%;
         }
+
+        ion-button {
+            --background: rgba(255, 255, 255, 0.2);
+            --background-hover: rgba(255, 255, 255, 0.3);
+            --background-activated: rgba(255, 255, 255, 0.4);
+            --border-radius: 12px;
+            --color: white;
+            font-weight: 600;
+            height: 50px;
+            margin-top: 30px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+    
+        @media (max-width: 768px) {
+            .form-card {
+                padding: 20px;
+            }
+        }
+
+        ion-input, ion-textarea {
+            --color: white;
+            --placeholder-color: rgba(255, 255, 255, 0.8);
+            --placeholder-opacity: 0.8;
+            font-size: 1.1em;
+        }
     
         ion-list {
             padding: 30px;
@@ -60,20 +92,76 @@
         }
     
         .form-card {
-            width: 100%;
-            max-width: 700px;
-            padding: 50px 20px;
-            background: transparent;
-        }
+        width: 100%;
+        max-width: 500px;
+        padding: 30px;
+        background: rgba(255, 255, 255, 0.15);
+        backdrop-filter: blur(10px);
+        border-radius: 20px;
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+    }
 
         ion-icon {
-            margin-right: 15px;
-            font-size: 24px;
-        }
+        color: rgba(255, 255, 255, 0.9);
+        font-size: 1.2em;
+        margin-right: 10px;
+    }
     
         .form-header {
-            margin-bottom: 40px; /* Aumentado de 30px */
+            text-align: center;
+            margin-bottom: 30px;
         }
+
+        .form-header h1 {
+            color: white;
+            font-size: 2.5em;
+            font-weight: 700;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        .nav-toolbar {
+            --background: #e1e5ec;
+            --border-style: none;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        
+        .nav-buttons ion-button {
+            --color: #394e60;
+            --background: transparent;
+            --background-hover: #f5f5f5;
+            --background-activated: #e0e0e0;
+            --border-color: #394e60;
+            --border-style: solid;
+            --border-width: 1px;
+            margin: 0 5px;
+            height: 40px;
+            font-size: 14px;
+        }
+        
+        .nav-buttons ion-button:last-child {
+            --background: #c3cfd9;
+            --background-hover: #b3bfc9;
+            --background-activated: #a3afb9;
+            --border-style: none;
+            --color: white;
+        }
+        
+        ion-header img {
+            height: 80px;
+            object-fit: contain;
+        }
+        
+        @media (max-width: 768px) {
+            .nav-buttons {
+                display: none !important;
+            }
+            
+            ion-header img {
+                height: 60px;
+            }
+        }
+    
     </style>
 </head>
 
@@ -82,22 +170,22 @@
         <ion-header>
             <ion-toolbar class="nav-toolbar" style="height: 100px;">
                 <div style="display: flex; align-items: center; width: 100%;">
-                    <img src="logo.png" alt="Magik Park Logo" style="margin-right: 20px;">
+                    <img src="logo.png" alt="Magik Park Logo" href= index.html style="margin-right: 20px;">
                     <div class="nav-buttons" style="display: flex; align-items: center;">
-                        <ion-button fill="outline">
-                            Descubre el parque
+                        <ion-button fill="outline" href="atracciones.html">
+                            Atracciones
                             <ion-icon slot="end" name="chevron-down-outline"></ion-icon>
                         </ion-button>
-                        <ion-button fill="outline">
-                            Horarios y Precios
+                        <ion-button fill="outline" href="formulario.html">
+                            Formulario
                             <ion-icon slot="end" name="chevron-down-outline"></ion-icon>
                         </ion-button>
-                        <ion-button fill="outline">
-                            Dónde alojarse
+                        <ion-button fill="outline" href="alojamiento.html">
+                            Galeria de Imagenes
                             <ion-icon slot="end" name="chevron-down-outline"></ion-icon>
                         </ion-button>
-                        <ion-button style="--background: #c3cfd9;">
-                            Comprar
+                        <ion-button style="--background: #c3cfd9;" href="entradas.html">
+                            Comprar Entradas
                         </ion-button>
                     </div>
                 </div>
@@ -106,28 +194,39 @@
         <ion-content>
             <div class="form-container">
                 <div class="form-card">
-                <div class="form-header">FORMULARIO</div>
-                <ion-list>
-                    <ion-item>
-                    <ion-icon name="person-outline" slot="start"></ion-icon>
-                    <ion-input placeholder="Nombre"></ion-input>
-                    </ion-item>
-                    <ion-item>
-                    <ion-icon name="person-add-outline" slot="start"></ion-icon>
-                    <ion-input placeholder="Apellidos"></ion-input>
-                    </ion-item>
-                    <ion-item>
-                    <ion-icon name="location-outline" slot="start"></ion-icon>
-                    <ion-input placeholder="Dirección"></ion-input>
-                    </ion-item>
-                    <ion-item>
-                    <ion-icon name="chatbubble-ellipses-outline" slot="start"></ion-icon>
-                    <ion-input placeholder="Motivo de contacto"></ion-input>
-                    </ion-item>
-                </ion-list>
-                <ion-button expand="block">ENVIAR</ion-button>
+                    <div class="form-header">
+                        <h1>Contáctanos</h1>
+                        <p style="color: white; opacity: 0.9;">Completa el formulario y nos pondremos en contacto contigo</p>
+                    </div>
+                    
+                    <form>
+                        <ion-item>
+                            <ion-icon name="person-outline"></ion-icon>
+                            <ion-input required label="Nombre" label-placement="floating" placeholder="Introduce tu nombre"></ion-input>
+                        </ion-item>
+        
+                        <ion-item>
+                            <ion-icon name="mail-outline"></ion-icon>
+                            <ion-input required type="email" label="Email" label-placement="floating" placeholder="Introduce tu email"></ion-input>
+                        </ion-item>
+        
+                        <ion-item>
+                            <ion-icon name="call-outline"></ion-icon>
+                            <ion-input type="tel" label="Teléfono" label-placement="floating" placeholder="Introduce tu teléfono"></ion-input>
+                        </ion-item>
+        
+                        <ion-item>
+                            <ion-icon name="chatbubble-outline"></ion-icon>
+                            <ion-textarea required label="Mensaje" label-placement="floating" placeholder="Escribe tu mensaje" rows="4"></ion-textarea>
+                        </ion-item>
+        
+                        <ion-button expand="block" type="submit">
+                            Enviar mensaje
+                            <ion-icon slot="end" name="paper-plane-outline"></ion-icon>
+                        </ion-button>
+                    </form>
                 </div>
-            </div>        
+            </div>
         </ion-content>
     </ion-app>
 </body>
