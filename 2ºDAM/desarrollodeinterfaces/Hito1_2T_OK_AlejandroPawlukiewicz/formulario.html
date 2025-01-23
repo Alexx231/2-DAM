@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <title>Magik Park - Formulario</title>
+    <script type="module" src="https://cdn.jsdelivr.net/npm/@ionic/core/dist/ionic/ionic.esm.js"></script>
+    <link rel="stylesheet" href="index.css">
+    <script type="module" src="https://unpkg.com/@ionic/core@latest/dist/ionic/ionic.esm.js"></script>
+    <link rel="stylesheet" href="https://unpkg.com/@ionic/core@latest/css/ionic.bundle.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@ionic/core/css/ionic.bundle.css" />
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            width: 100%;
+            overflow: hidden;
+        }
+    
+        ion-content {
+            --background: url('formulario.png') no-repeat center center fixed;
+            --background-size: cover;
+        }
+    
+        .form-container {
+            height: 100%;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        ion-item {
+            --background: rgba(255, 255, 255, 0.2);
+            --border-color: transparent;
+            margin-bottom: 40px;
+            --min-height: 70px;
+            border-radius: 10px;
+            --padding-top: 15px;
+            --padding-bottom: 15px;
+            margin-left: 20px;
+            margin-right: 20px;
+        }
+    
+        ion-input {
+            --color: white;
+            --placeholder-color: white;
+            --padding-start: 20px;
+            --padding-end: 20px;
+            --padding-top: 20px;
+            --padding-bottom: 20px;
+            width: 100%;
+        }
+    
+        ion-list {
+            padding: 30px;
+            background: transparent;
+        }
+    
+        .form-card {
+            width: 100%;
+            max-width: 700px;
+            padding: 50px 20px;
+            background: transparent;
+        }
+
+        ion-icon {
+            margin-right: 15px;
+            font-size: 24px;
+        }
+    
+        .form-header {
+            margin-bottom: 40px; /* Aumentado de 30px */
+        }
+    </style>
+</head>
+
+<body>
+    <ion-app>
+        <ion-header>
+            <ion-toolbar class="nav-toolbar" style="height: 100px;">
+                <div style="display: flex; align-items: center; width: 100%;">
+                    <img src="logo.png" alt="Magik Park Logo" style="margin-right: 20px;">
+                    <div class="nav-buttons" style="display: flex; align-items: center;">
+                        <ion-button fill="outline">
+                            Descubre el parque
+                            <ion-icon slot="end" name="chevron-down-outline"></ion-icon>
+                        </ion-button>
+                        <ion-button fill="outline">
+                            Horarios y Precios
+                            <ion-icon slot="end" name="chevron-down-outline"></ion-icon>
+                        </ion-button>
+                        <ion-button fill="outline">
+                            Dónde alojarse
+                            <ion-icon slot="end" name="chevron-down-outline"></ion-icon>
+                        </ion-button>
+                        <ion-button style="--background: #c3cfd9;">
+                            Comprar
+                        </ion-button>
+                    </div>
+                </div>
+            </ion-toolbar>
+        </ion-header>
+        <ion-content>
+            <div class="form-container">
+                <div class="form-card">
+                <div class="form-header">FORMULARIO</div>
+                <ion-list>
+                    <ion-item>
+                    <ion-icon name="person-outline" slot="start"></ion-icon>
+                    <ion-input placeholder="Nombre"></ion-input>
+                    </ion-item>
+                    <ion-item>
+                    <ion-icon name="person-add-outline" slot="start"></ion-icon>
+                    <ion-input placeholder="Apellidos"></ion-input>
+                    </ion-item>
+                    <ion-item>
+                    <ion-icon name="location-outline" slot="start"></ion-icon>
+                    <ion-input placeholder="Dirección"></ion-input>
+                    </ion-item>
+                    <ion-item>
+                    <ion-icon name="chatbubble-ellipses-outline" slot="start"></ion-icon>
+                    <ion-input placeholder="Motivo de contacto"></ion-input>
+                    </ion-item>
+                </ion-list>
+                <ion-button expand="block">ENVIAR</ion-button>
+                </div>
+            </div>        
+        </ion-content>
+    </ion-app>
+</body>
+</html>
