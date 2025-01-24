@@ -19,8 +19,8 @@
         <ion-header>
             <ion-toolbar class="nav-toolbar" style="height: 100px;">
                 <div style="display: flex; align-items: center; width: 100%;">
-                    <a href="index.html">
-                        <img src="../img/logo.png" alt="Magik Park Logo" style="margin-right: 20px;">
+                    <a href="index.html" style="padding: 10px; transition: transform 0.3s ease;">
+                        <img src="../img/logo.png" alt="Magik Park Logo" style="height: 80px; width: auto; margin-right: 20px; transition: transform 0.3s ease;" onmouseover="this.style.transform='scale(1.1)'" onmouseout="this.style.transform='scale(1)'">
                     </a>
                     <div class="nav-buttons" style="display: flex; align-items: center;">
                         <ion-button fill="outline" href="atracciones.html">
@@ -81,5 +81,30 @@
             </div>
         </ion-content>
     </ion-app>
+    <script>
+        const form = document.querySelector('form');
+        const showToast = async () => {
+            const toast = document.createElement('ion-toast');
+            toast.message = 'Mensaje enviado correctamente';
+            toast.duration = 2000;
+            toast.position = 'bottom';
+            toast.color = 'success';
+            toast.buttons = [
+                {
+                    text: 'OK',
+                    role: 'cancel'
+                }
+            ];
+        
+            document.body.appendChild(toast);
+            await toast.present();
+        };
+        
+        form.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            await showToast();
+            form.reset();
+        });
+        </script>
 </body>
 </html>
