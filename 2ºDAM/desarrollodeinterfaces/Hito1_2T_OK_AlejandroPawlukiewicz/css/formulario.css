@@ -128,11 +128,11 @@ body, html {
 }
 
 .nav-buttons ion-button ion-icon {
-    margin-left: 4px;  /* Reducir el espacio entre texto e icono */
-    margin-right: 0;   /* Eliminar el margen derecho del icono */
+    margin-left: 4px; 
+    margin-right: 0;  
 }
 
 .nav-buttons ion-button::part(native) {
     padding: 0 15px;
-    gap: 4px;          /* Espacio uniforme entre elementos */
+    gap: 4px;         
 }

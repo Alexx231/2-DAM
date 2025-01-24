@@ -104,10 +104,10 @@
         display: flex;
         gap: 8px;
         flex-wrap: wrap;
-        margin: 0 auto; /* Cambio clave: de margin-right a margin auto */
-        justify-content: center; /* Añadido para centrar */
-        align-items: center; /* Añadido para alineación vertical */
-        padding: 0 16px; /* Añadido padding horizontal */
+        margin: 0 auto;
+        justify-content: center; 
+        align-items: center;
+        padding: 0 16px;
     }
     
     .nav-buttons ion-button {
@@ -123,8 +123,8 @@
     @media (max-width: 768px) {
         .nav-buttons {
             flex-direction: column;
-            width: 90%; /* Reducido de 100% a 90% para mejor visual */
-            margin: 10px auto; /* Cambiado a auto para centrar */
+            width: 90%; 
+            margin: 10px auto; 
             gap: 5px;
         }
     
@@ -150,12 +150,12 @@
     
     .nav-buttons ion-button[fill="outline"] {
         --background: #e1e5ec;
-        --border-color: #394754 !important; /* Forzar color del borde */
+        --border-color: #394754 !important;
         --color: white;
     }
     
     .nav-buttons ion-button[fill="outline"]:hover {
-        --color: #394754; /* Solo cambia el color del texto al pasar el ratón */
+        --color: #394754;
     }
 
 
