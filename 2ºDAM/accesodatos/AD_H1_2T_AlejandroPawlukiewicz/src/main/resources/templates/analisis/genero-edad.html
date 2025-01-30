@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Análisis por Género y Edad</title>
+</head>
+<body>
+    <h1>Análisis de Paro por Género y Grupo de Edad</h1>
+    <table>
+        <tr>
+            <th>Grupo de Edad</th>
+            <th>Sexo</th>
+            <th>Total</th>
+        </tr>
+        <tr th:each="dato : ${datos}">
+            <td th:text="${dato[0]}"></td>
+            <td th:text="${dato[1]}"></td>
+            <td th:text="${#numbers.formatDecimal(dato[2], 1, 2)}"></td>
+        </tr>
+    </table>
+</body>
+</html>

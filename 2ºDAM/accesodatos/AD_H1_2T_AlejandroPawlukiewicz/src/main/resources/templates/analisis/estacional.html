@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Tendencias Estacionales</title>
+</head>
+<body>
+    <h1>Análisis de Tendencias Estacionales del Paro</h1>
+    <table>
+        <tr>
+            <th>Mes</th>
+            <th>Media de Paro</th>
+        </tr>
+        <tr th:each="dato : ${datos}">
+            <td th:text="${dato[0]}"></td>
+            <td th:text="${#numbers.formatDecimal(dato[1], 1, 2)}"></td>
+        </tr>
+    </table>
+</body>
+</html>

@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Comparativa por Períodos</title>
+</head>
+<body>
+    <h1>Comparativa por Períodos</h1>
+    <table>
+        <tr>
+            <th>Período</th>
+            <th>Comunidad</th>
+            <th>Media</th>
+        </tr>
+        <tr th:each="dato : ${datos}">
+            <td th:text="${dato[0]}"></td>
+            <td th:text="${dato[1]}"></td>
+            <td th:text="${#numbers.formatDecimal(dato[2], 1, 2)}"></td>
+        </tr>
+    </table>
+</body>
+</html>

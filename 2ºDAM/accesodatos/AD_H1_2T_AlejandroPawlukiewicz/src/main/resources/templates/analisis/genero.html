@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Análisis por Género</title>
+</head>
+<body>
+    <h1>Análisis por Género</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>Comunidad Autónoma</th>
+                <th>Hombres</th>
+                <th>Mujeres</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="dato : ${datos}">
+                <td th:text="${dato[0]}"></td>
+                <td th:text="${dato[1]}"></td>
+                <td th:text="${dato[2]}"></td>
+            </tr>
+        </tbody>
+    </table>
+</body>
+</html>

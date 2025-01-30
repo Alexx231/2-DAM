@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Análisis de Datos de Paro</title>
+</head>
+<body>
+    <h1>Análisis de Datos de Paro</h1>
+    
+    <h2>Tasas por Comunidad</h2>
+    <table>
+        <tr>
+            <th>Comunidad</th>
+            <th>Tasa Media</th>
+        </tr>
+        <tr th:each="tasa : ${tasasPorComunidad}">
+            <td th:text="${tasa[0]}"></td>
+            <td th:text="${#numbers.formatDecimal(tasa[1], 1, 2)}"></td>
+        </tr>
+    </table>
+
+    <h2>Evolución Temporal</h2>
+    <table>
+        <tr>
+            <th>Período</th>
+            <th>Total</th>
+        </tr>
+        <tr th:each="evolucion : ${evolucionTemporal}">
+            <td th:text="${evolucion[0]}"></td>
+            <td th:text="${#numbers.formatDecimal(evolucion[1], 1, 2)}"></td>
+        </tr>
+    </table>
+
+    <h2>Enlaces a Análisis</h2>
+    <ul>
+        <li><a href="/analisis/tasas">Tasas de Paro</a></li>
+        <li><a href="/analisis/genero">Análisis por Género</a></li>
+        <li><a href="/analisis/periodos">Comparativa por Períodos</a></li>
+        <li><a href="/analisis/genero-edad">Análisis por Género y Edad</a></li>
+        <li><a href="/analisis/estacional">Tendencias Estacionales</a></li>
+        <li><a href="/analisis/impacto-regional">Impacto Regional</a></li>
+        <li><a href="/analisis/variacion-anual">Variación Anual</a></li>
+    </ul>
+</body>
+</html>
