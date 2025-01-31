@@ -1,0 +1,25 @@
+.table th { 
+    white-space: nowrap; 
+}
+
+.btn-group-xs > .btn,
+.btn-xs {
+    padding: .25rem .4rem;
+    font-size: .875rem;
+    line-height: .5;
+    border-radius: .2rem;
+}
+
+pre {
+    max-height: 400px;
+    overflow: auto;
+}
+
+.card {
+    box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+}
+
+#response-data {
+    font-family: 'Consolas', monospace;
+    font-size: 0.875rem;
+}

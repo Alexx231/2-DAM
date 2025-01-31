@@ -1,0 +1,6 @@
+tfg\dao\ClienteDAO.class
+tfg\conexion\ConexionBdd.class
+tfg\App.class
+tfg\modulos\Producto.class
+tfg\recursos\RecursosCliente.class
+tfg\modulos\Cliente.class
