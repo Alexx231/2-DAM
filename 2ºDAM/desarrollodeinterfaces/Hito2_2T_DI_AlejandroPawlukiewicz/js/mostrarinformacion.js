@@ -188,19 +188,21 @@ function actualizarFiltro(tipo, valor) {
 function actualizarVisualizacionMapa(atraccionesFiltradas) {
     const puntos = document.querySelectorAll('.punto-interes');
     
-    // Primero aplicamos estilo filtrado a todos los puntos
     puntos.forEach(punto => {
-        const nombreAtraccion = punto.querySelector('.tooltip').textContent;
+        const tooltip = punto.querySelector('.tooltip');
+        const nombreAtraccion = tooltip.querySelector('strong').textContent;
         const estaFiltrada = atraccionesFiltradas.some(a => a.nombre === nombreAtraccion);
         
         if (estaFiltrada) {
             punto.style.opacity = '1';
             punto.style.pointerEvents = 'auto';
             punto.style.transform = 'translate(-50%, -50%) scale(1)';
+            punto.classList.remove('filtered');
         } else {
-            punto.style.opacity = '0.2';
+            punto.style.opacity = '0.3'; // Cambiado de 0.2 a 0.3 para mejor visibilidad
             punto.style.pointerEvents = 'none';
             punto.style.transform = 'translate(-50%, -50%) scale(0.8)';
+            punto.classList.add('filtered');
         }
     });
 }

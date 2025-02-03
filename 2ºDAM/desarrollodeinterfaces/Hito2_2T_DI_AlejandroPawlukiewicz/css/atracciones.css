@@ -18,12 +18,14 @@
         transform: translate(-50%, -50%);
         z-index: 100;
         box-shadow: 0 0 10px rgba(57, 71, 84, 0.5);
+        animation: pulse 2s infinite;
     }
     
     .punto-interes.filtered {
-        opacity: 0.2;
+        opacity: 0.3;
         transform: translate(-50%, -50%) scale(0.8);
         pointer-events: none;
+        animation: none;
     }
     
     .punto-interes:not(.filtered):hover {
@@ -32,6 +34,7 @@
         border-color: #ffffff;
         box-shadow: 0 0 15px rgba(255, 68, 68, 0.8);
         z-index: 101;
+        opacity: 1;
     }
     
     .tooltip {
@@ -81,7 +84,7 @@
     }
 
     .punto-interes[data-tipo="Acuático"] {
-        background-color: #44aaff;
+        background-color: #2175b9;
         border-color: #eef8ff;
     }
 
