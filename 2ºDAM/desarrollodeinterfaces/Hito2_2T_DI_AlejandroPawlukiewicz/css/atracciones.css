@@ -140,11 +140,18 @@
     .filtro-grupo {
         display: flex;
         flex-direction: column;
-        gap: 6px;
+        gap: 4px;
+        padding: 4px;
+    }
+    
+    .filtro-grupo ion-button {
+        pointer-events: auto;
+        position: relative;
+        z-index: 2;
     }
     
     .filtro-grupo h4 {
-        margin: 0;
+        margin: 0 0 4px 0;
         color: #394e60;
         font-size: 1em;
         font-weight: 600;
@@ -156,11 +163,36 @@
         --background-hover: #2d3f4d;
         --color: white;
         --border-radius: 25px;
-        --padding-start: 15px;
-        --padding-end: 15px;
+        --padding-start: 12px;
+        --padding-end: 12px;
         font-weight: 600;
         font-size: 0.95em;
         transition: all 0.3s ease;
+        position: relative;
+        overflow: hidden;
+        cursor: pointer;
+        user-select: none;
+        -webkit-tap-highlight-color: transparent;
+        touch-action: manipulation;
+        z-index: 1;
+    }
+
+    .filtro-btn::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.1);
+        opacity: 0;
+        transition: opacity 0.2s ease;
+        pointer-events: none;
+        z-index: -1;
+    }
+
+    .filtro-btn:active::before {
+        opacity: 1;
     }
     
     .filtro-btn.active {
@@ -168,6 +200,12 @@
         --color: #394e60;
         transform: scale(1.05);
         box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        pointer-events: auto;
+    }
+    
+    .filtro-btn:not(.active):hover {
+        --background: #2d3f4d;
+        transform: translateY(-1px);
     }
     
     
@@ -188,6 +226,7 @@
         transition: all 0.3s ease;
         border: 2px solid #394e60;
         z-index: 100;
+        margin-bottom: 30px;
         animation: fadeIn 0.5s ease-out;
     }
     
@@ -290,6 +329,7 @@
         .filtro-grupo {
             flex-direction: column;
             align-items: stretch;
+            gap: 3px;
         }
 
         .filtro-grupo h4 {
@@ -365,22 +405,11 @@
     }
     
     .map-image {
-        width: 85%; /* Ajusta el ancho del mapa */
+        width: 100%;
         height: auto;
         display: block;
         border-radius: 8px;
         margin: 0 auto; /* Centra el mapa */
-    }
-
-    .map-container::after {
-        content: '';
-        position: absolute;
-        width: 10px;
-        height: 10px;
-        background: #394754;
-        border-radius: 50%;
-        transform: translate(-50%, -50%);
-        pointer-events: none;
     }
 
     area {
