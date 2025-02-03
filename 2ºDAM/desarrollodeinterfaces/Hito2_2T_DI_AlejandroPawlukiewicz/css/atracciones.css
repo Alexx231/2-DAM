@@ -8,31 +8,109 @@
     
     .punto-interes {
         position: absolute;
-        width: 15px;
-        height: 15px;
+        width: 20px;
+        height: 20px;
         background-color: #394754;
-        border: 2px solid white;
+        border: 3px solid #ffffff;
         border-radius: 50%;
         cursor: pointer;
-        transition: all 0.3s ease;
+        transition: all 0.4s ease;
         transform: translate(-50%, -50%);
         z-index: 100;
+        box-shadow: 0 0 10px rgba(57, 71, 84, 0.5);
+    }
+    
+    .punto-interes.filtered {
+        opacity: 0.2;
+        transform: translate(-50%, -50%) scale(0.8);
+        pointer-events: none;
+    }
+    
+    .punto-interes:not(.filtered):hover {
+        transform: translate(-50%, -50%) scale(1.3);
+        background-color: #ff4444;
+        border-color: #ffffff;
+        box-shadow: 0 0 15px rgba(255, 68, 68, 0.8);
+        z-index: 101;
     }
     
     .tooltip {
         position: absolute;
-        background: rgba(0, 0, 0, 0.8);
+        background: rgba(57, 71, 84, 0.95);
         color: white;
-        padding: 5px 10px;
-        border-radius: 4px;
-        font-size: 12px;
+        padding: 8px 12px;
+        border-radius: 6px;
+        font-size: 14px;
+        font-weight: bold;
         white-space: nowrap;
         pointer-events: none;
         opacity: 0;
-        transition: opacity 0.3s;
-        top: -25px;
+        transition: opacity 0.3s ease;
+        top: -35px;
         left: 50%;
         transform: translateX(-50%);
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+        z-index: 102;
+    }
+
+    .punto-interes:hover {
+        transform: translate(-50%, -50%) scale(1.3);
+        background-color: #ff4444;
+        border-color: #ffffff;
+        box-shadow: 0 0 15px rgba(255, 68, 68, 0.8);
+        z-index: 101;
+    }
+
+
+    @keyframes pulse {
+        0% {
+            box-shadow: 0 0 0 0 rgba(57, 71, 84, 0.7);
+        }
+        70% {
+            box-shadow: 0 0 0 10px rgba(57, 71, 84, 0);
+        }
+        100% {
+            box-shadow: 0 0 0 0 rgba(57, 71, 84, 0);
+        }
+    }
+
+
+    .punto-interes[data-tipo="Montaña Rusa"] {
+        background-color: #ff4444;
+        border-color: #ffeeee;
+    }
+
+    .punto-interes[data-tipo="Acuático"] {
+        background-color: #44aaff;
+        border-color: #eef8ff;
+    }
+
+    .punto-interes[data-tipo="Espectáculo"] {
+        background-color: #aa44ff;
+        border-color: #f8eeff;
+    }
+
+    .punto-interes[data-tipo="Atracción Temática"] {
+        background-color: #44ff44;
+        border-color: #eeffee;
+    }
+
+    .punto-interes[data-tipo="Atracción Infantil"] {
+        background-color: #ffaa44;
+        border-color: #fff8ee;
+    }
+
+
+    @media (max-width: 768px) {
+        .punto-interes {
+            width: 16px;
+            height: 16px;
+        }
+
+        .tooltip {
+            font-size: 12px;
+            padding: 6px 10px;
+        }
     }
 
     .filtros-container {
@@ -75,11 +153,6 @@
         box-shadow: 0 2px 8px rgba(0,0,0,0.1);
     }
     
-    
-    .punto-interes.filtered {
-        opacity: 0.3;
-        pointer-events: none;
-    }
     
     #resultados-count {
         font-size: 1.1em;
@@ -137,15 +210,6 @@
         margin: 5px 0;
     }
     
-    .punto-interes:hover {
-        transform: translate(-50%, -50%) scale(1.2);
-        background-color: #ff4444;
-        box-shadow: 0 0 10px rgba(255,68,68,0.5);
-    }
-    
-    .punto-interes:hover .tooltip {
-        opacity: 1;
-    }
     
     @media (max-width: 768px) {
         .punto-interes {

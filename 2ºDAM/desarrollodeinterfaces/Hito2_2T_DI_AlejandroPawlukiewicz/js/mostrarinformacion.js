@@ -185,24 +185,22 @@ function actualizarFiltro(tipo, valor) {
     actualizarContadorResultados(atraccionesFiltradas.length);
 }
 
-// Función para actualizar la visualización
 function actualizarVisualizacionMapa(atraccionesFiltradas) {
     const puntos = document.querySelectorAll('.punto-interes');
     
-    // Primero ocultamos todos los puntos
+    // Primero aplicamos estilo filtrado a todos los puntos
     puntos.forEach(punto => {
-        punto.style.display = 'none';
-        punto.style.opacity = '0.3';
-    });
-
-    // Luego mostramos solo los filtrados
-    atraccionesFiltradas.forEach(atraccion => {
-        const punto = Array.from(puntos).find(
-            p => p.querySelector('.tooltip').textContent === atraccion.nombre
-        );
-        if (punto) {
-            punto.style.display = 'block';
+        const nombreAtraccion = punto.querySelector('.tooltip').textContent;
+        const estaFiltrada = atraccionesFiltradas.some(a => a.nombre === nombreAtraccion);
+        
+        if (estaFiltrada) {
             punto.style.opacity = '1';
+            punto.style.pointerEvents = 'auto';
+            punto.style.transform = 'translate(-50%, -50%) scale(1)';
+        } else {
+            punto.style.opacity = '0.2';
+            punto.style.pointerEvents = 'none';
+            punto.style.transform = 'translate(-50%, -50%) scale(0.8)';
         }
     });
 }
@@ -254,18 +252,6 @@ function actualizarBotonesActivos() {
 function inicializarPuntos() {
     const mapContainer = document.querySelector('.map-container');
     const imagen = document.querySelector('.map-image');
-    const atracciones = [
-        { nombre: "Montaña Rusa del Terror", x: 15, y: 78 },
-        { nombre: "Torre del Vertigo", x: 41.5, y: 30 },
-        { nombre: "Cataratas Mágicas", x: 41.8, y: 65 },
-        { nombre: "Río Tranquilo", x: 20, y: 72 },
-        { nombre: "Safari Salvaje", x: 36, y: 60 },
-        { nombre: "Teatro de los Sueños", x: 58, y: 38 },
-        { nombre: "Laberinto Encantado", x: 55, y: 62 },
-        { nombre: "Carrusel Clásico", x:12, y: 55 },
-        { nombre: "Simulador Espacial", x: 68, y: 60 },
-        { nombre: "Zona Infantil Aventura", x: 73, y: 35 }
-    ];
 
     function crearPuntos() {
         // Limpiar puntos existentes
@@ -274,20 +260,49 @@ function inicializarPuntos() {
         atracciones.forEach(atraccion => {
             const punto = document.createElement('div');
             punto.className = 'punto-interes';
-            punto.style.left = `${atraccion.x}%`;
-            punto.style.top = `${atraccion.y}%`;
+            punto.setAttribute('data-tipo', atraccion.tipo); // Añadir tipo para estilos
+            
+            // Buscar las coordenadas correspondientes
+            const coordenadas = obtenerCoordenadas(atraccion.nombre);
+            punto.style.left = `${coordenadas.x}%`;
+            punto.style.top = `${coordenadas.y}%`;
 
+            // Crear tooltip mejorado
             const tooltip = document.createElement('div');
             tooltip.className = 'tooltip';
-            tooltip.textContent = atraccion.nombre;
+            tooltip.innerHTML = `
+                <strong>${atraccion.nombre}</strong>
+                <br>
+                <span style="font-size: 0.8em">${atraccion.tipo}</span>
+            `;
             punto.appendChild(tooltip);
 
+            // Añadir eventos
             punto.addEventListener('click', () => mostrarAtraccion(atraccion.nombre));
+            punto.addEventListener('mouseenter', () => tooltip.style.opacity = '1');
+            punto.addEventListener('mouseleave', () => tooltip.style.opacity = '0');
+
             mapContainer.appendChild(punto);
         });
     }
 
-    // Crear puntos iniciales
+    function obtenerCoordenadas(nombre) {
+        const coordenadas = {
+            "Montaña Rusa del Terror": { x: 15, y: 78 },
+            "Torre del Vertigo": { x: 41.5, y: 30 },
+            "Cataratas Mágicas": { x: 41.8, y: 65 },
+            "Río Tranquilo": { x: 20, y: 72 },
+            "Safari Salvaje": { x: 36, y: 60 },
+            "Teatro de los Sueños": { x: 58, y: 38 },
+            "Laberinto Encantado": { x: 55, y: 62 },
+            "Carrusel Clásico": { x: 12, y: 55 },
+            "Simulador Espacial": { x: 68, y: 60 },
+            "Zona Infantil Aventura": { x: 73, y: 35 }
+        };
+        return coordenadas[nombre];
+    }
+
+    // Crear puntos cuando la imagen esté cargada
     imagen.addEventListener('load', crearPuntos);
     crearPuntos();
 }
