@@ -254,15 +254,19 @@ function resetearFiltros() {
 }
 
 document.addEventListener('DOMContentLoaded', () => {
-
-    let resetContainer = document.querySelector('.reset-container');
-    
-    if (!document.getElementById('resultados-count')) {
-        const resultadosSpan = document.createElement('span');
-        resultadosSpan.id = 'resultados-count';
-        resultadosSpan.textContent = `${atracciones.length} atracciones encontradas`;
-        resetContainer.appendChild(resultadosSpan);
+    // Eliminar el contador si ya existe
+    const existingCounter = document.getElementById('resultados-count');
+    if (existingCounter) {
+        existingCounter.remove();
     }
+
+    // Crear el nuevo contador y añadirlo después del map-container
+    const resultadosSpan = document.createElement('span');
+    resultadosSpan.id = 'resultados-count';
+    resultadosSpan.textContent = `${atracciones.length} atracciones encontradas`;
+    
+    const mapContainer = document.querySelector('.map-container');
+    mapContainer.appendChild(resultadosSpan);
 
     actualizarFiltro('edad', 'todas');
 });

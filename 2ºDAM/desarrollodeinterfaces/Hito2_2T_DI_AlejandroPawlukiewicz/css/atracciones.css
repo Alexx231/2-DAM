@@ -5,21 +5,30 @@
         padding: 20px;
         max-width: 1600px;
         margin: 0 auto;
+        position: relative;
     }
     
     .punto-interes {
         position: absolute;
-        width: 20px;
+        width: 20px; /* Volvemos al tamaño original */
         height: 20px;
         background-color: #394754;
         border: 3px solid #ffffff;
         border-radius: 50%;
         cursor: pointer;
-        transition: all 0.4s ease;
+        transition: all 0.3s ease;
         transform: translate(-50%, -50%);
         z-index: 100;
         box-shadow: 0 0 10px rgba(57, 71, 84, 0.5);
         animation: pulse 2s infinite;
+    }
+    
+    .punto-interes:hover {
+        transform: translate(-50%, -50%) scale(1.3);
+        background-color: #ff4444;
+        border-color: #ffffff;
+        box-shadow: 0 0 15px rgba(255, 68, 68, 0.8);
+        z-index: 101;
     }
     
     .punto-interes.filtered {
@@ -42,27 +51,24 @@
         position: absolute;
         background: rgba(57, 71, 84, 0.95);
         color: white;
-        padding: 8px 12px;
-        border-radius: 6px;
+        padding: 10px 15px;
+        border-radius: 8px;
         font-size: 14px;
         font-weight: bold;
         white-space: nowrap;
         pointer-events: none;
         opacity: 0;
-        transition: opacity 0.3s ease;
-        top: -35px;
+        transition: all 0.3s ease;
+        top: -40px;
         left: 50%;
         transform: translateX(-50%);
         box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
         z-index: 102;
     }
-
-    .punto-interes:hover {
-        transform: translate(-50%, -50%) scale(1.3);
-        background-color: #ff4444;
-        border-color: #ffffff;
-        box-shadow: 0 0 15px rgba(255, 68, 68, 0.8);
-        z-index: 101;
+    
+    .punto-interes:hover .tooltip {
+        opacity: 1;
+        top: -45px;
     }
 
 
@@ -83,22 +89,22 @@
         background-color: #ff4444;
         border-color: #ffeeee;
     }
-
+    
     .punto-interes[data-tipo="Acuático"] {
-        background-color: #2175b9;
+        background-color: #44aaff;
         border-color: #eef8ff;
     }
-
+    
     .punto-interes[data-tipo="Espectáculo"] {
         background-color: #aa44ff;
         border-color: #f8eeff;
     }
-
+    
     .punto-interes[data-tipo="Atracción Temática"] {
         background-color: #44ff44;
         border-color: #eeffee;
     }
-
+    
     .punto-interes[data-tipo="Atracción Infantil"] {
         background-color: #ffaa44;
         border-color: #fff8ee;
@@ -118,11 +124,12 @@
     }
 
     .filtros-container {
-        flex: 0 0 300px;
+        width: 280px;
+        flex-shrink: 0;
         display: flex;
         flex-direction: column;
-        gap: 15px;
-        padding: 20px;
+        gap: 12px;
+        padding: 15px;
         background: #f5f5f5;
         border-radius: 10px;
         height: fit-content;
@@ -133,24 +140,27 @@
     .filtro-grupo {
         display: flex;
         flex-direction: column;
-        gap: 8px;
+        gap: 6px;
     }
     
     .filtro-grupo h4 {
         margin: 0;
         color: #394e60;
-        font-size: 1.1em;
+        font-size: 1em;
         font-weight: 600;
+        padding-bottom: 4px;
     }
 
     .filtro-btn {
-    width: 100%;
-    margin: 0;
-    --background: #394e60;
-    --background-hover: #2d3f4d;
-    --border-radius: 8px;
-    font-size: 0.9em;
-    transition: all 0.3s ease;
+        --background: #394e60;
+        --background-hover: #2d3f4d;
+        --color: white;
+        --border-radius: 25px;
+        --padding-start: 15px;
+        --padding-end: 15px;
+        font-weight: 600;
+        font-size: 0.95em;
+        transition: all 0.3s ease;
     }
     
     .filtro-btn.active {
@@ -162,30 +172,25 @@
     
     
     #resultados-count {
-        grid-column: 2;
-        width: 100%;
-        margin-top: 10px;
-        text-align: center;
-        font-size: 1.1em;
+        position: absolute;
+        bottom: -40px;
+        left: 50%;
+        transform: translateX(-50%);
+        font-size: 1em;
         font-weight: 500;
-        padding: 10px 20px;
-        background: rgba(195, 207, 217, 0.2);
-        border-radius: 20px;
         color: #394e60;
-        margin: 0 auto;
+        background: rgba(195, 207, 217, 0.2);
+        padding: 10px 20px;
+        border-radius: 20px;
+        text-align: center;
+        white-space: nowrap;
     }
 
     .reset-container {
-        display: grid;
-        grid-template-columns: auto 1fr auto;
-        align-items: center;
-        text-align: left;
         margin-top: auto;
+        padding-top: 15px;
+        border-top: 1px solid rgba(57, 71, 84, 0.1);
         width: 100%;
-        margin-left: 120px;
-        margin-right: 120px;
-        padding: 0 10px;
-        gap: 20px;
     }
     
     .reset-btn {
@@ -193,20 +198,17 @@
         --background-hover: #2d3f4d;
         --color: white;
         --border-radius: 25px;
-        --padding-start: 25px;
-        --padding-end: 25px;
-        --box-shadow: 0 4px 12px rgba(57, 71, 84, 0.2);
-        font-weight: bold;
-        font-size: 1.1em;
+        --padding-start: 20px;
+        --padding-end: 20px;
+        font-weight: 600;
         height: 45px;
         transition: all 0.3s ease;
-        position: relative;
-        overflow: hidden;
-        margin-left: 0;
-        margin-right: auto;
-        grid-column: 1;
         width: 100%;
-        margin: 0;
+    }
+    
+    .reset-btn:hover {
+        transform: translateY(-2px);
+        --box-shadow: 0 6px 16px rgba(57, 71, 84, 0.3);
     }
     
     .reset-btn::before {
@@ -221,10 +223,6 @@
         transition: opacity 0.3s ease;
     }
     
-    .reset-btn:hover {
-        transform: translateY(-2px);
-        --box-shadow: 0 6px 16px rgba(57, 71, 84, 0.3);
-    }
     
     .reset-btn:active {
         transform: translateY(1px);
@@ -246,11 +244,6 @@
     
         .reset-btn {
             grid-column: 1;
-        }
-    
-        #resultados-count {
-            grid-column: 1;
-            margin-top: 10px;
         }
     }
     
@@ -323,20 +316,30 @@
         }
     }
     
-    .map-image {
-        width: 100%;
-        height: auto;
-        display: block;
-        border-radius: 8px;
-    }
-    
     .punto-interes:hover .tooltip {
         opacity: 1;
     }
 
     .map-container {
         flex: 1;
-        max-width: 1200px;
+        position: relative;
+        min-height: 600px;
+        background: #fff;
+        border-radius: 10px;
+        padding: 15px;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        display: flex;
+        flex-direction: column;
+        align-items: center; /* Centra el mapa horizontalmente */
+        margin-bottom: 60px; /* Espacio para el contador */
+    }
+    
+    .map-image {
+        width: 85%; /* Ajusta el ancho del mapa */
+        height: auto;
+        display: block;
+        border-radius: 8px;
+        margin: 0 auto; /* Centra el mapa */
     }
 
     .map-container::after {
@@ -429,6 +432,7 @@
 
 
     .welcome-text {
+        margin-top: 60px;
         margin: 20px auto;
         padding: 20px;
         max-width: 1200px;
@@ -437,6 +441,17 @@
         color: #666;
         text-align: center;
         line-height: 1.6;
+    }
+
+    @media (max-width: 768px) {
+        .map-image {
+            width: 95%;
+        }
+        
+        #resultados-count {
+            font-size: 0.9em;
+            padding: 8px 15px;
+        }
     }
     
     @media (max-width: 768px) {
@@ -461,14 +476,14 @@
         }
     
         .filtros-container {
-            flex: none;
-            width: auto;
+            width: 100%;
             position: relative;
             top: 0;
         }
     
         .map-container {
             width: 100%;
+            min-height: 400px;
         }
     }
     
