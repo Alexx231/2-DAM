@@ -224,6 +224,35 @@ function actualizarBotonesActivos() {
     });
 }
 
+function resetearFiltros() {
+    // Resetear el estado de los filtros
+    filtrosActuales.edad = 'todas';
+    filtrosActuales.duracion = 'todas';
+    filtrosActuales.altura = 'todas';
+
+    // Actualizar la visualización
+    actualizarVisualizacionMapa(atracciones);
+    
+    // Actualizar los botones activos
+    document.querySelectorAll('.filtro-btn').forEach(btn => {
+        if (btn.dataset.valor === 'todas') {
+            btn.classList.add('active');
+        } else {
+            btn.classList.remove('active');
+        }
+    });
+
+    // Animar el icono del botón de reset
+    const resetIcon = document.querySelector('.reset-btn ion-icon');
+    resetIcon.style.animation = 'none';
+    setTimeout(() => {
+        resetIcon.style.animation = 'spin 0.3s ease-out';
+    }, 10);
+
+    // Actualizar el contador
+    actualizarContadorResultados(atracciones.length);
+}
+
 // Inicialización cuando el documento está listo
 document.addEventListener('DOMContentLoaded', () => {
     // Crear contador de resultados si no existe
