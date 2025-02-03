@@ -59,29 +59,37 @@
     }
 
     .filtro-btn {
-        --background: #394e60;
-        --background-hover: #2d3f4d;
-        --border-radius: 20px;
-        --padding-start: 15px;
-        --padding-end: 15px;
-        font-size: 0.9em;
-        transition: all 0.3s ease;
+    --background: #394e60;
+    --background-hover: #2d3f4d;
+    --border-radius: 20px;
+    --padding-start: 15px;
+    --padding-end: 15px;
+    font-size: 0.9em;
+    transition: all 0.3s ease;
     }
     
     .filtro-btn.active {
         --background: #c3cfd9;
         --color: #394e60;
         transform: scale(1.05);
+        box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+    
+    
+    .punto-interes.filtered {
+        opacity: 0.3;
+        pointer-events: none;
     }
     
     #resultados-count {
         font-size: 1.1em;
         font-weight: 500;
-        color: #394e60;
-        padding: 10px;
-        border-radius: 5px;
+        padding: 10px 20px;
         background: rgba(195, 207, 217, 0.2);
+        border-radius: 20px;
         display: inline-block;
+        margin-top: 20px;
+        transition: all 0.3s ease;
     }
 
     @media (max-width: 768px) {

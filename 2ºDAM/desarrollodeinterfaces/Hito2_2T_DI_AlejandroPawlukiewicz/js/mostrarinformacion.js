@@ -140,84 +140,106 @@ function mostrarAtraccion(nombre) {
     
 }
 
-function mostrarAtraccionesFiltradas(filtros) {
-    const atraccionesFiltradas = filtrarAtracciones(filtros);
-    actualizarVisualizacionMapa(atraccionesFiltradas);
-}
+// Variables globales para el estado de los filtros
+const filtrosActuales = {
+    edad: 'todas',
+    duracion: 'todas',
+    altura: 'todas'
+};
 
-function actualizarVisualizacionMapa(atraccionesFiltradas) {
-    document.querySelectorAll('.punto-interes').forEach(punto => {
-        punto.style.display = 'none';
-    });
-
-    atraccionesFiltradas.forEach(atraccion => {
-        const punto = Array.from(document.querySelectorAll('.punto-interes')).find(
-            p => p.querySelector('.tooltip').textContent === atraccion.nombre
-        );
-        if (punto) {
-            punto.style.display = 'block';
-        }
-    });
-
-    const resultadosCount = document.getElementById('resultados-count');
-    if (resultadosCount) {
-        resultadosCount.textContent = `${atraccionesFiltradas.length} atracciones encontradas`;
-    }
-}
-
+// Función principal de filtrado mejorada
 function filtrarAtracciones(filtros) {
     return atracciones.filter(atraccion => {
-        const cumpleEdad = filtros.edad === 'todas' || 
+        // Filtro por edad
+        const cumpleEdad = filtros.edad === 'todas' || (
             (filtros.edad === 'niños' && atraccion.edad <= 8) ||
             (filtros.edad === 'jovenes' && atraccion.edad > 8 && atraccion.edad <= 12) ||
-            (filtros.edad === 'adultos' && atraccion.edad > 12);
+            (filtros.edad === 'adultos' && atraccion.edad > 12)
+        );
 
-        const tiempoEnMinutos = parseInt(atraccion.tiempo.split(' ')[0]) || 0;
-        const cumpleDuracion = filtros.duracion === 'todas' ||
-            (filtros.duracion === 'corta' && tiempoEnMinutos <= 5) ||
-            (filtros.duracion === 'media' && tiempoEnMinutos > 5 && tiempoEnMinutos <= 15) ||
-            (filtros.duracion === 'larga' && tiempoEnMinutos > 15);
+        // Filtro por duración - convertir string "X minutos" a número
+        const duracionNum = parseInt(atraccion.tiempo);
+        const cumpleDuracion = filtros.duracion === 'todas' || (
+            (filtros.duracion === 'corta' && duracionNum <= 5) ||
+            (filtros.duracion === 'media' && duracionNum > 5 && duracionNum <= 15) ||
+            (filtros.duracion === 'larga' && duracionNum > 15)
+        );
 
-        const cumpleAltura = filtros.altura === 'todas' ||
+        // Filtro por altura
+        const cumpleAltura = filtros.altura === 'todas' || (
             (filtros.altura === 'baja' && atraccion.altura <= 100) ||
             (filtros.altura === 'media' && atraccion.altura > 100 && atraccion.altura <= 130) ||
-            (filtros.altura === 'alta' && atraccion.altura > 130);
+            (filtros.altura === 'alta' && atraccion.altura > 130)
+        );
 
         return cumpleEdad && cumpleDuracion && cumpleAltura;
     });
 }
 
+// Función para actualizar filtros
 function actualizarFiltro(tipo, valor) {
     filtrosActuales[tipo] = valor;
-    mostrarAtraccionesFiltradas(filtrosActuales);
+    const atraccionesFiltradas = filtrarAtracciones(filtrosActuales);
+    actualizarVisualizacionMapa(atraccionesFiltradas);
     actualizarBotonesActivos();
+    actualizarContadorResultados(atraccionesFiltradas.length);
 }
 
-function actualizarBotonesActivos() {
-    document.querySelectorAll('.filtro-btn').forEach(btn => {
-        const tipo = btn.dataset.tipo;
-        const valor = btn.dataset.valor;
-        if (filtrosActuales[tipo] === valor) {
-            btn.classList.add('active');
-        } else {
-            btn.classList.remove('active');
+// Función para actualizar la visualización
+function actualizarVisualizacionMapa(atraccionesFiltradas) {
+    const puntos = document.querySelectorAll('.punto-interes');
+    
+    // Primero ocultamos todos los puntos
+    puntos.forEach(punto => {
+        punto.style.display = 'none';
+        punto.style.opacity = '0.3';
+    });
+
+    // Luego mostramos solo los filtrados
+    atraccionesFiltradas.forEach(atraccion => {
+        const punto = Array.from(puntos).find(
+            p => p.querySelector('.tooltip').textContent === atraccion.nombre
+        );
+        if (punto) {
+            punto.style.display = 'block';
+            punto.style.opacity = '1';
         }
     });
 }
 
+// Función para actualizar el contador de resultados
+function actualizarContadorResultados(cantidad) {
+    const resultadosCount = document.getElementById('resultados-count');
+    if (resultadosCount) {
+        resultadosCount.textContent = `${cantidad} atracciones encontradas`;
+    }
+}
+
+// Función para actualizar los botones activos
+function actualizarBotonesActivos() {
+    document.querySelectorAll('.filtro-btn').forEach(btn => {
+        const tipo = btn.dataset.tipo;
+        const valor = btn.dataset.valor;
+        btn.classList.toggle('active', filtrosActuales[tipo] === valor);
+    });
+}
+
+// Inicialización cuando el documento está listo
 document.addEventListener('DOMContentLoaded', () => {
+    // Crear contador de resultados si no existe
+    if (!document.getElementById('resultados-count')) {
+        const filtrosContainer = document.querySelector('.filtros-container');
+        const resultadosDiv = document.createElement('div');
+        resultadosDiv.innerHTML = `
+            <div style="text-align: center; margin-top: 20px; color: #394e60;">
+                <span id="resultados-count">${atracciones.length} atracciones encontradas</span>
+            </div>
+        `;
+        filtrosContainer.appendChild(resultadosDiv);
+    }
+
     // Inicializar los filtros
-    mostrarAtraccionesFiltradas(filtrosActuales);
-    
-    // Añadir contador de resultados
-    const filtrosContainer = document.querySelector('.filtros-container');
-    const resultadosDiv = document.createElement('div');
-    resultadosDiv.innerHTML = `
-        <div style="text-align: center; margin-top: 20px; color: #394e60;">
-            <span id="resultados-count">${atracciones.length} atracciones encontradas</span>
-        </div>
-    `;
-    filtrosContainer.appendChild(resultadosDiv);
+    actualizarFiltro('edad', 'todas');
 });
 
 // Función para actualizar la visualización de botones activos
