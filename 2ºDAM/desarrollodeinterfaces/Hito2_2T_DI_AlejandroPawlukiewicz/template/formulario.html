@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <title>Magik Park - Formulario</title>
+    <script type="module" src="https://cdn.jsdelivr.net/npm/@ionic/core/dist/ionic/ionic.esm.js"></script>
+    <link rel="stylesheet" href="../css/index.css">
+    <link rel="stylesheet" href="../css/formulario.css">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'>
+        <!-- Estructura principal -->
+        <circle cx='12' cy='12' r='10' stroke='%23FF69B4' stroke-width='1.5' fill='none'/>
+        
+        <!-- Radios de la noria -->
+        <line x1='12' y1='2' x2='12' y2='22' stroke='%23FF69B4' stroke-width='1.5'/>
+        <line x1='2' y1='12' x2='22' y2='12' stroke='%23FF69B4' stroke-width='1.5'/>
+        <line x1='4.5' y1='4.5' x2='19.5' y2='19.5' stroke='%23FF69B4' stroke-width='1.5'/>
+        <line x1='19.5' y1='4.5' x2='4.5' y2='19.5' stroke='%23FF69B4' stroke-width='1.5'/>
+        
+        <!-- Cabinas de la noria -->
+        <circle cx='12' cy='2' r='1.5' fill='%23FF69B4'/>
+        <circle cx='22' cy='12' r='1.5' fill='%23FF69B4'/>
+        <circle cx='12' cy='22' r='1.5' fill='%23FF69B4'/>
+        <circle cx='2' cy='12' r='1.5' fill='%23FF69B4'/>
+        <circle cx='19.5' cy='4.5' r='1.5' fill='%23FF69B4'/>
+        <circle cx='19.5' cy='19.5' r='1.5' fill='%23FF69B4'/>
+        <circle cx='4.5' cy='19.5' r='1.5' fill='%23FF69B4'/>
+        <circle cx='4.5' cy='4.5' r='1.5' fill='%23FF69B4'/>
+        
+        <!-- Centro de la noria -->
+        <circle cx='12' cy='12' r='2' fill='%23FF69B4'/>
+    </svg>"/>    
+    <link rel="stylesheet" href="https://unpkg.com/@ionic/core@latest/css/ionic.bundle.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@ionic/core/css/ionic.bundle.css" />
+</head>
+
+<body>
+    <ion-app>
+        <ion-header>
+            <ion-toolbar class="nav-toolbar" style="height: 100px;">
+                <div style="display: flex; align-items: center; width: 100%;">
+                    <a href="index.html" style="padding: 10px; transition: transform 0.3s ease;">
+                        <img src="../img/logo.png" alt="Magik Park Logo" style="height: 80px; width: auto; margin-right: 20px; transition: transform 0.3s ease;" onmouseover="this.style.transform='scale(1.1)'" onmouseout="this.style.transform='scale(1)'">
+                    </a>
+                    <div class="nav-buttons" style="display: flex; align-items: center;">
+                        <ion-button fill="outline" href="atracciones.html">
+                            Atracciones
+                            <ion-icon slot="end" name="chevron-down-outline"></ion-icon>
+                        </ion-button>
+                        <ion-button fill="outline" href="formulario.html">
+                            Formulario
+                            <ion-icon slot="end" name="chevron-down-outline"></ion-icon>
+                        </ion-button>
+                        <ion-button fill="outline" href="galeria_imagenes.html">
+                            Galeria de Imagenes
+                            <ion-icon slot="end" name="chevron-down-outline"></ion-icon>
+                        </ion-button>
+                        <ion-button style="--background: #c3cfd9;" href="entradas.html">
+                            Comprar Entradas
+                        </ion-button>
+                    </div>
+                </div>
+            </ion-toolbar>
+        </ion-header>
+
+        <ion-content>
+            <div class="form-container">
+                <div class="form-card">
+                    <div class="form-header">
+                        <h1>Contáctanos</h1>
+                        <p style="color: white; opacity: 0.9;">Completa el formulario y nos pondremos en contacto contigo</p>
+                    </div>
+                    
+                    <form>
+                        <ion-item>
+                            <ion-icon name="person-outline"></ion-icon>
+                            <ion-input required label="Nombre" label-placement="floating" placeholder="Introduce tu nombre"></ion-input>
+                        </ion-item>
+        
+                        <ion-item>
+                            <ion-icon name="mail-outline"></ion-icon>
+                            <ion-input required type="email" label="Email" label-placement="floating" placeholder="Introduce tu email"></ion-input>
+                        </ion-item>
+        
+                        <ion-item>
+                            <ion-icon name="call-outline"></ion-icon>
+                            <ion-input type="tel" label="Teléfono" label-placement="floating" placeholder="Introduce tu teléfono"></ion-input>
+                        </ion-item>
+        
+                        <ion-item>
+                            <ion-icon name="chatbubble-outline"></ion-icon>
+                            <ion-textarea required label="Mensaje" label-placement="floating" placeholder="Escribe tu mensaje" rows="4"></ion-textarea>
+                        </ion-item>
+        
+                        <ion-button expand="block" type="submit">
+                            Enviar mensaje
+                            <ion-icon slot="end" name="paper-plane-outline"></ion-icon>
+                        </ion-button>
+                    </form>
+                </div>
+            </div>
+        </ion-content>
+    </ion-app>
+    <script>
+        const form = document.querySelector('form');
+        const showToast = async () => {
+            const toast = document.createElement('ion-toast');
+            toast.message = 'Mensaje enviado correctamente';
+            toast.duration = 2000;
+            toast.position = 'bottom';
+            toast.color = 'success';
+            toast.buttons = [
+                {
+                    text: 'OK',
+                    role: 'cancel'
+                }
+            ];
+        
+            document.body.appendChild(toast);
+            await toast.present();
+        };
+        
+        form.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            await showToast();
+            form.reset();
+        });
+        </script>
+</body>
+</html>

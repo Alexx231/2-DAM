@@ -1,0 +1,361 @@
+html {
+    scroll-behavior: smooth;
+}
+
+/* Animación para elementos al hacer scroll */
+.fade-in-section {
+    opacity: 0;
+    transform: translateY(50px);
+    visibility: hidden;
+    transition: opacity 0.6s ease-out, 
+                transform 0.6s ease-out,
+                visibility 0.6s ease-out;
+}
+
+.fade-in-section.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+    visibility: visible;
+}
+
+/* Scroll personalizado */
+::-webkit-scrollbar {
+    width: 10px;
+}
+
+::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #c3cfd9;
+    border-radius: 5px;
+    transition: background 0.3s ease;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #394e60;
+}
+
+.scroll-indicator {
+    position: absolute;
+    bottom: 100px;
+    left: 50%;
+    transform: translateX(-50%);
+    text-align: center;
+    color: white;
+    z-index: 100;
+    animation: fadeInOut 2s infinite;
+}
+
+.scroll-arrow {
+    font-size: 2em;
+    cursor: pointer;
+    animation: bounce 2s infinite;
+}
+
+.scroll-text {
+    font-size: 1.2em;
+    margin-top: 10px;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+}
+
+@keyframes bounce {
+    0%, 20%, 50%, 80%, 100% {
+        transform: translateY(0);
+    }
+    40% {
+        transform: translateY(-20px);
+    }
+    60% {
+        transform: translateY(-10px);
+    }
+}
+
+@keyframes fadeInOut {
+    0% { opacity: 0.4; }
+    50% { opacity: 1; }
+    100% { opacity: 0.4; }
+}
+
+ion-content {
+    --background: transparent;
+    position: relative;
+}
+
+.banner {
+    width: 100%;
+    height: auto;
+    margin-top: 0;
+    position: relative;
+    z-index: 1;
+}
+
+.container {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    z-index: 1000;
+    background: white;
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+}
+
+.info {
+    text-align: center;
+    margin-bottom: 16px;
+}
+
+.nav-toolbar {
+    display: flex;
+    align-items: center;
+    --background: #e1e5ec;
+    justify-content: space-between;
+}
+
+.nav-toolbar img {
+    height: 70px;
+    margin-left: 16px;
+}
+
+.nav-buttons {
+        display: flex;
+        gap: 8px;
+        flex-wrap: wrap;
+        margin: 0 auto;
+        justify-content: center;
+        align-items: center;
+        padding: 0 16px;
+}
+
+.nav-buttons ion-button {
+        --padding-top: 8px;
+        --padding-bottom: 8px;
+        --min-height: 32px;
+        --border-radius: 4px;
+        font-weight: bold;
+        font-size: 14px;
+        min-width: 120px;
+}
+
+@media (max-width: 768px) {
+        .nav-buttons {
+                flex-direction: column;
+                width: 90%;
+                margin: 10px auto;
+                gap: 5px;
+        }
+
+        .nav-buttons ion-button {
+                width: 100%;
+                --padding-start: 10px;
+                --padding-end: 10px;
+                font-size: 12px;
+                min-width: auto;
+        }
+}
+
+@media (max-width: 480px) {
+        .nav-buttons ion-button {
+                --min-height: 28px;
+                font-size: 11px;
+        }
+
+        .nav-buttons ion-icon {
+                font-size: 14px;
+        }
+}
+
+.nav-buttons ion-button[fill="outline"] {
+        --background: #e1e5ec;
+        --border-color: #394754 !important;
+        --color: white;
+}
+
+.nav-buttons ion-button[fill="outline"]:hover {
+        --color: #394754;
+}
+
+.info h4 {
+    margin: 0;
+    font-size: 1.2rem;
+    font-weight: bold;
+}
+
+.info .add-link {
+    color: #007bff;
+    text-decoration: none;
+    font-size: 1rem;
+    margin-top: 4px;
+    display: inline-block;
+}
+
+.footer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.9rem;
+    color: #666;
+    margin-top: 8px;
+}
+
+.footer .heart-icon {
+    color: red;
+    font-size: 1rem;
+    margin: 0 4px;
+}
+
+.news-section {
+    padding: 40px 20px;
+    background-color: #f5f5f5;
+    margin-top: 40px;
+}
+
+.section-title {
+    text-align: center;
+    color: #333;
+    font-size: 2.5em;
+    margin-bottom: 30px;
+}
+
+.news-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    padding: 20px;
+}
+
+.news-separator {
+    display: flex;
+    align-items: center;
+    margin: 20px 0;
+    width: 100%;
+}
+
+.news-separator hr {
+    flex-grow: 1;
+    height: 1px;
+    background-color: #ccc;
+    border: none;
+    margin: 0 10px;
+}
+
+.news-separator span {
+    color: #666;
+    font-size: 1.2em;
+}
+
+.news-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 15px;
+}
+
+.news-card {
+    margin: 0;
+    transition: transform 0.3s ease;
+}
+
+.news-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+}
+
+.news-card img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+}
+
+.news-card ion-card-subtitle {
+    color: #666;
+}
+
+.news-card ion-card-title {
+    font-size: 1.2em;
+    margin: 10px 0;
+}
+
+.news-card ion-card-content {
+    color: #555;
+    line-height: 1.6;
+}
+
+.letrero {
+    width: 800px;
+    height: 200px;
+    background-color: rgb(195, 207, 217);
+    margin: -100px auto 0;
+    position: relative;
+    z-index: 2;
+    border-radius: 15px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.letrero-content {
+    color: white;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+}
+
+.letrero h1 {
+    color: #333;
+    font-size: 48px;
+    margin: 0;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+.letrero h2 {
+    font-size: 4.5em;
+    margin: 10px 0;
+    color: #ffd700;
+    font-weight: 900;
+    letter-spacing: 4px;
+}
+
+.letrero p {
+    color: #666;
+    font-size: 24px;
+    margin: 10px 0 0;
+    font-style: italic;
+    font-weight: 300;
+    letter-spacing: 1px;
+}
+
+.footer-content {
+    display: flex;
+    justify-content: center;
+    padding: 20px;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(5px);
+}
+
+.privacy-button {
+    --color: #394e60;
+    --background-hover: rgba(57, 78, 96, 0.1);
+    font-size: 0.9em;
+    letter-spacing: 0.5px;
+    text-transform: none;
+    transition: all 0.3s ease;
+}
+
+.privacy-button:hover {
+    --opacity: 0.8;
+    transform: translateY(-2px);
+}
+
+.privacy-button ion-icon {
+    margin-right: 8px;
+    font-size: 1.2em;
+}

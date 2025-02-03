@@ -1,0 +1,187 @@
+
+    .map-container {
+        position: relative;
+        width: 100%;
+        max-width: 1200px;
+        margin: 0 auto;
+    }
+    
+    .punto-interes {
+        position: absolute;
+        width: 15px;
+        height: 15px;
+        background-color: #394754;
+        border: 2px solid white;
+        border-radius: 50%;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        transform: translate(-50%, -50%);
+        z-index: 100;
+    }
+    
+    .tooltip {
+        position: absolute;
+        background: rgba(0, 0, 0, 0.8);
+        color: white;
+        padding: 5px 10px;
+        border-radius: 4px;
+        font-size: 12px;
+        white-space: nowrap;
+        pointer-events: none;
+        opacity: 0;
+        transition: opacity 0.3s;
+        top: -25px;
+        left: 50%;
+        transform: translateX(-50%);
+    }
+    
+    .punto-interes:hover {
+        transform: translate(-50%, -50%) scale(1.2);
+        background-color: #ff4444;
+        box-shadow: 0 0 10px rgba(255,68,68,0.5);
+    }
+    
+    .punto-interes:hover .tooltip {
+        opacity: 1;
+    }
+    
+    @media (max-width: 768px) {
+        .punto-interes {
+            width: 12px;
+            height: 12px;
+        }
+    }
+    
+    @media (max-width: 480px) {
+        .punto-interes {
+            width: 10px;
+            height: 10px;
+        }
+    }
+    
+    .map-image {
+        width: 100%;
+        height: auto;
+        display: block;
+        border-radius: 8px;
+    }
+    
+    .punto-interes:hover .tooltip {
+        opacity: 1;
+    }
+
+    .map-container::after {
+        content: '';
+        position: absolute;
+        width: 10px;
+        height: 10px;
+        background: #394754;
+        border-radius: 50%;
+        transform: translate(-50%, -50%);
+        pointer-events: none;
+    }
+
+    area {
+        cursor: pointer;
+      }
+      
+      area:hover {
+        outline: 2px solid #394754;
+      }
+
+    .nav-toolbar {
+      display: flex;
+      align-items: center;
+      --background: #e1e5ec;
+      justify-content: space-between;
+    }
+    .nav-toolbar img {
+      height: 70px;
+      margin-left: 16px;
+    }
+
+    .nav-buttons {
+        display: flex;
+        gap: 8px;
+        flex-wrap: wrap;
+        margin: 0 auto;
+        justify-content: center; 
+        align-items: center;
+        padding: 0 16px;
+    }
+    
+    .nav-buttons ion-button {
+        --padding-top: 8px;
+        --padding-bottom: 8px;
+        --min-height: 32px;
+        --border-radius: 4px;
+        font-weight: bold;
+        font-size: 14px;
+        min-width: 120px;
+    }
+    
+    @media (max-width: 768px) {
+        .nav-buttons {
+            flex-direction: column;
+            width: 90%; 
+            margin: 10px auto; 
+            gap: 5px;
+        }
+    
+        .nav-buttons ion-button {
+            width: 100%;
+            --padding-start: 10px;
+            --padding-end: 10px;
+            font-size: 12px;
+            min-width: auto;
+        }
+    }
+    
+    @media (max-width: 480px) {
+        .nav-buttons ion-button {
+            --min-height: 28px;
+            font-size: 11px;
+        }
+    
+        .nav-buttons ion-icon {
+            font-size: 14px;
+        }
+    }
+    
+    .nav-buttons ion-button[fill="outline"] {
+        --background: #e1e5ec;
+        --border-color: #394754 !important;
+        --color: white;
+    }
+    
+    .nav-buttons ion-button[fill="outline"]:hover {
+        --color: #394754;
+    }
+
+
+    .welcome-text {
+        margin: 20px auto;
+        padding: 20px;
+        max-width: 1200px;
+        border-radius: 8px;
+        font-style: italic;
+        color: #666;
+        text-align: center;
+        line-height: 1.6;
+    }
+    
+    @media (max-width: 768px) {
+        .welcome-text {
+            margin: 15px;
+            padding: 15px;
+            font-size: 14px;
+        }
+    }
+    
+    @media (max-width: 480px) {
+        .welcome-text {
+            margin: 10px;
+            padding: 10px;
+            font-size: 12px;
+        }
+    }
