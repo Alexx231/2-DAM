@@ -319,16 +319,16 @@ function inicializarPuntos() {
 
     function obtenerCoordenadas(nombre) {
         const coordenadas = {
-            "Montaña Rusa del Terror": { x: 15, y: 78 },
-            "Torre del Vertigo": { x: 41.5, y: 30 },
-            "Cataratas Mágicas": { x: 41.8, y: 65 },
-            "Río Tranquilo": { x: 20, y: 72 },
-            "Safari Salvaje": { x: 36, y: 60 },
-            "Teatro de los Sueños": { x: 58, y: 38 },
-            "Laberinto Encantado": { x: 55, y: 62 },
-            "Carrusel Clásico": { x: 12, y: 55 },
-            "Simulador Espacial": { x: 68, y: 60 },
-            "Zona Infantil Aventura": { x: 73, y: 35 }
+            "Montaña Rusa del Terror": { x: 15, y: 63 },
+            "Torre del Vertigo": { x: 42, y: 30 },
+            "Cataratas Mágicas": { x: 42, y: 51 },
+            "Río Tranquilo": { x: 20, y: 58 },
+            "Safari Salvaje": { x: 36, y: 50 },
+            "Teatro de los Sueños": { x: 58, y: 32 },
+            "Laberinto Encantado": { x: 55, y: 50 },
+            "Carrusel Clásico": { x: 13, y: 46 },
+            "Simulador Espacial": { x: 68, y: 48.5 },
+            "Zona Infantil Aventura": { x: 73, y: 30 }
         };
         return coordenadas[nombre];
     }
