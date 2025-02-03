@@ -65,10 +65,23 @@
         --padding-start: 15px;
         --padding-end: 15px;
         font-size: 0.9em;
+        transition: all 0.3s ease;
     }
-
+    
     .filtro-btn.active {
         --background: #c3cfd9;
+        --color: #394e60;
+        transform: scale(1.05);
+    }
+    
+    #resultados-count {
+        font-size: 1.1em;
+        font-weight: 500;
+        color: #394e60;
+        padding: 10px;
+        border-radius: 5px;
+        background: rgba(195, 207, 217, 0.2);
+        display: inline-block;
     }
 
     @media (max-width: 768px) {

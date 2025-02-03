@@ -140,9 +140,31 @@ function mostrarAtraccion(nombre) {
     
 }
 
-// En mostrarinformacion.js
+function mostrarAtraccionesFiltradas(filtros) {
+    const atraccionesFiltradas = filtrarAtracciones(filtros);
+    actualizarVisualizacionMapa(atraccionesFiltradas);
+}
 
-// Función para filtrar atracciones con múltiples criterios
+function actualizarVisualizacionMapa(atraccionesFiltradas) {
+    document.querySelectorAll('.punto-interes').forEach(punto => {
+        punto.style.display = 'none';
+    });
+
+    atraccionesFiltradas.forEach(atraccion => {
+        const punto = Array.from(document.querySelectorAll('.punto-interes')).find(
+            p => p.querySelector('.tooltip').textContent === atraccion.nombre
+        );
+        if (punto) {
+            punto.style.display = 'block';
+        }
+    });
+
+    const resultadosCount = document.getElementById('resultados-count');
+    if (resultadosCount) {
+        resultadosCount.textContent = `${atraccionesFiltradas.length} atracciones encontradas`;
+    }
+}
+
 function filtrarAtracciones(filtros) {
     return atracciones.filter(atraccion => {
         const cumpleEdad = filtros.edad === 'todas' || 
@@ -150,10 +172,11 @@ function filtrarAtracciones(filtros) {
             (filtros.edad === 'jovenes' && atraccion.edad > 8 && atraccion.edad <= 12) ||
             (filtros.edad === 'adultos' && atraccion.edad > 12);
 
+        const tiempoEnMinutos = parseInt(atraccion.tiempo.split(' ')[0]) || 0;
         const cumpleDuracion = filtros.duracion === 'todas' ||
-            (filtros.duracion === 'corta' && parseInt(atraccion.tiempo) <= 5) ||
-            (filtros.duracion === 'media' && parseInt(atraccion.tiempo) > 5 && parseInt(atraccion.tiempo) <= 15) ||
-            (filtros.duracion === 'larga' && parseInt(atraccion.tiempo) > 15);
+            (filtros.duracion === 'corta' && tiempoEnMinutos <= 5) ||
+            (filtros.duracion === 'media' && tiempoEnMinutos > 5 && tiempoEnMinutos <= 15) ||
+            (filtros.duracion === 'larga' && tiempoEnMinutos > 15);
 
         const cumpleAltura = filtros.altura === 'todas' ||
             (filtros.altura === 'baja' && atraccion.altura <= 100) ||
@@ -164,19 +187,38 @@ function filtrarAtracciones(filtros) {
     });
 }
 
-// Estado global de los filtros
-const filtrosActuales = {
-    edad: 'todas',
-    duracion: 'todas',
-    altura: 'todas'
-};
-
-// Función para actualizar filtros y mostrar resultados
 function actualizarFiltro(tipo, valor) {
     filtrosActuales[tipo] = valor;
     mostrarAtraccionesFiltradas(filtrosActuales);
     actualizarBotonesActivos();
 }
+
+function actualizarBotonesActivos() {
+    document.querySelectorAll('.filtro-btn').forEach(btn => {
+        const tipo = btn.dataset.tipo;
+        const valor = btn.dataset.valor;
+        if (filtrosActuales[tipo] === valor) {
+            btn.classList.add('active');
+        } else {
+            btn.classList.remove('active');
+        }
+    });
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+    // Inicializar los filtros
+    mostrarAtraccionesFiltradas(filtrosActuales);
+    
+    // Añadir contador de resultados
+    const filtrosContainer = document.querySelector('.filtros-container');
+    const resultadosDiv = document.createElement('div');
+    resultadosDiv.innerHTML = `
+        <div style="text-align: center; margin-top: 20px; color: #394e60;">
+            <span id="resultados-count">${atracciones.length} atracciones encontradas</span>
+        </div>
+    `;
+    filtrosContainer.appendChild(resultadosDiv);
+});
 
 // Función para actualizar la visualización de botones activos
 function actualizarBotonesActivos() {
