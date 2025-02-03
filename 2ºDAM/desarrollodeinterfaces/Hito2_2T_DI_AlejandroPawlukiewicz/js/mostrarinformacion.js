@@ -140,6 +140,41 @@ function mostrarAtraccion(nombre) {
     
 }
 
+// Función para filtrar atracciones
+function filtrarAtracciones(tipo) {
+    return atracciones.filter(atraccion => {
+        if (tipo === 'all') return true;
+        return atraccion.tipo === tipo;
+    });
+}
+
+// Función para mostrar atracciones filtradas
+function mostrarAtraccionesFiltradas(tipo) {
+    const atraccionesFiltradas = filtrarAtracciones(tipo);
+    const contenedor = document.getElementById('atracciones-grid');
+    contenedor.innerHTML = '';
+
+    atraccionesFiltradas.forEach(atraccion => {
+        const card = document.createElement('ion-card');
+        card.className = 'atraccion-card';
+        card.innerHTML = `
+            <ion-card-header>
+                <ion-card-title>${atraccion.nombre}</ion-card-title>
+                <ion-card-subtitle>${atraccion.tipo}</ion-card-subtitle>
+            </ion-card-header>
+            <ion-card-content>
+                <p>${atraccion.descripción}</p>
+                <div class="atraccion-detalles">
+                    <p><ion-icon name="location"></ion-icon> ${atraccion.ubicación}</p>
+                    <p><ion-icon name="time"></ion-icon> ${atraccion.horario}</p>
+                    <p><ion-icon name="person"></ion-icon> Edad mínima: ${atraccion.edad} años</p>
+                </div>
+            </ion-card-content>
+        `;
+        contenedor.appendChild(card);
+    });
+}
+
 function inicializarPuntos() {
     const mapContainer = document.querySelector('.map-container');
     const imagen = document.querySelector('.map-image');

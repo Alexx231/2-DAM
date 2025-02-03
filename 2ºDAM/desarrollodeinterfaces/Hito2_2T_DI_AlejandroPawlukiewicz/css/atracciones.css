@@ -34,6 +34,58 @@
         left: 50%;
         transform: translateX(-50%);
     }
+
+    .filtros-container {
+        display: flex;
+        justify-content: center;
+        gap: 10px;
+        margin: 20px 0;
+        padding: 10px;
+        background: #f5f5f5;
+        border-radius: 10px;
+    }
+    
+    .filtro-btn {
+        --background: #394e60;
+        --background-hover: #2d3f4d;
+        --border-radius: 20px;
+        --padding-start: 15px;
+        --padding-end: 15px;
+    }
+    
+    .filtro-btn.active {
+        --background: #c3cfd9;
+    }
+    
+    .atracciones-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 20px;
+        padding: 20px;
+    }
+    
+    .atraccion-card {
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        transition: transform 0.3s ease;
+    }
+    
+    .atraccion-card:hover {
+        transform: translateY(-5px);
+    }
+    
+    .atraccion-detalles {
+        margin-top: 15px;
+        padding-top: 15px;
+        border-top: 1px solid #eee;
+    }
+    
+    .atraccion-detalles p {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        margin: 5px 0;
+    }
     
     .punto-interes:hover {
         transform: translate(-50%, -50%) scale(1.2);
