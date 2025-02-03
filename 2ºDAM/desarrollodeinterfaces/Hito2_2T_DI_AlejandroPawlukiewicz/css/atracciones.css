@@ -158,24 +158,27 @@
     
     
     #resultados-count {
+        grid-column: 2;
+        text-align: center;
         font-size: 1.1em;
         font-weight: 500;
         padding: 10px 20px;
         background: rgba(195, 207, 217, 0.2);
         border-radius: 20px;
         color: #394e60;
-        margin-left: 20px;
+        margin: 0 auto;
     }
 
     .reset-container {
-        display: flex;
-        justify-content: space-between;
+        display: grid;
+        grid-template-columns: auto 1fr auto;
         align-items: center;
         text-align: left;
         margin-top: 20px;
         margin-left: 120px;
         margin-right: 120px;
         padding: 0 10px;
+        gap: 20px;
     }
     
     .reset-btn {
@@ -194,6 +197,8 @@
         overflow: hidden;
         margin-left: 0;
         margin-right: auto;
+        grid-column: 1;
+        margin: 0;
     }
     
     .reset-btn::before {
@@ -225,16 +230,18 @@
 
     @media (max-width: 768px) {
         .reset-container {
-            flex-direction: column;
-            align-items: stretch;
+            grid-template-columns: 1fr;
             margin-left: 20px;
             margin-right: 20px;
             gap: 10px;
         }
     
+        .reset-btn {
+            grid-column: 1;
+        }
+    
         #resultados-count {
-            text-align: center;
-            margin-left: 0;
+            grid-column: 1;
             margin-top: 10px;
         }
     }
