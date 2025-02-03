@@ -66,118 +66,122 @@
         </ion-header>
 
         <ion-content>
-            <div class="filtros-container">
-                <!-- Filtros por edad -->
-                <div class="filtro-grupo">
-                    <h4>Edad</h4>
-                    <ion-button class="filtro-btn active" data-tipo="edad" data-valor="todas" 
-                            onclick="actualizarFiltro('edad', 'todas')">
-                        Todas
-                    </ion-button>
-                    <ion-button class="filtro-btn" data-tipo="edad" data-valor="niños" 
-                            onclick="actualizarFiltro('edad', 'niños')">
-                        Niños (0-8)
-                    </ion-button>
-                    <ion-button class="filtro-btn" data-tipo="edad" data-valor="jovenes" 
-                            onclick="actualizarFiltro('edad', 'jovenes')">
-                        Jóvenes (9-12)
-                    </ion-button>
-                    <ion-button class="filtro-btn" data-tipo="edad" data-valor="adultos" 
-                            onclick="actualizarFiltro('edad', 'adultos')">
-                        Adultos (13+)
-                    </ion-button>
-                </div>
+            <div class="main-container">
+                <div class="filtros-container">
+                    <!-- Filtros por edad -->
+                    <div class="filtro-grupo">
+                        <h4>Edad</h4>
+                        <ion-button class="filtro-btn active" data-tipo="edad" data-valor="todas" 
+                                onclick="actualizarFiltro('edad', 'todas')">
+                            Todas
+                        </ion-button>
+                        <ion-button class="filtro-btn" data-tipo="edad" data-valor="niños" 
+                                onclick="actualizarFiltro('edad', 'niños')">
+                            Niños (0-8)
+                        </ion-button>
+                        <ion-button class="filtro-btn" data-tipo="edad" data-valor="jovenes" 
+                                onclick="actualizarFiltro('edad', 'jovenes')">
+                            Jóvenes (9-12)
+                        </ion-button>
+                        <ion-button class="filtro-btn" data-tipo="edad" data-valor="adultos" 
+                                onclick="actualizarFiltro('edad', 'adultos')">
+                            Adultos (13+)
+                        </ion-button>
+                    </div>
 
-                <!-- Filtros por duración -->
-                <div class="filtro-grupo">
-                    <h4>Duración</h4>
-                    <ion-button class="filtro-btn active" data-tipo="duracion" data-valor="todas" 
-                            onclick="actualizarFiltro('duracion', 'todas')">
-                        Todas
-                    </ion-button>
-                    <ion-button class="filtro-btn" data-tipo="duracion" data-valor="corta" 
-                            onclick="actualizarFiltro('duracion', 'corta')">
-                        Corta (≤5min)
-                    </ion-button>
-                    <ion-button class="filtro-btn" data-tipo="duracion" data-valor="media" 
-                            onclick="actualizarFiltro('duracion', 'media')">
-                        Media (6-15min)
-                    </ion-button>
-                    <ion-button class="filtro-btn" data-tipo="duracion" data-valor="larga" 
-                            onclick="actualizarFiltro('duracion', 'larga')">
-                        Larga (>15min)
-                    </ion-button>
-                </div>
+                    <!-- Filtros por duración -->
+                    <div class="filtro-grupo">
+                        <h4>Duración</h4>
+                        <ion-button class="filtro-btn active" data-tipo="duracion" data-valor="todas" 
+                                onclick="actualizarFiltro('duracion', 'todas')">
+                            Todas
+                        </ion-button>
+                        <ion-button class="filtro-btn" data-tipo="duracion" data-valor="corta" 
+                                onclick="actualizarFiltro('duracion', 'corta')">
+                            Corta (≤5min)
+                        </ion-button>
+                        <ion-button class="filtro-btn" data-tipo="duracion" data-valor="media" 
+                                onclick="actualizarFiltro('duracion', 'media')">
+                            Media (6-15min)
+                        </ion-button>
+                        <ion-button class="filtro-btn" data-tipo="duracion" data-valor="larga" 
+                                onclick="actualizarFiltro('duracion', 'larga')">
+                            Larga (>15min)
+                        </ion-button>
+                    </div>
 
-                <!-- Filtros por altura -->
-                <div class="filtro-grupo">
-                    <h4>Altura mínima</h4>
-                    <ion-button class="filtro-btn active" data-tipo="altura" data-valor="todas" 
-                            onclick="actualizarFiltro('altura', 'todas')">
-                        Todas
-                    </ion-button>
-                    <ion-button class="filtro-btn" data-tipo="altura" data-valor="baja" 
-                            onclick="actualizarFiltro('altura', 'baja')">
-                        Baja (≤100cm)
-                    </ion-button>
-                    <ion-button class="filtro-btn" data-tipo="altura" data-valor="media" 
-                            onclick="actualizarFiltro('altura', 'media')">
-                        Media (101-130cm)
-                    </ion-button>
-                    <ion-button class="filtro-btn" data-tipo="altura" data-valor="alta" 
-                            onclick="actualizarFiltro('altura', 'alta')">
-                        Alta (>130cm)
-                    </ion-button>
-                </div>
-                <div class="reset-container">
-                    <ion-button class="reset-btn" onclick="resetearFiltros()">
-                        <ion-icon slot="start" name="refresh-circle"></ion-icon>
-                        Reiniciar Filtros
-                    </ion-button>
+                    <!-- Filtros por altura -->
+                    <div class="filtro-grupo">
+                        <h4>Altura mínima</h4>
+                        <ion-button class="filtro-btn active" data-tipo="altura" data-valor="todas" 
+                                onclick="actualizarFiltro('altura', 'todas')">
+                            Todas
+                        </ion-button>
+                        <ion-button class="filtro-btn" data-tipo="altura" data-valor="baja" 
+                                onclick="actualizarFiltro('altura', 'baja')">
+                            Baja (≤100cm)
+                        </ion-button>
+                        <ion-button class="filtro-btn" data-tipo="altura" data-valor="media" 
+                                onclick="actualizarFiltro('altura', 'media')">
+                            Media (101-130cm)
+                        </ion-button>
+                        <ion-button class="filtro-btn" data-tipo="altura" data-valor="alta" 
+                                onclick="actualizarFiltro('altura', 'alta')">
+                            Alta (>130cm)
+                        </ion-button>
+                    </div>
+                    <div class="reset-container">
+                        <ion-button class="reset-btn" onclick="resetearFiltros()">
+                            <ion-icon slot="start" name="refresh-circle"></ion-icon>
+                            Reiniciar Filtros
+                        </ion-button>
+                    </div>
                 </div>
             </div>
 
-            <div class="map-container">
-                <img src="../img/mapa.png" alt="Mapa del Magik Park" class="map-image" usemap="#parkmap">
-                    <map name="parkmap" id="parkmap">
-                        <!-- Zona Maquinismo -->
-                        <area shape="circle" coords="20,45,1.5" href="#" 
-                              alt="Montaña Rusa del Terror" 
-                              onclick="mostrarAtraccion('Montaña Rusa del Terror'); return false;">
-                        <area shape="circle" coords="49.5,19,1.5" href="#" 
-                              alt="Torre del Vertigo" 
-                              onclick="mostrarAtraccion('Torre del Vertigo'); return false;">
-                        
-                        <!-- Zona Naturaleza -->
-                        <area shape="circle" coords="35,29,1.5" href="#" 
-                              alt="Cataratas Mágicas" 
-                              onclick="mostrarAtraccion('Cataratas Mágicas'); return false;">
-                        <area shape="circle" coords="20,39,1.5" href="#" 
-                              alt="Río Tranquilo" 
-                              onclick="mostrarAtraccion('Río Tranquilo'); return false;">
-                        <area shape="circle" coords="39,20,1.5" href="#" 
-                              alt="Safari Salvaje" 
-                              onclick="mostrarAtraccion('Safari Salvaje'); return false;">
-                        
-                        <!-- Zona Central -->
-                        <area shape="circle" coords="69,22,1.5" href="#" 
-                              alt="Teatro de los Sueños" 
-                              onclick="mostrarAtraccion('Teatro de los Sueños'); return false;">
-                        <area shape="circle" coords="40,48,1.5" href="#" 
-                              alt="Laberinto Encantado" 
-                              onclick="mostrarAtraccion('Laberinto Encantado'); return false;">
-                        <area shape="circle" coords="70,45,1.5" href="#" 
-                              alt="Carrusel Clásico" 
-                              onclick="mostrarAtraccion('Carrusel Clásico'); return false;">
-                        
-                        <!-- Zona Futurista y Zona Infantil -->
-                        <area shape="circle" coords="80,33,1.5" href="#" 
-                              alt="Simulador Espacial" 
-                              onclick="mostrarAtraccion('Simulador Espacial'); return false;">
-                        <area shape="circle" coords="85,20,1.5" href="#" 
-                              alt="Zona Infantil Aventura" 
-                              onclick="mostrarAtraccion('Zona Infantil Aventura'); return false;">
-                    </map>
+            <div class="map-section">
+                <div class="map-container">
+                    <img src="../img/mapa.png" alt="Mapa del Magik Park" class="map-image" usemap="#parkmap">
+                        <map name="parkmap" id="parkmap">
+                            <!-- Zona Maquinismo -->
+                            <area shape="circle" coords="20,45,1.5" href="#" 
+                                alt="Montaña Rusa del Terror" 
+                                onclick="mostrarAtraccion('Montaña Rusa del Terror'); return false;">
+                            <area shape="circle" coords="49.5,19,1.5" href="#" 
+                                alt="Torre del Vertigo" 
+                                onclick="mostrarAtraccion('Torre del Vertigo'); return false;">
+                            
+                            <!-- Zona Naturaleza -->
+                            <area shape="circle" coords="35,29,1.5" href="#" 
+                                alt="Cataratas Mágicas" 
+                                onclick="mostrarAtraccion('Cataratas Mágicas'); return false;">
+                            <area shape="circle" coords="20,39,1.5" href="#" 
+                                alt="Río Tranquilo" 
+                                onclick="mostrarAtraccion('Río Tranquilo'); return false;">
+                            <area shape="circle" coords="39,20,1.5" href="#" 
+                                alt="Safari Salvaje" 
+                                onclick="mostrarAtraccion('Safari Salvaje'); return false;">
+                            
+                            <!-- Zona Central -->
+                            <area shape="circle" coords="69,22,1.5" href="#" 
+                                alt="Teatro de los Sueños" 
+                                onclick="mostrarAtraccion('Teatro de los Sueños'); return false;">
+                            <area shape="circle" coords="40,48,1.5" href="#" 
+                                alt="Laberinto Encantado" 
+                                onclick="mostrarAtraccion('Laberinto Encantado'); return false;">
+                            <area shape="circle" coords="70,45,1.5" href="#" 
+                                alt="Carrusel Clásico" 
+                                onclick="mostrarAtraccion('Carrusel Clásico'); return false;">
+                            
+                            <!-- Zona Futurista y Zona Infantil -->
+                            <area shape="circle" coords="80,33,1.5" href="#" 
+                                alt="Simulador Espacial" 
+                                onclick="mostrarAtraccion('Simulador Espacial'); return false;">
+                            <area shape="circle" coords="85,20,1.5" href="#" 
+                                alt="Zona Infantil Aventura" 
+                                onclick="mostrarAtraccion('Zona Infantil Aventura'); return false;">
+                        </map>
+                </div>
             </div>
 
             <div class="welcome-text">
