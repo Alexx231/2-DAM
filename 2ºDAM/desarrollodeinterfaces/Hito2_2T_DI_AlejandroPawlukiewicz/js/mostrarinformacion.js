@@ -254,21 +254,68 @@ function resetearFiltros() {
 }
 
 document.addEventListener('DOMContentLoaded', () => {
-    // Eliminar el contador si ya existe
-    const existingCounter = document.getElementById('resultados-count');
-    if (existingCounter) {
-        existingCounter.remove();
+    const resultadosCount = document.getElementById('resultados-count');
+    let listaVisible = false;
+    
+    // Crear lista de resultados si no existe
+    let resultadosLista = document.querySelector('.resultados-lista');
+    if (!resultadosLista) {
+        resultadosLista = document.createElement('div');
+        resultadosLista.className = 'resultados-lista';
+        resultadosCount.parentNode.insertBefore(resultadosLista, resultadosCount);
     }
 
-    // Crear el nuevo contador y añadirlo después del map-container
-    const resultadosSpan = document.createElement('span');
-    resultadosSpan.id = 'resultados-count';
-    resultadosSpan.textContent = `${atracciones.length} atracciones encontradas`;
-    
-    const mapContainer = document.querySelector('.map-container');
-    mapContainer.appendChild(resultadosSpan);
+    // Función para actualizar la lista de atracciones
+    function actualizarListaAtracciones(atraccionesFiltradas) {
+        resultadosLista.innerHTML = '';
+        
+        atraccionesFiltradas.forEach(atraccion => {
+            const item = document.createElement('div');
+            item.className = 'atraccion-item';
+            item.innerHTML = `
+                <div class="atraccion-info">
+                    <div class="atraccion-nombre">${atraccion.nombre}</div>
+                    <div class="atraccion-tipo">${atraccion.tipo}</div>
+                    <div class="atraccion-ubicacion">${atraccion.ubicación}</div>
+                </div>
+            `;
+            
+            item.addEventListener('click', () => {
+                mostrarAtraccion(atraccion.nombre);
+            });
+            
+            resultadosLista.appendChild(item);
+        });
+    }
 
-    actualizarFiltro('edad', 'todas');
+    // Toggle de la lista al hacer clic en el contador
+    resultadosCount.addEventListener('click', () => {
+        listaVisible = !listaVisible;
+        resultadosLista.classList.toggle('active', listaVisible);
+        
+        if (listaVisible) {
+            const atraccionesFiltradas = filtrarAtracciones(filtrosActuales);
+            actualizarListaAtracciones(atraccionesFiltradas);
+        }
+    });
+
+    // Cerrar lista al hacer clic fuera
+    document.addEventListener('click', (e) => {
+        if (!resultadosCount.contains(e.target) && !resultadosLista.contains(e.target)) {
+            listaVisible = false;
+            resultadosLista.classList.remove('active');
+        }
+    });
+
+    // Actualizar la lista cuando cambien los filtros
+    const originalActualizarFiltro = window.actualizarFiltro;
+    window.actualizarFiltro = function(tipo, valor) {
+        originalActualizarFiltro(tipo, valor);
+        if (listaVisible) {
+            const atraccionesFiltradas = filtrarAtracciones(filtrosActuales);
+            actualizarListaAtracciones(atraccionesFiltradas);
+        }
+    };
 });
 
 // Función para actualizar la visualización de botones activos
