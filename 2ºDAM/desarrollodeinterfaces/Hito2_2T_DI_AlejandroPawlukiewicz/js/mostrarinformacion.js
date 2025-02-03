@@ -253,21 +253,17 @@ function resetearFiltros() {
     actualizarContadorResultados(atracciones.length);
 }
 
-// Inicialización cuando el documento está listo
 document.addEventListener('DOMContentLoaded', () => {
-    // Crear contador de resultados si no existe
+
+    let resetContainer = document.querySelector('.reset-container');
+    
     if (!document.getElementById('resultados-count')) {
-        const filtrosContainer = document.querySelector('.filtros-container');
-        const resultadosDiv = document.createElement('div');
-        resultadosDiv.innerHTML = `
-            <div style="text-align: center; margin-top: 20px; color: #394e60;">
-                <span id="resultados-count">${atracciones.length} atracciones encontradas</span>
-            </div>
-        `;
-        filtrosContainer.appendChild(resultadosDiv);
+        const resultadosSpan = document.createElement('span');
+        resultadosSpan.id = 'resultados-count';
+        resultadosSpan.textContent = `${atracciones.length} atracciones encontradas`;
+        resetContainer.appendChild(resultadosSpan);
     }
 
-    // Inicializar los filtros
     actualizarFiltro('edad', 'todas');
 });
 

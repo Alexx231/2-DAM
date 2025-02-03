@@ -163,11 +163,21 @@
         padding: 10px 20px;
         background: rgba(195, 207, 217, 0.2);
         border-radius: 20px;
-        display: inline-block;
-        margin-top: 20px;
-        transition: all 0.3s ease;
+        color: #394e60;
+        margin-left: 20px;
     }
 
+    .reset-container {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        text-align: left;
+        margin-top: 20px;
+        margin-left: 120px;
+        margin-right: 120px;
+        padding: 0 10px;
+    }
+    
     .reset-btn {
         --background: #394e60;
         --background-hover: #2d3f4d;
@@ -182,6 +192,8 @@
         transition: all 0.3s ease;
         position: relative;
         overflow: hidden;
+        margin-left: 0;
+        margin-right: auto;
     }
     
     .reset-btn::before {
@@ -209,6 +221,22 @@
         font-size: 1.3em;
         margin-right: 8px;
         animation: spin 0.3s ease-out;
+    }
+
+    @media (max-width: 768px) {
+        .reset-container {
+            flex-direction: column;
+            align-items: stretch;
+            margin-left: 20px;
+            margin-right: 20px;
+            gap: 10px;
+        }
+    
+        #resultados-count {
+            text-align: center;
+            margin-left: 0;
+            margin-top: 10px;
+        }
     }
     
     @keyframes spin {
