@@ -66,6 +66,24 @@
         </ion-header>
 
         <ion-content>
+            <div class="filtros-container">
+                <ion-button class="filtro-btn active" onclick="filtrarPorTipo('all')">
+                    Todas
+                </ion-button>
+                <ion-button class="filtro-btn" onclick="filtrarPorTipo('Montaña Rusa')">
+                    Montañas Rusas
+                </ion-button>
+                <ion-button class="filtro-btn" onclick="filtrarPorTipo('Acuático')">
+                    Acuáticas
+                </ion-button>
+                <ion-button class="filtro-btn" onclick="filtrarPorTipo('Atracción Temática')">
+                    Temáticas
+                </ion-button>
+            </div>
+
+            <div id="atracciones-grid" class="atracciones-grid">
+            </div>
+
             <div class="map-container">
                 <img src="../img/mapa.png" alt="Mapa del Magik Park" class="map-image" usemap="#parkmap">
                     <map name="parkmap" id="parkmap">
@@ -128,6 +146,7 @@
         </ion-content>
 
         <script src="../js/mostrarinformacion.js"></script>
+        <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
 
     </ion-app>
 </body>
