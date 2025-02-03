@@ -67,21 +67,68 @@
 
         <ion-content>
             <div class="filtros-container">
-                <ion-button class="filtro-btn active" onclick="filtrarPorTipo('all')">
-                    Todas
-                </ion-button>
-                <ion-button class="filtro-btn" onclick="filtrarPorTipo('Montaña Rusa')">
-                    Montañas Rusas
-                </ion-button>
-                <ion-button class="filtro-btn" onclick="filtrarPorTipo('Acuático')">
-                    Acuáticas
-                </ion-button>
-                <ion-button class="filtro-btn" onclick="filtrarPorTipo('Atracción Temática')">
-                    Temáticas
-                </ion-button>
-            </div>
+                <!-- Filtros por edad -->
+                <div class="filtro-grupo">
+                    <h4>Edad</h4>
+                    <ion-button class="filtro-btn active" data-tipo="edad" data-valor="todas" 
+                            onclick="actualizarFiltro('edad', 'todas')">
+                        Todas
+                    </ion-button>
+                    <ion-button class="filtro-btn" data-tipo="edad" data-valor="niños" 
+                            onclick="actualizarFiltro('edad', 'niños')">
+                        Niños (0-8)
+                    </ion-button>
+                    <ion-button class="filtro-btn" data-tipo="edad" data-valor="jovenes" 
+                            onclick="actualizarFiltro('edad', 'jovenes')">
+                        Jóvenes (9-12)
+                    </ion-button>
+                    <ion-button class="filtro-btn" data-tipo="edad" data-valor="adultos" 
+                            onclick="actualizarFiltro('edad', 'adultos')">
+                        Adultos (13+)
+                    </ion-button>
+                </div>
 
-            <div id="atracciones-grid" class="atracciones-grid">
+                <!-- Filtros por duración -->
+                <div class="filtro-grupo">
+                    <h4>Duración</h4>
+                    <ion-button class="filtro-btn active" data-tipo="duracion" data-valor="todas" 
+                            onclick="actualizarFiltro('duracion', 'todas')">
+                        Todas
+                    </ion-button>
+                    <ion-button class="filtro-btn" data-tipo="duracion" data-valor="corta" 
+                            onclick="actualizarFiltro('duracion', 'corta')">
+                        Corta (≤5min)
+                    </ion-button>
+                    <ion-button class="filtro-btn" data-tipo="duracion" data-valor="media" 
+                            onclick="actualizarFiltro('duracion', 'media')">
+                        Media (6-15min)
+                    </ion-button>
+                    <ion-button class="filtro-btn" data-tipo="duracion" data-valor="larga" 
+                            onclick="actualizarFiltro('duracion', 'larga')">
+                        Larga (>15min)
+                    </ion-button>
+                </div>
+
+                <!-- Filtros por altura -->
+                <div class="filtro-grupo">
+                    <h4>Altura mínima</h4>
+                    <ion-button class="filtro-btn active" data-tipo="altura" data-valor="todas" 
+                            onclick="actualizarFiltro('altura', 'todas')">
+                        Todas
+                    </ion-button>
+                    <ion-button class="filtro-btn" data-tipo="altura" data-valor="baja" 
+                            onclick="actualizarFiltro('altura', 'baja')">
+                        Baja (≤100cm)
+                    </ion-button>
+                    <ion-button class="filtro-btn" data-tipo="altura" data-valor="media" 
+                            onclick="actualizarFiltro('altura', 'media')">
+                        Media (101-130cm)
+                    </ion-button>
+                    <ion-button class="filtro-btn" data-tipo="altura" data-valor="alta" 
+                            onclick="actualizarFiltro('altura', 'alta')">
+                        Alta (>130cm)
+                    </ion-button>
+                </div>
             </div>
 
             <div class="map-container">

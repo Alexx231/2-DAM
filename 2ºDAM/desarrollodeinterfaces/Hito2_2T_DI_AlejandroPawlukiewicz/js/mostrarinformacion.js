@@ -140,38 +140,50 @@ function mostrarAtraccion(nombre) {
     
 }
 
-// Función para filtrar atracciones
-function filtrarAtracciones(tipo) {
+// En mostrarinformacion.js
+
+// Función para filtrar atracciones con múltiples criterios
+function filtrarAtracciones(filtros) {
     return atracciones.filter(atraccion => {
-        if (tipo === 'all') return true;
-        return atraccion.tipo === tipo;
+        const cumpleEdad = filtros.edad === 'todas' || 
+            (filtros.edad === 'niños' && atraccion.edad <= 8) ||
+            (filtros.edad === 'jovenes' && atraccion.edad > 8 && atraccion.edad <= 12) ||
+            (filtros.edad === 'adultos' && atraccion.edad > 12);
+
+        const cumpleDuracion = filtros.duracion === 'todas' ||
+            (filtros.duracion === 'corta' && parseInt(atraccion.tiempo) <= 5) ||
+            (filtros.duracion === 'media' && parseInt(atraccion.tiempo) > 5 && parseInt(atraccion.tiempo) <= 15) ||
+            (filtros.duracion === 'larga' && parseInt(atraccion.tiempo) > 15);
+
+        const cumpleAltura = filtros.altura === 'todas' ||
+            (filtros.altura === 'baja' && atraccion.altura <= 100) ||
+            (filtros.altura === 'media' && atraccion.altura > 100 && atraccion.altura <= 130) ||
+            (filtros.altura === 'alta' && atraccion.altura > 130);
+
+        return cumpleEdad && cumpleDuracion && cumpleAltura;
     });
 }
 
-// Función para mostrar atracciones filtradas
-function mostrarAtraccionesFiltradas(tipo) {
-    const atraccionesFiltradas = filtrarAtracciones(tipo);
-    const contenedor = document.getElementById('atracciones-grid');
-    contenedor.innerHTML = '';
+// Estado global de los filtros
+const filtrosActuales = {
+    edad: 'todas',
+    duracion: 'todas',
+    altura: 'todas'
+};
 
-    atraccionesFiltradas.forEach(atraccion => {
-        const card = document.createElement('ion-card');
-        card.className = 'atraccion-card';
-        card.innerHTML = `
-            <ion-card-header>
-                <ion-card-title>${atraccion.nombre}</ion-card-title>
-                <ion-card-subtitle>${atraccion.tipo}</ion-card-subtitle>
-            </ion-card-header>
-            <ion-card-content>
-                <p>${atraccion.descripción}</p>
-                <div class="atraccion-detalles">
-                    <p><ion-icon name="location"></ion-icon> ${atraccion.ubicación}</p>
-                    <p><ion-icon name="time"></ion-icon> ${atraccion.horario}</p>
-                    <p><ion-icon name="person"></ion-icon> Edad mínima: ${atraccion.edad} años</p>
-                </div>
-            </ion-card-content>
-        `;
-        contenedor.appendChild(card);
+// Función para actualizar filtros y mostrar resultados
+function actualizarFiltro(tipo, valor) {
+    filtrosActuales[tipo] = valor;
+    mostrarAtraccionesFiltradas(filtrosActuales);
+    actualizarBotonesActivos();
+}
+
+// Función para actualizar la visualización de botones activos
+function actualizarBotonesActivos() {
+    document.querySelectorAll('.filtro-btn').forEach(btn => {
+        const tipo = btn.dataset.tipo;
+        const valor = btn.dataset.valor;
+        btn.classList.toggle('active', filtrosActuales[tipo] === valor);
     });
 }
 
