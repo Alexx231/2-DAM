@@ -255,7 +255,9 @@ function resetearFiltros() {
 
 document.addEventListener('DOMContentLoaded', () => {
     const resultadosCount = document.getElementById('resultados-count');
-    let listaVisible = false;
+    if (resultadosCount) {
+        resultadosCount.onclick = mostrarPopupResultados;
+    }
     
     // Crear lista de resultados si no existe
     let resultadosLista = document.querySelector('.resultados-lista');
@@ -325,6 +327,58 @@ function actualizarBotonesActivos() {
         const valor = btn.dataset.valor;
         btn.classList.toggle('active', filtrosActuales[tipo] === valor);
     });
+}
+
+// Añadir al archivo mostrarinformacion.js
+function mostrarPopupResultados() {
+    const atraccionesFiltradas = filtrarAtracciones(filtrosActuales);
+    
+    // Crear elementos del popup
+    const overlay = document.createElement('div');
+    overlay.className = 'popup-overlay';
+    
+    const content = document.createElement('div');
+    content.className = 'popup-content';
+    
+    content.innerHTML = `
+        <div class="popup-header">
+            <div class="popup-title">${atraccionesFiltradas.length} atracciones encontradas</div>
+            <button class="close-popup">&times;</button>
+        </div>
+        <div class="popup-body">
+            ${atraccionesFiltradas.map(atraccion => `
+                <div class="atraccion-lista-item" onclick="mostrarAtraccion('${atraccion.nombre}')">
+                    <div>
+                        <h3 style="margin: 0; color: #394e60;">${atraccion.nombre}</h3>
+                        <p style="margin: 5px 0; color: #666;">
+                            <small>${atraccion.tipo} - ${atraccion.ubicación}</small>
+                        </p>
+                    </div>
+                </div>
+            `).join('')}
+        </div>
+    `;
+    
+    // Añadir al DOM
+    overlay.appendChild(content);
+    document.body.appendChild(overlay);
+    
+    // Mostrar popup
+    setTimeout(() => overlay.style.display = 'flex', 0);
+    
+    // Eventos de cierre
+    const closeBtn = content.querySelector('.close-popup');
+    closeBtn.onclick = () => {
+        overlay.style.opacity = '0';
+        setTimeout(() => overlay.remove(), 300);
+    };
+    
+    overlay.onclick = (e) => {
+        if (e.target === overlay) {
+            overlay.style.opacity = '0';
+            setTimeout(() => overlay.remove(), 300);
+        }
+    };
 }
 
 function inicializarPuntos() {
