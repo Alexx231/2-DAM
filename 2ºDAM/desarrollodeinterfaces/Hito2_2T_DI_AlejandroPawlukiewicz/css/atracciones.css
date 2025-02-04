@@ -71,6 +71,28 @@
         top: -45px;
     }
 
+    .close-btn {
+        background: none;
+        border: none;
+        color: #394e60;
+        cursor: pointer;
+        padding: 8px;
+        display: flex;
+        align-items: center;
+        gap: 5px;
+        font-size: 1em;
+        transition: all 0.3s ease;
+    }
+    
+    .close-btn:hover {
+        background: rgba(57, 78, 96, 0.1);
+        border-radius: 4px;
+    }
+    
+    .close-btn ion-icon {
+        font-size: 1.2em;
+    }
+
 
     @keyframes pulse {
         0% {
@@ -274,7 +296,7 @@
         padding: 20px;
         border-radius: 15px;
         box-shadow: 0 4px 20px rgba(0,0,0,0.2);
-        z-index: 1500; /* Aumentamos el z-index para que aparezca por encima del popup */
+        z-index: 2000;
         max-width: 500px;
         width: 90%;
         animation: fadeIn 0.3s ease;

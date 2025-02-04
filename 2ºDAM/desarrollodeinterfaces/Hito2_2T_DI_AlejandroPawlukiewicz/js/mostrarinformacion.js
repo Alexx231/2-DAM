@@ -116,18 +116,17 @@ function mostrarAtraccion(nombre, desde = 'default') {
     const atraccion = atracciones.find(a => a.nombre === nombre);
     
     if (desde === 'lista') {
-        // Crear un nuevo div para los detalles
+        const resultadosLista = document.querySelector('.resultados-lista');
         const detallesDiv = document.createElement('div');
         detallesDiv.className = 'detalles-atraccion';
 
-        // Contenido de los detalles
         detallesDiv.innerHTML = `
-            <div class="detalles-header">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
                 <h2 style="margin: 0; color: #394e60;">${atraccion.nombre}</h2>
-                <ion-button class="volver-btn" fill="clear">
-                    <ion-icon name="arrow-back-outline"></ion-icon>
-                    Volver
-                </ion-button>
+                <button onclick="cerrarDetalles(this)" style="background: none; border: none; color: #394e60; cursor: pointer; padding: 8px; display: flex; align-items: center;">
+                    <ion-icon name="close-outline"></ion-icon>
+                    Cerrar
+                </button>
             </div>
             <div style="color: #666;">
                 <p>${atraccion.descripción}</p>
@@ -141,19 +140,8 @@ function mostrarAtraccion(nombre, desde = 'default') {
         `;
 
         document.body.appendChild(detallesDiv);
-
-        // Evento para el botón volver
-        const volverBtn = detallesDiv.querySelector('.volver-btn');
-        volverBtn.addEventListener('click', () => {
-            detallesDiv.remove();
-            // Mostrar de nuevo la lista de resultados si estaba visible
-            const resultadosLista = document.querySelector('.resultados-lista');
-            if (resultadosLista) {
-                resultadosLista.classList.add('active');
-            }
-        });
     } else {
-        // Comportamiento original para mostrar el modal
+        // Comportamiento original para el modal
         const modal = document.querySelector('ion-modal');
         const title = document.getElementById('modal-title');
         const content = document.getElementById('modal-content');
@@ -172,6 +160,17 @@ function mostrarAtraccion(nombre, desde = 'default') {
         `;
         
         modal.present();
+    }
+}
+
+function cerrarDetalles(btnElement) {
+    const detallesDiv = btnElement.closest('.detalles-atraccion');
+    if (detallesDiv) {
+        detallesDiv.remove();
+        const resultadosLista = document.querySelector('.resultados-lista');
+        if (resultadosLista) {
+            resultadosLista.classList.add('active');
+        }
     }
 }
 
