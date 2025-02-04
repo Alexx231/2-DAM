@@ -112,32 +112,67 @@ const atracciones = [
 ]
 ;
 
-function mostrarAtraccion(nombre) {
+function mostrarAtraccion(nombre, desde = 'default') {
     const atraccion = atracciones.find(a => a.nombre === nombre);
-    const modal = document.querySelector('ion-modal');
-    const title = document.getElementById('modal-title');
-    const content = document.getElementById('modal-content');
     
-    title.textContent = atraccion.nombre;
-    content.innerHTML = `
-        <div class="ion-padding">
-            <p>${atraccion.descripción}</p>
-            <p><strong>Ubicación:</strong> ${atraccion.ubicación}</p>
-            <p><strong>Edad mínima:</strong> ${atraccion.edad} años</p>
-            <p><strong>Altura mínima:</strong> ${atraccion.altura}cm</p>
-            <p><strong>Duración:</strong> ${atraccion.tiempo}</p>
-            <p><strong>Horario:</strong> ${atraccion.horario}</p>
-            <p><strong>Tipo:</strong> ${atraccion.tipo}</p>
-        </div>
-    `;
-    
-    modal.present();
+    if (desde === 'lista') {
+        // Crear un nuevo div para los detalles
+        const detallesDiv = document.createElement('div');
+        detallesDiv.className = 'detalles-atraccion';
 
-    const closeButton = modal.querySelector('ion-button');
-    closeButton.addEventListener('click', () => {
-        modal.dismiss();
-    });
-    
+        // Contenido de los detalles
+        detallesDiv.innerHTML = `
+            <div class="detalles-header">
+                <h2 style="margin: 0; color: #394e60;">${atraccion.nombre}</h2>
+                <ion-button class="volver-btn" fill="clear">
+                    <ion-icon name="arrow-back-outline"></ion-icon>
+                    Volver
+                </ion-button>
+            </div>
+            <div style="color: #666;">
+                <p>${atraccion.descripción}</p>
+                <p><strong>Ubicación:</strong> ${atraccion.ubicación}</p>
+                <p><strong>Edad mínima:</strong> ${atraccion.edad} años</p>
+                <p><strong>Altura mínima:</strong> ${atraccion.altura}cm</p>
+                <p><strong>Duración:</strong> ${atraccion.tiempo}</p>
+                <p><strong>Horario:</strong> ${atraccion.horario}</p>
+                <p><strong>Tipo:</strong> ${atraccion.tipo}</p>
+            </div>
+        `;
+
+        document.body.appendChild(detallesDiv);
+
+        // Evento para el botón volver
+        const volverBtn = detallesDiv.querySelector('.volver-btn');
+        volverBtn.addEventListener('click', () => {
+            detallesDiv.remove();
+            // Mostrar de nuevo la lista de resultados si estaba visible
+            const resultadosLista = document.querySelector('.resultados-lista');
+            if (resultadosLista) {
+                resultadosLista.classList.add('active');
+            }
+        });
+    } else {
+        // Comportamiento original para mostrar el modal
+        const modal = document.querySelector('ion-modal');
+        const title = document.getElementById('modal-title');
+        const content = document.getElementById('modal-content');
+        
+        title.textContent = atraccion.nombre;
+        content.innerHTML = `
+            <div class="ion-padding">
+                <p>${atraccion.descripción}</p>
+                <p><strong>Ubicación:</strong> ${atraccion.ubicación}</p>
+                <p><strong>Edad mínima:</strong> ${atraccion.edad} años</p>
+                <p><strong>Altura mínima:</strong> ${atraccion.altura}cm</p>
+                <p><strong>Duración:</strong> ${atraccion.tiempo}</p>
+                <p><strong>Horario:</strong> ${atraccion.horario}</p>
+                <p><strong>Tipo:</strong> ${atraccion.tipo}</p>
+            </div>
+        `;
+        
+        modal.present();
+    }
 }
 
 // Variables globales para el estado de los filtros
@@ -269,6 +304,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Función para actualizar la lista de atracciones
     function actualizarListaAtracciones(atraccionesFiltradas) {
+        const resultadosLista = document.querySelector('.resultados-lista');
         resultadosLista.innerHTML = '';
         
         atraccionesFiltradas.forEach(atraccion => {
@@ -283,7 +319,7 @@ document.addEventListener('DOMContentLoaded', () => {
             `;
             
             item.addEventListener('click', () => {
-                mostrarAtraccion(atraccion.nombre);
+                mostrarAtraccion(atraccion.nombre, 'lista');
             });
             
             resultadosLista.appendChild(item);
