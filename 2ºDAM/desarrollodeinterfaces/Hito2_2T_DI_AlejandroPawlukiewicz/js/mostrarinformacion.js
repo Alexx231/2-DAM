@@ -7,7 +7,7 @@ const atracciones = [
         "altura": 140,
         "tiempo": "2 minutos",
         "horario": "10:00 - 20:00",
-        "imagen": "ruta_a_imagen/montana_rusa.jpg",
+        "imagen": "../img/Montaña Rusa del Terror.webp",
         "tipo": "Montaña Rusa"
     },
     {
@@ -18,7 +18,7 @@ const atracciones = [
         "altura": 100,
         "tiempo": "5 minutos",
         "horario": "10:00 - 19:00",
-        "imagen": "ruta_a_imagen/cataratas.jpg",
+        "imagen": "../img/Cataratas Mágicas.webp",
         "tipo": "Acuático"
     },
     {
@@ -29,7 +29,7 @@ const atracciones = [
         "altura": 0,
         "tiempo": "30 minutos",
         "horario": "12:00 - 18:00",
-        "imagen": "ruta_a_imagen/teatro.jpg",
+        "imagen": "../img/Teatro de los Sueños.webp",
         "tipo": "Espectáculo"
     },
     {
@@ -40,7 +40,7 @@ const atracciones = [
         "altura": 0,
         "tiempo": "10 minutos",
         "horario": "10:00 - 19:00",
-        "imagen": "ruta_a_imagen/rio_tranquilo.jpg",
+        "imagen": "../img/Río Tranquilo.webp",
         "tipo": "Acuático"
     },
     {
@@ -51,18 +51,18 @@ const atracciones = [
         "altura": 0,
         "tiempo": "15 minutos",
         "horario": "10:00 - 20:00",
-        "imagen": "ruta_a_imagen/laberinto.jpg",
+        "imagen": "../img/Laberinto Encantado.webp",
         "tipo": "Atracción Temática"
     },
     {
-        "nombre": "Torre del Vertigo",
+        "nombre": "Torre del Vértigo",
         "descripción": "Una caída libre desde lo más alto para los más valientes.",
         "ubicación": "Zona Maquinismo",
         "edad": 14,
         "altura": 150,
         "tiempo": "3 minutos",
         "horario": "11:00 - 20:00",
-        "imagen": "ruta_a_imagen/torre_vertigo.jpg",
+        "imagen": "../img/Torre del Vértigo.webp",
         "tipo": "Montaña Rusa"
     },
     {
@@ -73,7 +73,7 @@ const atracciones = [
         "altura": 0,
         "tiempo": "Ilimitado",
         "horario": "10:00 - 19:00",
-        "imagen": "ruta_a_imagen/zona_infantil.jpg",
+        "imagen": "../img/Zona Infantil Aventura.webp",
         "tipo": "Zona Infantil"
     },
     {
@@ -84,7 +84,7 @@ const atracciones = [
         "altura": 130,
         "tiempo": "7 minutos",
         "horario": "10:00 - 18:00",
-        "imagen": "ruta_a_imagen/simulador.jpg",
+        "imagen": "../img/Simulador Espacial.webp",
         "tipo": "Atracción Tecnológica"
     },
     {
@@ -95,7 +95,7 @@ const atracciones = [
         "altura": 120,
         "tiempo": "10 minutos",
         "horario": "10:00 - 18:30",
-        "imagen": "ruta_a_imagen/safari.jpg",
+        "imagen": "../img/Safari Salvaje.webp",
         "tipo": "Atracción Temática"
     },
     {
@@ -106,7 +106,7 @@ const atracciones = [
         "altura": 0,
         "tiempo": "5 minutos",
         "horario": "10:00 - 20:00",
-        "imagen": "ruta_a_imagen/carrusel.jpg",
+        "imagen": "../img/Carrusel Clasico.webp",
         "tipo": "Atracción Infantil"
     }
 ]
