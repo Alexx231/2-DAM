@@ -452,7 +452,7 @@ function inicializarPuntos() {
             "Teatro de los Sueños": { x: 58, y: 32 },
             "Laberinto Encantado": { x: 55, y: 50 },
             "Carrusel Clásico": { x: 13, y: 46 },
-            "Simulador Espacial": { x: 68, y: 48.5 },
+            "Simulador Espacial": { x: 60, y: 43 },
             "Zona Infantil Aventura": { x: 73, y: 30 }
         };
         return coordenadas[nombre];
