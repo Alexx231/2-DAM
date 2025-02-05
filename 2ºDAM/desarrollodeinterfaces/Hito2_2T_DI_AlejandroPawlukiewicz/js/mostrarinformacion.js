@@ -407,23 +407,35 @@ function mostrarPopupResultados() {
 
 function inicializarPuntos() {
     const mapContainer = document.querySelector('.map-container');
-    const imagen = document.querySelector('.map-image');
+    if (!mapContainer) {
+        console.error('No se encontró el contenedor del mapa');
+        return;
+    }
+
+    const imagen = mapContainer.querySelector('.map-image');
+    if (!imagen) {
+        console.error('No se encontró la imagen del mapa');
+        return;
+    }
 
     function crearPuntos() {
         // Limpiar puntos existentes
-        document.querySelectorAll('.punto-interes').forEach(p => p.remove());
+        const puntosExistentes = document.querySelectorAll('.punto-interes');
+        puntosExistentes.forEach(p => p.remove());
 
         atracciones.forEach(atraccion => {
+            const coordenadas = obtenerCoordenadas(atraccion.nombre);
+            if (!coordenadas) {
+                console.error(`No se encontraron coordenadas para ${atraccion.nombre}`);
+                return;
+            }
+
             const punto = document.createElement('div');
             punto.className = 'punto-interes';
-            punto.setAttribute('data-tipo', atraccion.tipo); // Añadir tipo para estilos
-            
-            // Buscar las coordenadas correspondientes
-            const coordenadas = obtenerCoordenadas(atraccion.nombre);
+            punto.setAttribute('data-tipo', atraccion.tipo);
             punto.style.left = `${coordenadas.x}%`;
             punto.style.top = `${coordenadas.y}%`;
 
-            // Crear tooltip mejorado
             const tooltip = document.createElement('div');
             tooltip.className = 'tooltip';
             tooltip.innerHTML = `
@@ -433,7 +445,6 @@ function inicializarPuntos() {
             `;
             punto.appendChild(tooltip);
 
-            // Añadir eventos
             punto.addEventListener('click', () => mostrarAtraccion(atraccion.nombre));
             punto.addEventListener('mouseenter', () => tooltip.style.opacity = '1');
             punto.addEventListener('mouseleave', () => tooltip.style.opacity = '0');
@@ -445,7 +456,7 @@ function inicializarPuntos() {
     function obtenerCoordenadas(nombre) {
         const coordenadas = {
             "Montaña Rusa del Terror": { x: 15, y: 63 },
-            "Torre del Vertigo": { x: 42, y: 30 },
+            "Torre del Vértigo": { x: 42, y: 30 },
             "Cataratas Mágicas": { x: 42, y: 51 },
             "Río Tranquilo": { x: 20, y: 58 },
             "Safari Salvaje": { x: 36, y: 50 },
@@ -453,14 +464,21 @@ function inicializarPuntos() {
             "Laberinto Encantado": { x: 55, y: 50 },
             "Carrusel Clásico": { x: 13, y: 46 },
             "Simulador Espacial": { x: 60, y: 43 },
-            "Zona Infantil Aventura": { x: 73, y: 30 }
+            "Zona Infantil Aventura": { x: 70, y: 30 }
         };
         return coordenadas[nombre];
     }
 
-    // Crear puntos cuando la imagen esté cargada
-    imagen.addEventListener('load', crearPuntos);
-    crearPuntos();
+    if (imagen.complete) {
+        crearPuntos();
+    } else {
+        imagen.addEventListener('load', crearPuntos);
+    }
 }
 
-document.addEventListener('DOMContentLoaded', inicializarPuntos);
+// Asegurarse de que el DOM está cargado
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', inicializarPuntos);
+} else {
+    inicializarPuntos();
+}
