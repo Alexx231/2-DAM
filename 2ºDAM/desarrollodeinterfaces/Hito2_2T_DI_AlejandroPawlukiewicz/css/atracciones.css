@@ -10,7 +10,7 @@
     
     .punto-interes {
         position: absolute;
-        width: 20px; /* Volvemos al tamaño original */
+        width: 20px;
         height: 20px;
         background-color: #394754;
         border: 3px solid #ffffff;
@@ -69,6 +69,116 @@
     .punto-interes:hover .tooltip {
         opacity: 1;
         top: -45px;
+    }
+
+    .popup-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.5);
+        display: none;
+        justify-content: center;
+        align-items: center;
+        z-index: 1000;
+        opacity: 1;
+        transition: opacity 0.3s ease;
+    }
+    
+    .popup-content {
+        background: white;
+        padding: 20px;
+        border-radius: 15px;
+        max-width: 800px;
+        width: 90%;
+        max-height: 85vh;
+        overflow-y: auto;
+        position: relative;
+        box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+        animation: popupFadeIn 0.3s ease;
+    }
+    
+    .popup-image {
+        width: 100%;
+        height: 250px;
+        object-fit: cover;
+        border-radius: 10px;
+        margin-bottom: 20px;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        transition: transform 0.3s ease;
+    }
+    
+    .popup-image:hover {
+        transform: scale(1.02);
+    }
+    
+    .popup-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 20px;
+        padding-bottom: 10px;
+        border-bottom: 2px solid #eee;
+    }
+    
+    .popup-body {
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+    }
+    
+    .popup-info {
+        margin-top: 15px;
+    }
+    
+    .popup-info p {
+        margin: 8px 0;
+        line-height: 1.6;
+        color: #444;
+    }
+    
+    .popup-info strong {
+        color: #394e60;
+        font-weight: 600;
+    }
+    
+    @media (max-width: 768px) {
+        .popup-content {
+            width: 95%;
+        }
+    
+        .popup-image {
+            height: 200px;
+        }
+    }
+    
+    @media (max-width: 480px) {
+        .popup-image {
+            height: 180px;
+        }
+    }
+
+    .close-popup {
+        background: none;
+        border: none;
+        color: #394e60;
+        cursor: pointer;
+        padding: 8px;
+        display: flex;
+        align-items: center;
+        font-size: 1.5em;
+        transition: all 0.3s ease;
+        border-radius: 50%;
+    }
+    
+    .close-popup:hover {
+        background: rgba(57, 78, 96, 0.1);
+        transform: rotate(90deg);
+    }
+    
+    .close-popup ion-icon {
+        font-size: 24px;
     }
 
     .close-btn {
@@ -374,28 +484,6 @@
         z-index: 1000;
     }
 
-    .popup-content {
-        background: white;
-        padding: 20px;
-        border-radius: 15px;
-        max-width: 600px;
-        width: 90%;
-        max-height: 80vh;
-        overflow-y: auto;
-        position: relative;
-        box-shadow: 0 4px 20px rgba(0,0,0,0.2);
-        animation: popupFadeIn 0.3s ease;
-    }
-
-    .popup-header {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        margin-bottom: 20px;
-        padding-bottom: 10px;
-        border-bottom: 2px solid #eee;
-    }
-
     .popup-title {
         font-size: 1.5em;
         color: #394e60;
@@ -629,8 +717,8 @@
         box-shadow: 0 2px 8px rgba(0,0,0,0.1);
         display: flex;
         flex-direction: column;
-        align-items: center; /* Centra el mapa horizontalmente */
-        margin-bottom: 60px; /* Espacio para el contador */
+        align-items: center;
+        margin-bottom: 60px;
     }
     
     .map-image {
@@ -638,7 +726,7 @@
         height: auto;
         display: block;
         border-radius: 8px;
-        margin: 0 auto; /* Centra el mapa */
+        margin: 0 auto;
     }
 
     area {

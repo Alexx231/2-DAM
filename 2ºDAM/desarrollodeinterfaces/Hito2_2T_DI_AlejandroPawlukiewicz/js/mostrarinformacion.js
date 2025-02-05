@@ -112,23 +112,26 @@ const atracciones = [
 ]
 ;
 
-function mostrarAtraccion(nombre, desde = 'default') {
+function mostrarAtraccion(nombre) {
     const atraccion = atracciones.find(a => a.nombre === nombre);
     
-    if (desde === 'lista') {
-        const resultadosLista = document.querySelector('.resultados-lista');
-        const detallesDiv = document.createElement('div');
-        detallesDiv.className = 'detalles-atraccion';
+    const overlay = document.createElement('div');
+    overlay.className = 'popup-overlay';
+    overlay.style.display = 'flex';
+    
+    const detallesDiv = document.createElement('div');
+    detallesDiv.className = 'popup-content';
 
-        detallesDiv.innerHTML = `
-            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
-                <h2 style="margin: 0; color: #394e60;">${atraccion.nombre}</h2>
-                <button onclick="cerrarDetalles(this)" style="background: none; border: none; color: #394e60; cursor: pointer; padding: 8px; display: flex; align-items: center;">
-                    <ion-icon name="close-outline"></ion-icon>
-                    Cerrar
-                </button>
-            </div>
-            <div style="color: #666;">
+    detallesDiv.innerHTML = `
+        <div class="popup-header">
+            <div class="popup-title">${atraccion.nombre}</div>
+            <button onclick="cerrarPopup(this)" class="close-popup">
+                <ion-icon name="close-outline"></ion-icon>
+            </button>
+        </div>
+        <img src="${atraccion.imagen}" alt="${atraccion.nombre}" class="popup-image">
+        <div class="popup-body">
+            <div class="popup-info">
                 <p>${atraccion.descripción}</p>
                 <p><strong>Ubicación:</strong> ${atraccion.ubicación}</p>
                 <p><strong>Edad mínima:</strong> ${atraccion.edad} años</p>
@@ -137,43 +140,29 @@ function mostrarAtraccion(nombre, desde = 'default') {
                 <p><strong>Horario:</strong> ${atraccion.horario}</p>
                 <p><strong>Tipo:</strong> ${atraccion.tipo}</p>
             </div>
-        `;
+        </div>
+    `;
 
-        document.body.appendChild(detallesDiv);
-    } else {
-        // Comportamiento original para el modal
-        const modal = document.querySelector('ion-modal');
-        const title = document.getElementById('modal-title');
-        const content = document.getElementById('modal-content');
-        
-        title.textContent = atraccion.nombre;
-        content.innerHTML = `
-            <div class="ion-padding">
-                <p>${atraccion.descripción}</p>
-                <p><strong>Ubicación:</strong> ${atraccion.ubicación}</p>
-                <p><strong>Edad mínima:</strong> ${atraccion.edad} años</p>
-                <p><strong>Altura mínima:</strong> ${atraccion.altura}cm</p>
-                <p><strong>Duración:</strong> ${atraccion.tiempo}</p>
-                <p><strong>Horario:</strong> ${atraccion.horario}</p>
-                <p><strong>Tipo:</strong> ${atraccion.tipo}</p>
-            </div>
-        `;
-        
-        modal.present();
+    overlay.appendChild(detallesDiv);
+    document.body.appendChild(overlay);
+}
+
+function cerrarPopup(button) {
+    const overlay = button.closest('.popup-overlay');
+    if (overlay) {
+        overlay.style.opacity = '0';
+        setTimeout(() => overlay.remove(), 300);
     }
 }
 
-function cerrarDetalles(btnElement) {
-    const detallesDiv = btnElement.closest('.detalles-atraccion');
-    if (detallesDiv) {
-        detallesDiv.remove();
-        const resultadosLista = document.querySelector('.resultados-lista');
-        if (resultadosLista) {
-            resultadosLista.classList.add('active');
-        }
+function cerrarDetalles(event) {
+    event.preventDefault();
+    const overlay = event.target.closest('.popup-overlay');
+    if (overlay) {
+        overlay.style.opacity = '0';
+        setTimeout(() => overlay.remove(), 300);
     }
 }
-
 // Variables globales para el estado de los filtros
 const filtrosActuales = {
     edad: 'todas',
