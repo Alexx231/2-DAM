@@ -744,21 +744,21 @@
 
     area {
         cursor: pointer;
-      }
-      
-      area:hover {
+    }
+    
+    area:hover {
         outline: 2px solid #394754;
-      }
+    }
 
     .nav-toolbar {
-      display: flex;
-      align-items: center;
-      --background: #e1e5ec;
-      justify-content: space-between;
+        display: flex;
+        align-items: center;
+        --background: #e1e5ec;
+        justify-content: space-between;
     }
     .nav-toolbar img {
-      height: 70px;
-      margin-left: 16px;
+        height: 70px;
+        margin-left: 16px;
     }
 
     .nav-buttons {
