@@ -1,55 +1,159 @@
 body {
+    margin: 0;
+    padding: 0;
+    min-height: 100vh;
+    background: linear-gradient(135deg, white, #2d2d2d);
     font-family: Arial, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+}
+
+.hero-container {
     text-align: center;
-    background-color: #f0f0f0;
+    position: relative;
+    z-index: 1;
 }
-.container {
-    width: 400px;
-    margin: auto;
-    padding: 20px;
-    background: white;
-    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
-    border-radius: 10px;
+
+.hero-logo {
+    width: 300px;
+    animation: float 3s ease-in-out infinite;
 }
-.logo {
-    width: 100px;
+
+.hero-title {
+    color: #333;
+    font-size: 3em;
+    margin: 30px 0;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    text-shadow: 0 0 10px rgba(255,255,255,0.3);
+    animation: glow 2s ease-in-out infinite alternate;
 }
-.input-group {
+
+.button-container {
+    display: flex;
+    gap: 30px;
+    justify-content: center;
+    margin-top: 50px;
+}
+
+.hero-button {
+    padding: 20px 40px;
+    font-size: 1.2em;
+    text-decoration: none;
+    border-radius: 50px;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.hero-button::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(45deg, #ff6b6b, #ff8e8e);
+    opacity: 0;
+    transition: all 0.3s ease;
+    z-index: -1;
+}
+
+.button-content {
     display: flex;
     align-items: center;
-    background: #d3d3d3;
-    border-radius: 20px;
-    padding: 10px;
-    margin: 10px 0;
+    gap: 10px;
     position: relative;
+    z-index: 1;
 }
-.input-group .icon {
-    position: absolute;
-    left: 10px;
-}
-.input-group .icon img {
-    width: 20px;
-    height: 20px;
-}
-.input-group input {
-    width: 100%;
-    padding: 10px 10px 10px 40px;
-    border: none;
-    background: none;
-    outline: none;
-    font-size: 16px;
-}
-.submit-btn {
-    background: #6c98e1;
-    border: none;
-    padding: 10px;
-    border-radius: 20px;
+
+.login {
+    background: linear-gradient(45deg, #4a90e2, #63b3ed);
     color: white;
-    font-weight: bold;
-    cursor: pointer;
 }
-.social-icons img {
-    width: 30px;
-    margin: 10px;
-    cursor: pointer;
+
+.list {
+    background: linear-gradient(45deg, #6c63ff, #8b7fff);
+    color: white;
+}
+
+.hero-button:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+}
+
+.hero-button:hover::before {
+    opacity: 1;
+}
+
+.floating-circles {
+    position: fixed; /* Cambiado de absolute a fixed */
+    top: 0;
+    left: 0;
+    width: 100vw; /* Cambiado a viewport width */
+    height: 100vh; /* Cambiado a viewport height */
+    overflow: hidden;
+    z-index: -1;
+}
+
+.circle {
+    position: absolute;
+    background: rgba(108, 99, 255, 0.05); /* Color ajustado para ser visible en fondo blanco */
+    border-radius: 50%;
+    animation: float-circle 15s infinite linear;
+}
+
+.circle:nth-child(1) {
+    width: 600px; /* Aumentado tamaño */
+    height: 600px;
+    left: -200px;
+    top: -200px;
+}
+
+.circle:nth-child(2) {
+    width: 800px; /* Aumentado tamaño */
+    height: 800px;
+    right: -300px;
+    top: 50%;
+    animation-delay: -5s;
+}
+
+.circle:nth-child(3) {
+    width: 400px; /* Aumentado tamaño */
+    height: 400px;
+    left: 50%;
+    bottom: -150px;
+    animation-delay: -10s;
+}
+
+@keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-20px); }
+}
+
+@keyframes glow {
+    from { text-shadow: 0 0 10px rgba(255,255,255,0.3); }
+    to { text-shadow: 0 0 20px rgba(255,255,255,0.5), 0 0 30px rgba(255,255,255,0.3); }
+}
+
+@keyframes float-circle {
+    0% { transform: rotate(0deg) translate(100px) rotate(0deg); } /* Aumentado radio de rotación */
+    100% { transform: rotate(360deg) translate(100px) rotate(-360deg); }
+}
+
+@media (max-width: 768px) {
+    .button-container {
+        flex-direction: column;
+        gap: 20px;
+    }
+    
+    .hero-title {
+        font-size: 2em;
+    }
+    
+    .hero-logo {
+        width: 200px;
+    }
 }

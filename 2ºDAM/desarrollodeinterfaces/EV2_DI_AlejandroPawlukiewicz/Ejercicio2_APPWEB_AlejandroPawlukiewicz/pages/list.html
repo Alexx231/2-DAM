@@ -5,48 +5,18 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AnimeWorld - Mi Lista</title>
     <link rel="stylesheet" href="../css/list.css">
-    <script defer src="../js/script.js"></script>
 </head>
 <body>
     <div class="container">
-        <img src="../logo.png" alt="AnimeWorld Logo" class="logo">
-        <h1>animeworld</h1>
-        <button class="list-btn">MI LISTA</button>
+        <img src="../img/logo.png" alt="AnimeWorld Logo" class="logo">
+        <h1 class="list-title">MI LISTA DE ANIME</h1>
         <div class="tabs">
-            <button>Ya lo he visto</button>
-            <button>Estoy viendo</button>
+            <button class="active">En posesion</button>
             <button>Lista de deseados</button>
+            <button>En uso</button>
         </div>
-        <div class="anime-list">
-            <div class="anime-item">
-                <img src="../dbz.png" alt="Dragon Ball Z">
-                <div class="anime-info">
-                    <h2>DRAGON BALL Z</h2>
-                    <p>Cap : 27/300</p>
-                    <div class="stars" data-rating="5">
-                        <span class="star">☆</span>
-                        <span class="star">☆</span>
-                        <span class="star">☆</span>
-                        <span class="star">☆</span>
-                        <span class="star">☆</span>
-                    </div>
-                </div>
-            </div>
-            <div class="anime-item">
-                <img src="../onepiece.png" alt="One Piece">
-                <div class="anime-info">
-                    <h2>ONE PIECE</h2>
-                    <p>Cap : 237/900</p>
-                    <div class="stars" data-rating="4">
-                        <span class="star">☆</span>
-                        <span class="star">☆</span>
-                        <span class="star">☆</span>
-                        <span class="star">☆</span>
-                        <span class="star">☆</span>
-                    </div>
-                </div>
-            </div>
-        </div>
+        <div class="anime-list"></div>
     </div>
+    <script src="../js/list.js"></script>
 </body>
 </html>
