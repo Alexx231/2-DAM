@@ -68,6 +68,39 @@ body {
     box-shadow: 0 5px 15px rgba(66, 153, 225, 0.4);
 }
 
+.anime-details {
+    padding: 15px 0;
+    border-top: 1px solid #e2e8f0;
+    margin-top: 15px;
+}
+
+.anime-details p {
+    margin: 8px 0;
+    font-size: 0.9em;
+    color: #4a5568;
+}
+
+.anime-details .descripcion {
+    font-style: italic;
+    margin-top: 15px;
+    line-height: 1.4;
+}
+
+.anime-details strong {
+    color: #2b6cb0;
+    font-weight: 600;
+}
+
+.anime-item {
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.anime-item:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 25px rgba(66, 153, 225, 0.3);
+}
+
 .anime-list {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
@@ -146,7 +179,6 @@ body {
     }
 }
 
-/* Animaciones */
 @keyframes fadeIn {
     from { opacity: 0; transform: translateY(20px); }
     to { opacity: 1; transform: translateY(0); }

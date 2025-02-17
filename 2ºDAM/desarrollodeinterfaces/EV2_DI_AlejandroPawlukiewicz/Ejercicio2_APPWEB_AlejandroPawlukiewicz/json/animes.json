@@ -1,0 +1,114 @@
+{
+    "animes": [
+        {
+            "nombre": "Fullmetal Alchemist: Brotherhood",
+            "descripcion": "Dos hermanos buscan la piedra filosofal para recuperar sus cuerpos después de un fallido intento de resucitar a su madre usando alquimia.",
+            "fechaPublicacion": "2009-04-05",
+            "edadRecomendada": 14,
+            "autor": "Hiromu Arakawa",
+            "editorial": "Square Enix",
+            "generos": ["Acción", "Aventura", "Drama", "Fantasía"],
+            "imagen": "../img/fullmetal.jpg",
+            "tipo": "En posesion"
+        },
+        {
+            "nombre": "Death Note",
+            "descripcion": "Un estudiante encuentra un cuaderno sobrenatural que le permite matar a cualquier persona cuyo nombre escriba en él.",
+            "fechaPublicacion": "2006-10-03",
+            "edadRecomendada": 16,
+            "autor": "Tsugumi Ohba",
+            "editorial": "Shueisha",
+            "generos": ["Misterio", "Sobrenatural", "Thriller", "Psicológico"],
+            "imagen": "../img/deathnote.webp",
+            "tipo": "En uso"
+        },
+        {
+            "nombre": "Attack on Titan",
+            "descripcion": "La humanidad lucha por sobrevivir contra gigantes que devoran humanos dentro de ciudades rodeadas por enormes muros.",
+            "fechaPublicacion": "2013-04-07",
+            "edadRecomendada": 16,
+            "autor": "Hajime Isayama",
+            "editorial": "Kodansha",
+            "generos": ["Acción", "Drama", "Fantasía", "Misterio"],
+            "imagen": "../img/atackontitan.jpg",
+            "tipo": "Lista de deseados"
+        },
+        {
+            "nombre": "My Hero Academia",
+            "descripcion": "En un mundo donde el 80% de la población tiene superpoderes, un joven sin poderes lucha por convertirse en un héroe.",
+            "fechaPublicacion": "2016-04-03",
+            "edadRecomendada": 12,
+            "autor": "Kohei Horikoshi",
+            "editorial": "Shueisha",
+            "generos": ["Acción", "Comedia", "Superpoderes"],
+            "imagen": "../img/myheroacademia.avif",
+            "tipo": "En uso"
+        },
+        {
+            "nombre": "Demon Slayer",
+            "descripcion": "Un joven se convierte en cazador de demonios después de que su familia es asesinada y su hermana transformada en demonio.",
+            "fechaPublicacion": "2019-04-06",
+            "edadRecomendada": 14,
+            "autor": "Koyoharu Gotouge",
+            "editorial": "Shueisha",
+            "generos": ["Acción", "Sobrenatural", "Drama"],
+            "imagen": "../img/demonslayer.webp",
+            "tipo": "En posesion"
+        },
+        {
+            "nombre": "Jujutsu Kaisen",
+            "descripcion": "Estudiantes de una escuela de hechicería luchan contra maldiciones usando energía maldita.",
+            "fechaPublicacion": "2020-10-03",
+            "edadRecomendada": 16,
+            "autor": "Gege Akutami",
+            "editorial": "Shueisha",
+            "generos": ["Acción", "Sobrenatural", "Horror"],
+            "imagen": "../img/jujutsu.jpg",
+            "tipo": "Lista de deseados"
+        },
+        {
+            "nombre": "Spy x Family",
+            "descripcion": "Un espía, una asesina y una telépata forman una familia falsa para cumplir una misión de paz mundial.",
+            "fechaPublicacion": "2022-04-09",
+            "edadRecomendada": 12,
+            "autor": "Tatsuya Endo",
+            "editorial": "Shogakukan",
+            "generos": ["Comedia", "Acción", "Slice of Life"],
+            "imagen": "../img/spy.jpg",
+            "tipo": "En posesion"
+        },
+        {
+            "nombre": "Chainsaw Man",
+            "descripcion": "Un joven hace un pacto con un demonio motosierra para cazar otros demonios y pagar las deudas de su padre.",
+            "fechaPublicacion": "2022-10-12",
+            "edadRecomendada": 17,
+            "autor": "Tatsuki Fujimoto",
+            "editorial": "Shueisha",
+            "generos": ["Acción", "Horror", "Sobrenatural"],
+            "imagen": "../img/chainsaw.jpg",
+            "tipo": "En uso"
+        },
+        {
+            "nombre": "One Punch Man",
+            "descripcion": "Un superhéroe que puede derrotar a cualquier enemigo de un solo golpe busca un verdadero desafío.",
+            "fechaPublicacion": "2015-10-05",
+            "edadRecomendada": 14,
+            "autor": "ONE",
+            "editorial": "Shogakukan",
+            "generos": ["Acción", "Comedia", "Superpoderes"],
+            "imagen": "../img/onepunchman.jpg",
+            "tipo": "Lista de deseados"
+        },
+        {
+            "nombre": "Tokyo Revengers",
+            "descripcion": "Un joven viaja al pasado para salvar a su ex novia y cambiar su futuro.",
+            "fechaPublicacion": "2021-04-11",
+            "edadRecomendada": 16,
+            "autor": "Ken Wakui",
+            "editorial": "Kodansha",
+            "generos": ["Acción", "Drama", "Viajes en el tiempo"],
+            "imagen": "../img/tokyorevengers.jpeg",
+            "tipo": "En posesion"
+        }
+    ]
+}
